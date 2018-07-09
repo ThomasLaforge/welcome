@@ -1,0 +1,37 @@
+{
+  "name": "the-lost-expedition",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@petejkim/react-scripts-ts-sass": "^2.8.0",
+    "@types/lodash": "^4.14.104",
+    "@types/moment": "^2.13.0",
+    "@types/node-uuid": "^0.0.28",
+    "brain.js": "^1.1.2",
+    "lodash": "^4.17.5",
+    "material-ui": "^1.0.0-beta.36",
+    "material-ui-icons": "^1.0.0-beta.36",
+    "mobx": "^3.3.3",
+    "mobx-logger": "https://github.com/iamdanthedev/mobx-undo-redo",
+    "mobx-react": "^4.3.5",
+    "moment": "^2.21.0",
+    "node-uuid": "^1.4.8",
+    "raf": "^3.4.0",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-router-dom": "^4.2.2"
+  },
+  "scripts": {
+    "start": "react-scripts-ts start",
+    "build": "react-scripts-ts build",
+    "test": "react-scripts-ts test --env=jsdom --setupTestFrameworkScriptFile=raf/polyfill",
+    "eject": "react-scripts-ts eject"
+  },
+  "devDependencies": {
+    "@types/jest": "^21.1.8",
+    "@types/node": "^8.0.54",
+    "@types/react": "^16.0.26",
+    "@types/react-dom": "^16.0.3",
+    "mobx-react-devtools": "^4.2.15"
+  }
+}
