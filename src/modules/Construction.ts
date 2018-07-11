@@ -1,13 +1,13 @@
 import {observable} from 'mobx'
 
-import { ConstructionEffect } from './Welcome'
+import { EffectType } from './Welcome'
 
 export class Construction {
 
     @observable private _houseNumber: number;
-    @observable private _effect: ConstructionEffect;
+    @observable private _effect: EffectType;
 
-	constructor(houseNumber: number, effect: ConstructionEffect) {
+	constructor(houseNumber: number, effect: EffectType) {
 		this._houseNumber = houseNumber;
 		this._effect = effect;
 	}
@@ -18,10 +18,10 @@ export class Construction {
 	public set houseNumber(value: number) {
 		this._houseNumber = value;
 	}
-	public get effect(): ConstructionEffect {
+	public get effect(): EffectType {
 		return this._effect;
 	}
-	public set effect(value: ConstructionEffect) {
+	public set effect(value: EffectType) {
 		this._effect = value;
 	}
 

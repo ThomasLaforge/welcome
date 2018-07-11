@@ -1,0 +1,80 @@
+{
+    "1": [
+        {
+            "title": "Minimalist Diplomat",
+            "description": "by completing all 3 plans"
+        },
+        {
+            "title": "Aquaphobic Green",
+            "description": "without building any pool"
+        },
+        {
+            "title": "Concrete is beautiful",
+            "description": "without building any park"
+        },
+        {
+            "title": "Meticulous Mason",
+            "description": "by building all houses"
+        },
+        {
+            "title": "Monomaniac",
+            "description": "by building only one type of housing lot"
+        },
+        {
+            "title": "Bronze Medallist",
+            "description": "by exceeding 100 points"
+        }
+    ],
+    "2": [
+        {
+            "title": "Plebeian Estate Developer",
+            "description": "without using any extension"
+        },
+        {
+            "title": "Aquatic Bling",
+            "description": "by building all pools"
+        },
+        {
+            "title": "Tree Hugging Hippie",
+            "description": "by building all parks"
+        },
+        {
+            "title": "House too?",
+            "description": "by building all pools and all parks"
+        },
+        {
+            "title": "Indecisive Architect",
+            "description": "by building all types of housing lots"
+        },
+        {
+            "title": "Silver Medallist",
+            "description": "by exceeding 120 points"
+        }
+    ],
+    "3": [
+        {
+            "title": "Politician",
+            "description": "by completing all 3 plans first"
+        },
+        {
+            "title": "Not just houses?",
+            "description": "without building any park and any pool"
+        },
+        {
+            "title": "Welcome to ... Hollywood!",
+            "description": "by using all extensions"
+        },
+        {
+            "title": "Solitary Architect",
+            "description": "by hiring 10 Temp workers"
+        },
+        {
+            "title": "Luxury Architect",
+            "description": "by maxing out 4 housing lot values"
+        },
+        {
+            "title": "Gold Medallist",
+            "description": "by exceeding 140 points"
+        }
+    ],
+}

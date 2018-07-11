@@ -7,14 +7,15 @@ export class ConstructionPile {
     @observable private _constructions: Construction[];
     @observable private _discard: Construction[];
 
-	constructor(constructions: Construction[], discard: Construction[]) {
+	constructor(constructions: Construction[], discard: Construction[] = []) {
 		this._constructions = constructions;
 		this._discard = discard;
+		this.next()
     }
 
     next(){
-        this.constructions = this.constructions.filter(c => _.isEqual(c, this.topCard))
-        this.discard.push(this.topCard)
+		this.discard.push(this.topCard)
+        this.constructions = this.constructions.slice(1, this.constructions.length)
     }
 
     empty(){
@@ -23,7 +24,11 @@ export class ConstructionPile {
 
     get topCard(){
         return this.constructions[0]
-    }
+	}
+	
+	get lastCard(){
+		return this.discard[this.discard.length - 1]
+	}
 
 	public get constructions(): Construction[] {
 		return this._constructions;

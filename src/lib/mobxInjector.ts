@@ -10,6 +10,5 @@ export interface DefaultProps {
 }
 
 export const injector = (injectContent: InjectedStores) : DefaultProps => ({
-    manager: injectContent.store.gameStore as WelcomeModulesManager,
-    store: injectContent.store
+    manager: injectContent.store.welcomeStore as WelcomeModulesManager
 })

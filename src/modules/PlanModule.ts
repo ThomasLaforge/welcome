@@ -1,16 +1,14 @@
 import {observable} from 'mobx'
 
 import {PlanLevel} from './Welcome'
-import {Deck} from './Deck'
+import {PlanDeck} from './Decks'
 import {Plan} from './Plan'
 
-const planCollection: Plan[] = []
-
 export class PlanModule {
-    @observable private _deck: Deck<Plan>;
+    @observable private _deck: PlanDeck;
     @observable private _plans: Plan[];
     
-	constructor(deck: Deck<Plan> = new Deck(planCollection), plans: Plan[] = []) {
+	constructor(deck: PlanDeck = new PlanDeck(), plans: Plan[] = []) {
         this._plans = plans;
         this._deck = deck;
         this.initPlans();
@@ -36,10 +34,10 @@ export class PlanModule {
     //     return this.plans.filter(p => p.complete()).length === this.plans.length
     // }
 
-	public get deck(): Deck<Plan> {
+	public get deck(): PlanDeck {
 		return this._deck;
 	}
-	public set deck(value: Deck<Plan>) {
+	public set deck(value: PlanDeck) {
 		this._deck = value;
 	}
 	public get plans(): Plan[] {

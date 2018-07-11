@@ -3,10 +3,11 @@ import {observable} from 'mobx'
 
 export class Deck <T> {
 
-    @observable private _arrayDeck : T[]
+    @observable protected _arrayDeck : T[]
 
     constructor(arrayDeck: T[] = [], shuffle = true) {
         this.arrayDeck = arrayDeck
+        console.log('arrayDeck', this.arrayDeck, this.arrayDeck.length)
         if(shuffle){
             this.shuffle();
         }
@@ -17,11 +18,12 @@ export class Deck <T> {
     }
 
     get length(){
+        console.log('length', this.arrayDeck, this.arrayDeck.length)
         return this.arrayDeck.length;
     }
 
     shuffle(){
-        this.arrayDeck = _.shuffle( this.arrayDeck );
+        this.arrayDeck = _.shuffle(this.arrayDeck.slice())
     }
 
     addCard(card:T | T[]){
@@ -91,7 +93,12 @@ export class Deck <T> {
         return this.arrayDeck[index]
     }
 
-    get arrayDeck(){ return this._arrayDeck }
-    set arrayDeck(newArr){ this._arrayDeck = newArr }
+    slice(start: number, end: number){
+        console.log('slice', start, end, this.arrayDeck.slice(start, end))
+        return this.arrayDeck.slice(start, end)
+    }
+
+    public get arrayDeck(){ return this._arrayDeck }
+    public set arrayDeck(newArr){ this._arrayDeck = newArr }
 
 }

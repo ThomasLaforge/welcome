@@ -21,6 +21,14 @@ export class WelcomeModulesManager {
 		this.init()
 	}
 
+	get turn(){
+		return this.constructions.piles[0].discard.length
+	}
+	get nbTurn(){
+		// console.log('nb turn details', this.constructions.piles[0].constructions.length, this.constructions.piles[0].discard.length)
+		return this.constructions.piles[0].constructions.length + this.constructions.piles[0].discard.length
+	}
+
 	public get constructions(): ConstructionModule {
 		return this._constructions;
 	}

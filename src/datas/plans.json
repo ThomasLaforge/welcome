@@ -1,0 +1,270 @@
+{
+    "1": {
+        "normal": [
+            {
+                "reward": {
+                    "firstPlayer": 8,
+                    "others": 4
+                },
+                "mission": [
+                    1, 1, 1, 1, 1, 1
+                ]
+            },
+            {
+                "reward": {
+                    "firstPlayer": 6,
+                    "others": 3
+                },
+                "mission": [
+                    4, 4
+                ]
+            },
+            {
+                "reward": {
+                    "firstPlayer": 8,
+                    "others": 4
+                },
+                "mission": [
+                    2, 2, 2, 2
+                ]
+            },
+            {
+                "reward": {
+                    "firstPlayer": 8,
+                    "others": 4
+                },
+                "mission": [
+                    3, 3, 3
+                ]
+            },
+            {
+                "reward": {
+                    "firstPlayer": 8,
+                    "others": 4
+                },
+                "mission": [
+                    5, 5
+                ]
+            },
+            {
+                "reward": {
+                    "firstPlayer": 10,
+                    "others": 6
+                },
+                "mission": [
+                    6, 6
+                ]
+            }
+        ],
+        "special": [
+            {
+                "reward": {
+                    "firstPlayer": 8,
+                    "others": 3
+                },
+                "mission": [
+                    "5 bis"
+                ]
+            },
+            {
+                "reward": {
+                    "firstPlayer": 8,
+                    "others": 4
+                },
+                "mission": [
+                    "toute rangée du bas"
+                ]
+            },
+            {
+                "reward": {
+                    "firstPlayer": 6,
+                    "others": 3
+                },
+                "mission": [
+                   "toute rangée du haut"
+                ]
+            },
+            {
+                "reward": {
+                    "firstPlayer": 6,
+                    "others": 3
+                },
+                "mission": [
+                    "7 barrières"
+                ]
+            },
+            {
+                "reward": {
+                    "firstPlayer": 7,
+                    "others": 4
+                },
+                "mission": [
+                    "extremites"
+                ]
+            }
+        ]
+    },
+    "2": {
+        "normal": [
+            {
+                "reward": {
+                    "firstPlayer": 9,
+                    "others": 5
+                },
+                "mission": [
+                    4, 1, 1, 1
+                ]
+            },
+            {
+                "reward": {
+                    "firstPlayer": 12,
+                    "others": 7
+                },
+                "mission": [
+                    3, 3, 4
+                ]
+            },
+            {
+                "reward": {
+                    "firstPlayer": 9,
+                    "others": 5
+                },
+                "mission": [
+                    4, 5
+                ]
+            },
+            {
+                "reward": {
+                    "firstPlayer": 10,
+                    "others": 6
+                },
+                "mission": [
+                    5, 2, 2
+                ]
+            },
+            {
+                "reward": {
+                    "firstPlayer": 11,
+                    "others": 6
+                },
+                "mission": [
+                    1, 1, 1, 6
+                ]
+            },
+            {
+                "reward": {
+                    "firstPlayer": 8,
+                    "others": 4
+                },
+                "mission": [
+                    3, 6
+                ]
+            }
+        ],
+        "special": [
+            {
+                "reward": {
+                    "firstPlayer": 8,
+                    "others": 3
+                },
+                "mission": [
+                    "tous parcs et piscinede la rue ligne milieu"
+                ]
+            },
+            {
+                "reward": {
+                    "firstPlayer": 10,
+                    "others": 5
+                },
+                "mission": [
+                    "tous parcs et piscinede la rue ligne bas"
+                ]
+            },
+            {
+                "reward": {
+                    "firstPlayer": 7,
+                    "others": 4
+                },
+                "mission": [
+                    "deux lignes tous leur parc"
+                ]
+            },
+            {
+                "reward": {
+                    "firstPlayer": 7,
+                    "others": 4
+                },
+                "mission": [
+                    "deux lignes tous leur piscine"
+                ]
+            },
+            {
+                "reward": {
+                    "firstPlayer": 10,
+                    "others": 5
+                },
+                "mission": [
+                    "tous les parcs + toutes les piscines + un rond point"
+                ]
+            }
+        ]
+    },
+    "3": {
+        "normal": [
+            {
+                "reward": {
+                    "firstPlayer": 13,
+                    "others": 7
+                },
+                "mission": [
+                    1, 4, 5
+                ]
+            },
+            {
+                "reward": {
+                    "firstPlayer": 7,
+                    "others": 3
+                },
+                "mission": [
+                    2, 5
+                ]
+            },
+            {
+                "reward": {
+                    "firstPlayer": 13,
+                    "others": 7
+                },
+                "mission": [
+                    2, 3, 5
+                ]
+            },
+            {
+                "reward": {
+                    "firstPlayer": 7,
+                    "others": 3
+                },
+                "mission": [
+                    3, 4
+                ]
+            },
+            {
+                "reward": {
+                    "firstPlayer": 11,
+                    "others": 6
+                },
+                "mission": [
+                    1, 2, 2, 3
+                ]
+            },
+            {
+                "reward": {
+                    "firstPlayer": 12,
+                    "others": 7
+                },
+                "mission": [
+                    1, 2, 6
+                ]
+            }
+        ]
+    }
+}

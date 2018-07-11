@@ -3,15 +3,26 @@ import {ConstructionPile} from './ConstructionPile'
 import {Deck} from './Deck'
 import {Plan} from './Plan'
 import {observable} from 'mobx'
+import { ConstructionDeck, constructions } from './Decks';
 
 export class ConstructionModule {
 
     @observable private _piles: ConstructionPile[];
-    @observable private _constructionCards: Deck<Construction>;
+    @observable private _constructionDeck: ConstructionDeck;
 
-	constructor(piles: ConstructionPile[], constructionCards: Deck<Construction>) {
-		this._piles = piles;
-		this._constructionCards = constructionCards;
+	constructor(nbPiles = 3, constructionDeck = new ConstructionDeck(constructions)) {
+        this._constructionDeck = constructionDeck;
+        console.log('constructionDeck1', constructionDeck, constructionDeck.length)
+        let piles = []
+        let lengthOfSlice = Math.trunc(constructionDeck.length / nbPiles)
+        for (let i = 0; i < nbPiles; i++) {
+            let start = i * lengthOfSlice
+            let end = start + lengthOfSlice
+            let constructionSplit = constructionDeck.slice(start, end)
+            let p = new ConstructionPile(constructionSplit)
+            piles.push(p)
+        }
+        this._piles = piles
     }
     
     completePlan(p: Plan){
@@ -28,11 +39,11 @@ export class ConstructionModule {
     public set piles(value: ConstructionPile[]) {
 		this._piles = value;
 	}
-    public get constructionCards(): Deck<Construction> {
-		return this._constructionCards;
+    public get constructionDeck(): Deck<Construction> {
+		return this._constructionDeck;
 	}
-    public set constructionCards(value: Deck<Construction>) {
-		this._constructionCards = value;
+    public set constructionDeck(value: Deck<Construction>) {
+		this._constructionDeck = value;
 	}
 
 }

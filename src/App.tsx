@@ -13,10 +13,7 @@ import Button from 'material-ui/Button'
 import Typography from 'material-ui/Typography'
 import Drawer from 'material-ui/Drawer'
 
-import Game from './components/Game';
-import EndGame from './components/EndGame';
-import RoundCounter from './components/RoundCounter';
-import Scores from './components/Scores';
+import Manager from './components/Manager';
 import './styles/main.scss';
 
 @observer
@@ -45,18 +42,16 @@ class App extends React.Component<{}, { store: Store, drawerOpened: boolean} > {
                   <MenuIcon />
                 </IconButton>
                 <Typography variant="title" color="inherit">
-                  Roll Through The Ages
+                  Welcome
                 </Typography>
-                <div className='toolbar-round-counter'>
-                  <RoundCounter />
-                  <Scores />              
-                </div>  
               </Toolbar>
             </AppBar>
+            
             <Drawer open={this.state.drawerOpened} onClose={() => this.setState({drawerOpened: false})}>
               
             </Drawer>
-            {this.state.store.gameStore.isOver() ? <EndGame /> : <Game />}
+
+            <Manager />
           </div>
       </Provider>
     );
