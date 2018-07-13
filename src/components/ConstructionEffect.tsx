@@ -25,7 +25,7 @@ class ConstructionEffect extends React.Component <ConstructionEffectProps, Const
         let effect = new ConstructionEffectModel(this.props.effect)
         return (
             <div className="construction-effect">
-                <div className={effect.cssClassName} />
+                <div className={'construction-effect-icon ' + effect.cssClassName} />
             </div>
         );
     }

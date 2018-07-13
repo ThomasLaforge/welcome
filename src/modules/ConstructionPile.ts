@@ -15,12 +15,19 @@ export class ConstructionPile {
 
     next(){
 		this.discard.push(this.topCard)
-        this.constructions = this.constructions.slice(1, this.constructions.length)
+		this.constructions = this.constructions.slice(1, this.constructions.length)
     }
 
     empty(){
         return this.constructions.length === 0
-    }
+	}
+	
+	reshuffle(){
+		this.constructions = this.constructions.concat(this.discard)
+		this.constructions = _.shuffle(this.constructions.slice())
+		this.discard = []
+		this.next()
+	}
 
     get topCard(){
         return this.constructions[0]

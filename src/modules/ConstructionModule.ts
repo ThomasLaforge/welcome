@@ -24,13 +24,27 @@ export class ConstructionModule {
         }
         this._piles = piles
     }
+
+    get turn(){
+		return this.piles[0].discard.length
+	}
+	get nbTurn(){
+		// console.log('nb turn details', this.constructions.piles[0].constructions.length, this.constructions.piles[0].discard.length)
+		return this.piles[0].constructions.length + this.piles[0].discard.length - 1
+	}
     
     completePlan(p: Plan){
         p.complete()
     }
 
     nextTurn(){
-        this.piles.forEach(p => p.next())
+        if(this.turn < this.nbTurn){
+            this.piles.forEach(p => p.next())
+        }
+    }
+
+    reshuffle(){
+        this.piles.forEach(p => p.reshuffle())
     }
 
     public get piles(): ConstructionPile[] {

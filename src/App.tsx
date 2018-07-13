@@ -5,15 +5,16 @@ import DevTools from 'mobx-react-devtools';
 
 import { Store } from './modules/Store'
 
-import AppBar from 'material-ui/AppBar'
-import Toolbar from 'material-ui/Toolbar'
-import IconButton from 'material-ui/IconButton'
-import MenuIcon from 'material-ui-icons/Menu';
-import Button from 'material-ui/Button'
-import Typography from 'material-ui/Typography'
-import Drawer from 'material-ui/Drawer'
+import AppBar from '@material-ui/core/AppBar'
+import Toolbar from '@material-ui/core/Toolbar'
+import IconButton from '@material-ui/core/IconButton'
+import MenuIcon from '@material-ui/icons/Menu';
+import Button from '@material-ui/core/Button'
+import Typography from '@material-ui/core/Typography'
+import Drawer from '@material-ui/core/Drawer'
 
 import Manager from './components/Manager';
+import WelcomeMap from './components/WelcomeMap';
 import './styles/main.scss';
 
 @observer
@@ -38,20 +39,16 @@ class App extends React.Component<{}, { store: Store, drawerOpened: boolean} > {
           {/* https://codesandbox.io/s/kk2889j305 */}
             <AppBar position="static">
               <Toolbar>
-                <IconButton onClick={this.toggleDrawer} color="inherit" aria-label="Menu">
+                {/* <IconButton onClick={this.toggleDrawer} color="inherit" aria-label="Menu">
                   <MenuIcon />
-                </IconButton>
+                </IconButton> */}
                 <Typography variant="title" color="inherit">
                   Welcome
                 </Typography>
               </Toolbar>
             </AppBar>
-            
-            <Drawer open={this.state.drawerOpened} onClose={() => this.setState({drawerOpened: false})}>
-              
-            </Drawer>
-
-            <Manager />
+            {/* <Manager /> */}
+            <WelcomeMap />
           </div>
       </Provider>
     );

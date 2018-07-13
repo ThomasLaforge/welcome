@@ -5,6 +5,7 @@ import { DefaultProps, injector } from '../lib/mobxInjector'
 import {WelcomeModulesManager} from '../modules/WelcomeModulesManager'
 import ConstructionDeck from './ConstructionDeck';
 import Constructions from './Constructions';
+import Plans from './Plans';
 
 // import Stepper, { Step, StepLabel } from 'material-ui/Stepper';
 // import Button from 'material-ui/Button';
@@ -31,10 +32,10 @@ class Manager extends React.Component <ManagerProps, ManagerState> {
         return (
             <div className="manager">
                 {/* <ConstructionDeck /> */}
-                <div className="turn">
-                    {manager.turn} / {manager.nbTurn}
-                </div>
+                
                 <Constructions />
+                <hr />           
+                <Plans />                
             </div>
         );
     }

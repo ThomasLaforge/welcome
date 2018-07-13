@@ -2,7 +2,7 @@ import * as React from 'react';
 import {observer, inject} from 'mobx-react';
 import { DefaultProps, injector } from '../lib/mobxInjector'
 
-import Button from 'material-ui/Button';
+import Button from '@material-ui/core/Button';
 
 import Pile from './Pile'
 

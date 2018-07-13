@@ -1,14 +1,15 @@
 import { Reward, PlanLevel } from './Welcome'
 import {observable} from 'mobx'
+import { Mission } from './Mission';
 
 export class Plan {
 
     @observable private _reward: Reward;
-    @observable private _mission: number[];
+    @observable private _mission: Mission;
     @observable private _level: PlanLevel;
     @observable private _isComplete: boolean;
 
-	constructor(reward: Reward, mission: number[], level: PlanLevel, isComplete = false) {
+	constructor(reward: Reward, mission: Mission, level: PlanLevel, isComplete = false) {
 		this._reward = reward;
 		this._mission = mission;
 		this._level = level;
@@ -29,10 +30,10 @@ export class Plan {
 	public set reward(value: Reward) {
 		this._reward = value;
 	}
-    public get mission(): number[] {
+    public get mission(): Mission {
 		return this._mission;
     }
-    public set mission(value: number[]) {
+    public set mission(value: Mission) {
 		this._mission = value;
 	}
     public get isComplete(): boolean {

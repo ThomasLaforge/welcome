@@ -1,20 +1,39 @@
 import {Deck} from './Deck'
 import {Plan} from './Plan'
 import {Construction} from './Construction'
-import { Reward, PlanLevel, JsonConstruction, JsonPlan } from './Welcome';
+import { Reward, PlanLevel, JsonConstruction, JsonPlan, GameMode } from './Welcome';
+import { Mission } from './Mission';
 
 /**
  * Plans
  */
 
-const planList: Plan[] = []
-// require('../datas/plans.json').map( (p: JsonPlan) => 
-//     new Plan(p.reward, [], p.level) 
-// )
+const dataPlans = require('../datas/plans.json')
+console.log('dataPlans', dataPlans)
+let planList: Plan[] = []
+Object.keys(dataPlans).forEach( (level: string) => {
+    let levelType = Number.parseInt(level)
+    Object.keys(dataPlans[level]).forEach(k => {
+        dataPlans[level][k].forEach( (p: JsonPlan) => {
+            console.log('plan', p)
+            planList.push(
+                new Plan(
+                    p.reward,
+                    new Mission(p.mission.type, p.mission.constructionNeeded),
+                    levelType
+                )
+            )
+        })
+    })
+})
+console.log('planList', planList, planList.length)
 
 export class PlanDeck extends Deck<Plan> {
 
-    constructor(datas = planList){
+    constructor(
+        gameMode = GameMode.Normal, 
+        datas = gameMode === GameMode.Normal ? planList.filter(p => p.mission.type === 0) : planList
+    ){
         super(datas)
     }
 }
@@ -22,16 +41,16 @@ export class PlanDeck extends Deck<Plan> {
 /**
  * Construction
  */
-let datas = require('../datas/constructions.json')
+const datasPlan = require('../datas/constructions.json')
 // console.log('constructions', datas)
 let constructionList: Construction[] = []
-Object.keys(datas).forEach( (effect: string) => {
+Object.keys(datasPlan).forEach( (effect: string) => {
     // console.log('list of effect construction', effect, datas[effect])
     let effectType = Number.parseInt(effect)
-    Object.keys(datas[effect]).forEach(houseNumberStr => {
+    Object.keys(datasPlan[effect]).forEach(houseNumberStr => {
         let houseNumber = Number.parseInt(houseNumberStr)
         // console.log('nb cards', datas[effect][houseNumberStr])
-        for (let index = 0; index < datas[effect][houseNumberStr]; index++) {
+        for (let index = 0; index < datasPlan[effect][houseNumberStr]; index++) {
             constructionList.push(new Construction(houseNumber, effectType))
         }
     })

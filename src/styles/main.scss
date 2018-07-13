@@ -16,19 +16,208 @@ html, body, #app {
 #root, .app {
     height: 100%;
     overflow: hidden;
-}
-
-
-.app {
-    // display: flex;
-    // flex-direction: column;
+    display: flex;
+    flex-direction: column;
 }
 
 .manager {
-    // height: 100%;
-    // display: flex;
-    // flex-direction: column;
-    // justify-content: space-between;
-    // padding: 0 25px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 0 25px;
+
+    .constructions-zone {
+        height: 45%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+
+        .turn {
+            width: 100%;
+            text-align: center;
+        }
+
+        .piles {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            justify-content: center;
+            
+            .pile {
+                height: 150px;
+                width: 300px;
+                display: flex;
+                flex-direction: row;
+                border: 1px solid black;
+                margin: 0 15px;
+    
+                .current-construction {
+                    position: relative;
+                    height: 100%;
+                    width: 50%;
+                    display: flex;
+                    flex-direction: row;
+    
+                    .house-number {
+                        width: 100%;
+                        height: 100%;
+                        // border: 1px solid blue;
+                        font-size: 30px;
+                        line-height: 150px;
+                        text-align: center;
+                    }
+                    .effect {
+                        position: absolute;
+                        top:0;
+                        left: 0;         
+                        width: 33%;
+                        height: 45px;
+                        // border: 1px solid red;
+                    }
+                }
+        
+                .last-construction {
+                    width: 50%;
+                    height: 100%;
+                    // border: 1px green solid;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+    
+                    .construction-effect-icon {
+                        min-height: 85px;
+                    }
+                }
+            }
+        }
+
+        .constructions-actions {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+        }
+    }
+
+$planHeight: 200px;
+
+    .plans-zone {
+        height: 45%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+
+        .plans {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+        
+            .plan {
+                display: flex;
+                flex-direction: column;
+                // justify-content: space-between
+                
+                border: 1px solid black;
+                width: 250px;
+                height: $planHeight;
+
+                .plan-mission {
+                    display: flex;
+                    flex-direction: row;
+                    flex-wrap: wrap;
+                    justify-content: center;
+
+                    border: 1px solid black;
+                    flex: 1;
+                    padding: 30px;
+
+                    .plan-mission-construction {
+                        // width: 50px;
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: space-around;
+                        margin: 10px 10px;
+
+                        .mission-construction-spot {
+                            width: 20px;
+                            text-align: center;
+                        }
+                    }
+                }
+
+                .plan-rewards {
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-around;
+
+                    border: 1px solid black;
+                    height: $planHeight / 5;
+                    line-height: $planHeight / 5;
+                    font-size: 25px;
+
+                    .plan-rewards-first,
+                    .plan-rewards-others {
+                        width: $planHeight / 5;
+                        text-align: center;
+                        border: 2px solid darkgray;
+                        border-radius: 400px;
+                    }
+
+                    .rewards-first-complete{
+                        // visibility: hidden;
+                        opacity: 0.4;
+                    }
+                }
+            }
+        }
+
+        .plans-actions {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            width: 100%;
+        }
+    }
 }
 
+.construction-effect {
+
+    .construction-effect-icon {
+        min-width: 100%;
+        min-height: 45px;
+        
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center center;
+    }
+
+    .surveyor          { background-image: url("../images/surveyor.png"); }
+    .pool              { background-image: url("../images/pool.png"); }
+    .interim           { background-image: url("../images/interim.png"); }
+    .bis               { background-image: url("../images/bis.png"); }
+    .park              { background-image: url("../images/park.png"); }
+    .real_estate_agent { background-image: url("../images/real_estate_agent.png"); }
+}
+
+.map {
+    margin: auto;
+    width: 200px;
+    height: 150px;
+    
+    background-image: url("../images/map_only.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+
+    position: relative;
+
+    .test-on-map {
+        width: 20px;
+        height: 30px;
+
+        position: absolute;
+        top: 10px;
+        left: 50px;
+        border: 1px solid white;
+    }
+}

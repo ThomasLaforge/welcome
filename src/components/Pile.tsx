@@ -24,8 +24,6 @@ class Pile extends React.Component <PileProps, PileState> {
 
     render() {
         let pile = this.props.p
-        let currentHouseNumber = pile.topCard.houseNumber
-        let lastEffect = pile.lastCard.effect
 
         return (
             <div className="pile">

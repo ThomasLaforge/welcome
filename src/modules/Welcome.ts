@@ -25,5 +25,19 @@ export interface JsonConstruction {
 
 export interface JsonPlan {
     reward: Reward,
-    level: number
+    mission: MissionJson
+}
+
+export interface MissionJson {
+    type: MissionType,
+    constructionNeeded?: number[]
+}
+
+export enum MissionType {
+    District = 0
+}
+
+export enum GameMode {
+    Normal,
+    Advanced
 }
