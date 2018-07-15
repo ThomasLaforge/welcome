@@ -12,7 +12,7 @@ export class ConstructionModule {
 
 	constructor(nbPiles = 3, constructionDeck = new ConstructionDeck(constructions)) {
         this._constructionDeck = constructionDeck;
-        console.log('constructionDeck1', constructionDeck, constructionDeck.length)
+        // console.log('constructionDeck1', constructionDeck, constructionDeck.length)
         let piles = []
         let lengthOfSlice = Math.trunc(constructionDeck.length / nbPiles)
         for (let i = 0; i < nbPiles; i++) {

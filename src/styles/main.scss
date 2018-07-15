@@ -200,24 +200,101 @@ $planHeight: 200px;
 }
 
 .map {
-    margin: auto;
-    width: 200px;
-    height: 150px;
+    margin: 10px auto 0;
+    width: 70%;
+    height: 50%;
     
-    background-image: url("../images/map_only.png");
-    background-size: contain;
+    // background-image: url("../images/map_only.png");
+    background-image: url("../images/map_only-tone-enhance.jpg");
+    background-size: 100% 100%;
     background-repeat: no-repeat;
     background-position: center center;
 
     position: relative;
 
-    .test-on-map {
-        width: 20px;
-        height: 30px;
-
-        position: absolute;
-        top: 10px;
-        left: 50px;
-        border: 1px solid white;
+    // Map boxes
+    $nbLines: 3;
+    
+    @mixin mapBox($top, $left) {
+        top: $top;
+        left: $left;
     }
+
+    .house, .park {
+        position: absolute;
+    }
+    
+    // Houses
+    $houseWidth: 6.7%;
+    $houseHeight: 18%;
+    $topFirstLineHouse: 15.3%;
+    $nbHouseOnLine: 10;
+    $spaceBeetweenTwoHouses: 0%;
+    $startHouseX: 23%;
+    $gapBetweenTwoLinesHouse: 15.6%;
+
+    .house {
+        width: $houseWidth;
+        height: $houseHeight;
+        border: 1px solid red;
+        font-size: 100%;
+
+        .house-construction-number ,.house-with-pool-construction-number {
+            height: 100%;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        // .house-construction-number {
+        //     padding-top: 40%;
+        // }
+        // .house-with-pool-construction-number {
+        //     padding-top: 57%; 
+        // }
+    }
+
+    $topFirstLinePark: 8.3%;
+    $parkWidth: 3.2%;
+    $nbParksOnLine: 3;
+    $spaceBeetweenTwoParks: 0.1%;
+    $startParkX: 79%;
+    $gapBetweenTwoLinesPark: 22.4%;
+    .park {
+        width: $parkWidth;
+        height: 5%;
+        border: 2px solid red;
+
+        .park-checked {
+            width: 100%;
+            height: 100%;
+            text-align: center;
+        }
+    }
+
+    @for $i from 0 to $nbLines {
+        // Houses
+        @for $j from 0 to $nbHouseOnLine {
+            .house-line-#{$i}-spot-#{$j} {
+                @include mapBox(
+                    $topFirstLineHouse + $i * ($topFirstLineHouse + $gapBetweenTwoLinesHouse), 
+                    $startHouseX + $j * ($spaceBeetweenTwoHouses + $houseWidth) - $i * ($spaceBeetweenTwoHouses + $houseWidth)
+                )
+            }
+        }
+        $nbHouseOnLine: $nbHouseOnLine + 1;
+
+        // Parks
+        @for $j from 0 to $nbParksOnLine {
+            .park-line-#{$i}-spot-#{$j} {
+                @include mapBox(
+                    $topFirstLinePark + $i * ($topFirstLinePark + $gapBetweenTwoLinesPark), 
+                    $startParkX + $j * ($spaceBeetweenTwoParks + $parkWidth) - $i * ($spaceBeetweenTwoParks + $parkWidth)
+                )
+            }
+        }
+        $nbParksOnLine: $nbParksOnLine + 1;
+
+    }
+
 }

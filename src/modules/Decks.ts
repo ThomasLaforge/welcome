@@ -9,13 +9,13 @@ import { Mission } from './Mission';
  */
 
 const dataPlans = require('../datas/plans.json')
-console.log('dataPlans', dataPlans)
+// console.log('dataPlans', dataPlans)
 let planList: Plan[] = []
 Object.keys(dataPlans).forEach( (level: string) => {
     let levelType = Number.parseInt(level)
     Object.keys(dataPlans[level]).forEach(k => {
         dataPlans[level][k].forEach( (p: JsonPlan) => {
-            console.log('plan', p)
+            // console.log('plan', p)
             planList.push(
                 new Plan(
                     p.reward,
@@ -26,7 +26,7 @@ Object.keys(dataPlans).forEach( (level: string) => {
         })
     })
 })
-console.log('planList', planList, planList.length)
+// console.log('planList', planList, planList.length)
 
 export class PlanDeck extends Deck<Plan> {
 

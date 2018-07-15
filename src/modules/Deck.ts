@@ -7,7 +7,7 @@ export class Deck <T> {
 
     constructor(arrayDeck: T[] = [], shuffle = true) {
         this.arrayDeck = arrayDeck
-        console.log('arrayDeck', this.arrayDeck, this.arrayDeck.length)
+        // console.log('arrayDeck', this.arrayDeck, this.arrayDeck.length)
         if(shuffle){
             this.shuffle();
         }
@@ -18,7 +18,7 @@ export class Deck <T> {
     }
 
     get length(){
-        console.log('length', this.arrayDeck, this.arrayDeck.length)
+        // console.log('length', this.arrayDeck, this.arrayDeck.length)
         return this.arrayDeck.length;
     }
 
@@ -94,7 +94,7 @@ export class Deck <T> {
     }
 
     slice(start: number, end: number){
-        console.log('slice', start, end, this.arrayDeck.slice(start, end))
+        // console.log('slice', start, end, this.arrayDeck.slice(start, end))
         return this.arrayDeck.slice(start, end)
     }
 
