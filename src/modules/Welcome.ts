@@ -19,8 +19,8 @@ export enum PlanLevel {
 }
 
 export interface JsonConstruction {
-    houseNumber,
-    effect
+    houseNumber: number,
+    effect: EffectType
 }
 
 export interface JsonPlan {
@@ -40,4 +40,8 @@ export enum MissionType {
 export enum GameMode {
     Normal,
     Advanced
+}
+
+export interface PlayOptions {
+    
 }

@@ -7,11 +7,6 @@ import ConstructionDeck from './ConstructionDeck';
 import Constructions from './Constructions';
 import Plans from './Plans';
 
-// import Stepper, { Step, StepLabel } from 'material-ui/Stepper';
-// import Button from 'material-ui/Button';
-// import Paper from 'material-ui/Paper';
-
-
 interface ManagerProps extends DefaultProps {
 }
 interface ManagerState {
@@ -32,10 +27,9 @@ class Manager extends React.Component <ManagerProps, ManagerState> {
         return (
             <div className="manager">
                 {/* <ConstructionDeck /> */}
-                
                 <Constructions />
                 <hr />           
-                <Plans />                
+                <Plans />
             </div>
         );
     }

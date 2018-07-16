@@ -15,6 +15,8 @@ import Drawer from '@material-ui/core/Drawer'
 
 import Manager from './components/Manager';
 import WelcomeMap from './components/WelcomeMap';
+import SoloGame from './components/SoloGame';
+
 import './styles/main.scss';
 
 @observer
@@ -48,7 +50,8 @@ class App extends React.Component<{}, { store: Store, drawerOpened: boolean} > {
               </Toolbar>
             </AppBar>
             {/* <Manager /> */}
-            <WelcomeMap />
+            {/* <WelcomeMap /> */}
+            <SoloGame />
           </div>
       </Provider>
     );

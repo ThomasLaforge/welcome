@@ -204,8 +204,8 @@ $planHeight: 200px;
     width: 70%;
     height: 50%;
     
-    // background-image: url("../images/map_only.png");
-    background-image: url("../images/map_only-tone-enhance.jpg");
+    // background-image: url("../images/map_only.png"); // original low definition version
+    background-image: url("../images/map_only-tone-enhance.jpg"); // enhanced definition version 
     background-size: 100% 100%;
     background-repeat: no-repeat;
     background-position: center center;
@@ -297,4 +297,74 @@ $planHeight: 200px;
 
     }
 
+}
+
+.game {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    .manager {
+        height: 20%;
+        border: 1px solid red;
+
+        flex: 1;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        width: 70%;
+
+        .constructions-zone {
+            width: 45%;
+            height: 100%;
+
+            .constructions-actions {
+                display: none;
+            }
+        }
+
+        .plans-zone {
+            width: 45%;
+            height: 100%;
+
+            .plans {
+                height: 80%;
+            }
+
+            .plan {
+                width: 150px;
+                height: 100%;
+
+                .plan-mission {
+                    padding: 0px 0px;
+
+                    .plan-mission-construction {
+                        // width: 50px;
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: space-around;
+                        margin: 5px 10px;
+                    }
+                }
+            }   
+            
+            .plans-actions {
+                display: none;
+            }
+        }
+    }
+
+    .map {
+        width: 100%;
+        max-width: 1000px;
+        height: 50%;
+        margin: 0 50px;
+        border: 1px solid green;
+    }
+
+    .player-actions {
+        height: 30%;
+        border: 1px solid blue;
+    }
 }
