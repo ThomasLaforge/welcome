@@ -18,6 +18,13 @@ export enum PlanLevel {
     Three
 }
 
+export enum Route {
+    Solo,
+    Multi,
+    Map,
+    Manager
+}
+
 export interface JsonConstruction {
     houseNumber: number,
     effect: EffectType
@@ -47,5 +54,5 @@ export interface PlayOptions {
 }
 
 export interface SpecialSoloCard {
-    _houseNumber: number
+    kind: 'SpecialSoloCard'
 }

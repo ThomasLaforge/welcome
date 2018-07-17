@@ -3,6 +3,7 @@ import {observable} from 'mobx'
 import {Game} from './Game'
 import { WelcomeModulesManager } from './WelcomeModulesManager';
 import { SoloGame } from './SoloGame';
+import { Route } from './Welcome';
 
 export class UIStore {
 	@observable private _game: Game;
@@ -10,6 +11,7 @@ export class UIStore {
 	@observable private _selectedConstruction: number;
 	@observable private _selectedHouse: number;
 	@observable private _selectedEffectTarget: number;
+	@observable private _route: Route;
 
     constructor(game: Game){
 		this.game = game
@@ -20,8 +22,13 @@ export class UIStore {
 		this.activePlayerActionStep = 0
 		this.selectedConstruction = null;
 		this.selectedHouse = null;
+		this.route = Route.Solo
 	}
-	
+
+	switchRoute(route: Route){
+		this.route = route
+	}
+
 	public get game(): Game {
 		return this._game;
 	}
@@ -52,8 +59,12 @@ export class UIStore {
 	public set selectedEffectTarget(value: number) {
 		this._selectedEffectTarget = value;
 	}
-
-
+	public get route(): Route {
+		return this._route;
+	}
+	public set route(value: Route) {
+		this._route = value;
+	}
 
 }
 

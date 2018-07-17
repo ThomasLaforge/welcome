@@ -1,12 +1,14 @@
 import * as React from 'react';
 import {observer, inject} from 'mobx-react';
-import { DefaultProps, injector } from '../lib/mobxInjector'
+import { DefaultProps, injector } from '../../lib/mobxInjector'
 
 import Plan from './Plan'
 
 import Button from '@material-ui/core/Button';
+import { PlanModule } from '../../modules/PlanModule';
 
 interface PlansProps extends DefaultProps {
+    plans: PlanModule
 }
 interface PlansState {
 }
@@ -21,11 +23,11 @@ class Plans extends React.Component <PlansProps, PlansState> {
     }
 
     resetPlansComplete = () => {
-        this.props.manager.plans.resetComplete()
+        this.props.plans.resetComplete()
     }
 
     renderPlans(){
-        return this.props.manager.plans.plans.map( (p, k) => <Plan plan={p} key={k} />)
+        return this.props.plans.plans.map( (p, k) => <Plan plan={p} key={k} />)
     }
 
     render() {

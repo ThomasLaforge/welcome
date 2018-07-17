@@ -1,10 +1,10 @@
 import * as React from 'react';
 import {observer, inject} from 'mobx-react';
-import { DefaultProps, injector } from '../lib/mobxInjector'
+import { DefaultProps, injector } from '../../lib/mobxInjector'
 
 import ConstructionEffect from './ConstructionEffect'
 
-import {Construction} from '../modules/Construction'
+import {Construction} from '../../modules/Construction'
 
 interface CurrentConstructionProps extends DefaultProps {
     card: Construction

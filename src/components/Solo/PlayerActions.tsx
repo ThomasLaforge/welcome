@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {observer, inject} from 'mobx-react';
-import { DefaultProps, injector } from '../lib/mobxInjector'
+import { DefaultProps, injector } from '../../lib/mobxInjector'
 
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';

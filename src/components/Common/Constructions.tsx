@@ -1,12 +1,14 @@
 import * as React from 'react';
 import {observer, inject} from 'mobx-react';
-import { DefaultProps, injector } from '../lib/mobxInjector'
+import { DefaultProps, injector } from '../../lib/mobxInjector'
 
 import Button from '@material-ui/core/Button';
 
 import Pile from './Pile'
+import { ConstructionModule } from '../../modules/ConstructionModule';
 
 interface ConstructionsProps extends DefaultProps {
+    constructions: ConstructionModule
 }
 interface ConstructionsState {
 }
@@ -20,11 +22,11 @@ class Constructions extends React.Component <ConstructionsProps, ConstructionsSt
         this.state = {}
     }
 
-    handleNext = () => this.props.manager.constructions.nextTurn()
-    handleReshuffle = () => this.props.manager.constructions.reshuffle()
+    handleNext = () => this.props.constructions.nextTurn()
+    handleReshuffle = () => this.props.constructions.reshuffle()
 
     renderPiles(){
-        return this.props.manager.constructions.piles.map( (p, k) => <Pile p={p} key={k} />)
+        return this.props.constructions.piles.map( (p, k) => <Pile p={p} key={k} />)
     }
 
     render() {
@@ -32,10 +34,6 @@ class Constructions extends React.Component <ConstructionsProps, ConstructionsSt
 
         return (
             <div className="constructions-zone">
-                <div className="turn">
-                    {manager.turn} / {manager.nbTurn}
-                </div>
-
                 <div className="piles">
                     {this.renderPiles()}
                 </div>

@@ -1,11 +1,11 @@
 import * as React from 'react';
 import {observer, inject} from 'mobx-react';
-import { DefaultProps, injector } from '../lib/mobxInjector'
+import { DefaultProps, injector } from '../../lib/mobxInjector'
 
-import {WelcomeMap as WelcomeMapModel} from '../modules/WelcomeMap'
+import {WelcomeMap as WelcomeMapModel} from '../../modules/WelcomeMap'
 
-import { MissionType } from '../modules/Welcome';
-import { Street } from '../modules/Street';
+import { MissionType } from '../../modules/Welcome';
+import { Street } from '../../modules/Street';
 
 interface WelcomeMapProps extends DefaultProps {
     canCheckPark?: boolean

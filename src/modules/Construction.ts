@@ -5,7 +5,8 @@ import { EffectType } from './Welcome'
 export class Construction {
 
     @observable private _houseNumber: number;
-    @observable private _effect: EffectType;
+	@observable private _effect: EffectType;
+	public kind = 'Construction';
 
 	constructor(houseNumber: number, effect: EffectType) {
 		this._houseNumber = houseNumber;

@@ -1,10 +1,10 @@
 import * as React from 'react';
 import {observer, inject} from 'mobx-react';
-import { DefaultProps, injector } from '../lib/mobxInjector'
+import { DefaultProps, injector } from '../../lib/mobxInjector'
 
-import {Plan as PlanModel} from '../modules/Plan'
+import {Plan as PlanModel} from '../../modules/Plan'
 
-import { MissionType } from '../modules/Welcome';
+import { MissionType } from '../../modules/Welcome';
 
 interface PlanProps extends DefaultProps {
     plan: PlanModel

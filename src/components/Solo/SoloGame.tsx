@@ -1,11 +1,11 @@
 import * as React from 'react';
 import {observer, inject} from 'mobx-react';
-import { DefaultProps, injector } from '../lib/mobxInjector'
+import { DefaultProps, injector } from '../../lib/mobxInjector'
 
 import Manager from './Manager'
-import WelcomeMap from './WelcomeMap'
+import WelcomeMap from '../Common/WelcomeMap'
+import ScoreBoard from '../Common/ScoreBoard'
 import PlayerActions from './PlayerActions'
-import ScoreBoard from './ScoreBoard'
 
 interface SoloGameProps extends DefaultProps {
 }
@@ -24,13 +24,13 @@ class SoloGame extends React.Component <SoloGameProps, SoloGameState> {
 
     render() {
         return <div className='game'>
-            <div className="game-infos">
+            <div className="game-main">
                 <Manager />
+                <PlayerActions />
+            </div>
+            <div className="game-paper">
                 <WelcomeMap />
                 <ScoreBoard />
-            </div>
-            <div className="game-main">
-                <PlayerActions />
             </div>
         </div>
     }

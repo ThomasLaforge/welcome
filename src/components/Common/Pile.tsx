@@ -1,11 +1,11 @@
 import * as React from 'react';
 import {observer, inject} from 'mobx-react';
-import { DefaultProps, injector } from '../lib/mobxInjector'
+import { DefaultProps, injector } from '../../lib/mobxInjector'
 
 import CurrentConstruction from './CurrentConstruction'
 import LastConstruction from './LastConstruction'
 
-import {ConstructionPile} from '../modules/ConstructionPile'
+import {ConstructionPile} from '../../modules/ConstructionPile'
 
 interface PileProps extends DefaultProps {
     p: ConstructionPile

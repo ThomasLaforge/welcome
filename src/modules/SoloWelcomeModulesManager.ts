@@ -24,12 +24,8 @@ export class SoloWelcomeModulesManager {
 		this.init()
 	}
 
-	get turn(){
-		return this.constructions.turn
-	}
-	get nbTurn(){
-		// console.log('nb turn details', this.constructions.piles[0].constructions.length, this.constructions.piles[0].discard.length)
-		return this.constructions.nbTurn
+	get remainingTurn(){
+		return this.constructions.remainingTurn
 	}
 
 	public get constructions(): SoloConstructionModule {

@@ -205,7 +205,8 @@ $planHeight: 200px;
     height: 50%;
     
     // background-image: url("../images/map_only.png"); // original low definition version
-    background-image: url("../images/map_only-tone-enhance.jpg"); // enhanced definition version 
+
+    // background-image: url("../images/map_only-tone-enhance.jpg"); // enhanced definition version 
     background-size: 100% 100%;
     background-repeat: no-repeat;
     background-position: center center;
@@ -236,7 +237,7 @@ $planHeight: 200px;
     .house {
         width: $houseWidth;
         height: $houseHeight;
-        border: 1px solid red;
+        // border: 1px solid red;
         font-size: 100%;
 
         .house-construction-number ,.house-with-pool-construction-number {
@@ -263,7 +264,7 @@ $planHeight: 200px;
     .park {
         width: $parkWidth;
         height: 5%;
-        border: 2px solid red;
+        // border: 2px solid red;
 
         .park-checked {
             width: 100%;
@@ -299,24 +300,41 @@ $planHeight: 200px;
 
 }
 
+.score-board {
+    width: 100%;
+    // background-image: url('../images/score_only.png');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+
+    @mixin scoreBox($top, $left) {
+        top: $top;
+        left: $left;
+    }
+
+    // plan scores
+    // pool scores
+    // interim score
+    // park score
+    // estate agent score
+    // bis score
+    // roundabout score
+    // total score
+
+}
+
 .game {
     display: flex;
-    flex-direction: row-reverse;
+    flex-direction: row;
     height: 100%;
     width: 100%;
-
-    .game-infos {
-        width: 70%;
-        max-width: 800px;
+    padding: 30px;
+    
+    .game-main {
         height: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        
+        width: 40%;
+
         .manager {
             height: 20%;
-            
-            flex: 1;
             display: flex;
             flex-direction: row;
             justify-content: space-around;
@@ -370,30 +388,6 @@ $planHeight: 200px;
                 }
             }
         }
-        
-        .map {
-            width: 100%;
-            height: 50%;
-            margin: 0px auto;
-        }
-
-        .score-board {
-            width: 100%;
-            height: 30%;
-            margin: 0px auto;
-
-            background-image: url('../images/score_only.png');
-            background-size: 100% 100%;
-            background-repeat: no-repeat;
-        }
-        
-    }
-    
-    .game-main {
-        height: 100%;
-        // width: 30%;
-        flex: 1;
-        border-left: 1px solid black;
 
         .player-actions {
             height: 100%;
@@ -405,6 +399,30 @@ $planHeight: 200px;
                 margin: auto;
             }
         }
+    }
+
+    .game-paper {
+        $mapHeight: 58%;
+        $scoreBoardHeigth: 100% - $mapHeight;
+        width: 60%;
+        // max-width: 800px;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        border-left: 1px solid black;
+
+        .map {
+            width: 100%;
+            height: $mapHeight;
+            margin: 0px auto;
+        }
+
+        .score-board {
+            height: $scoreBoardHeigth;
+            margin: 0px auto;
+        }
+        
     }
     
 }

@@ -56,5 +56,4 @@ export class SoloGame {
 		this.endDate = value;
 	}
 
-
 }

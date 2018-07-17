@@ -1,9 +1,9 @@
 import * as React from 'react';
 import {observer, inject} from 'mobx-react';
-import { DefaultProps, injector } from '../lib/mobxInjector'
+import { DefaultProps, injector } from '../../lib/mobxInjector'
 
-import {EffectType} from '../modules/Welcome'
-import {ConstructionEffect as ConstructionEffectModel} from '../modules/ConstructionEffect'
+import {EffectType} from '../../modules/Welcome'
+import {ConstructionEffect as ConstructionEffectModel} from '../../modules/ConstructionEffect'
 
 
 interface ConstructionEffectProps extends DefaultProps {
