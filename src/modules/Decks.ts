@@ -1,7 +1,7 @@
 import {Deck} from './Deck'
 import {Plan} from './Plan'
 import {Construction} from './Construction'
-import { Reward, PlanLevel, JsonConstruction, JsonPlan, GameMode } from './Welcome';
+import { JsonPlan, GameMode, SpecialSoloCard } from './Welcome';
 import { Mission } from './Mission';
 
 /**
@@ -41,16 +41,16 @@ export class PlanDeck extends Deck<Plan> {
 /**
  * Construction
  */
-const datasPlan = require('../datas/constructions.json')
+const datasConstruction = require('../datas/constructions.json')
 // console.log('constructions', datas)
 let constructionList: Construction[] = []
-Object.keys(datasPlan).forEach( (effect: string) => {
+Object.keys(datasConstruction).forEach( (effect: string) => {
     // console.log('list of effect construction', effect, datas[effect])
     let effectType = Number.parseInt(effect)
-    Object.keys(datasPlan[effect]).forEach(houseNumberStr => {
+    Object.keys(datasConstruction[effect]).forEach(houseNumberStr => {
         let houseNumber = Number.parseInt(houseNumberStr)
         // console.log('nb cards', datas[effect][houseNumberStr])
-        for (let index = 0; index < datasPlan[effect][houseNumberStr]; index++) {
+        for (let index = 0; index < datasConstruction[effect][houseNumberStr]; index++) {
             constructionList.push(new Construction(houseNumber, effectType))
         }
     })
@@ -61,7 +61,18 @@ export const constructions = constructionList
 
 export class ConstructionDeck extends Deck<Construction> {
 
-    constructor(datas: Construction[]){
+    constructor(datas: Construction[], soloMode = false){
         super(datas)
+    }
+}
+
+export class SoloConstructionDeck extends Deck<Construction | SpecialSoloCard> {
+
+    constructor(datas: Construction[], soloMode = false){
+        super(datas)
+        if(soloMode){
+            let c: SpecialSoloCard;
+            this.addAtBottomMiddle(c)
+        }
     }
 }

@@ -43,5 +43,9 @@ export enum GameMode {
 }
 
 export interface PlayOptions {
-    
+
+}
+
+export interface SpecialSoloCard {
+    _houseNumber: number
 }

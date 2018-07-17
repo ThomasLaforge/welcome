@@ -2,6 +2,7 @@ import {observable} from 'mobx'
 
 import {Game} from './Game'
 import { WelcomeModulesManager } from './WelcomeModulesManager';
+import { SoloGame } from './SoloGame';
 
 export class UIStore {
 	@observable private _game: Game;
@@ -60,10 +61,12 @@ export class Store {
 
     @observable private _uiStore: UIStore;
     @observable private _gameStore: Game;
-    @observable private _manager: WelcomeModulesManager;
+	@observable private _manager: WelcomeModulesManager;
+	@observable private _solo: SoloGame;
 
     constructor(){
         this.gameStore = new Game()
+        this.solo = new SoloGame()
 		this.uiStore = new UIStore(this.gameStore)
 		// this.gameStore.ui = this.uiStore
 		this.manager = new WelcomeModulesManager()
@@ -93,7 +96,11 @@ export class Store {
 	public set manager(value: WelcomeModulesManager) {
 		this._manager = value;
 	}
-
-
+	public get solo(): SoloGame {
+		return this._solo;
+	}
+	public set solo(value: SoloGame) {
+		this._solo = value;
+	}
 
 }

@@ -1,28 +1,28 @@
 import {observable} from 'mobx'
 
-import { WelcomeModulesManager } from './WelcomeModulesManager';
+import { SoloWelcomeModulesManager } from './SoloWelcomeModulesManager';
 import {Player} from './Player'
 import { Construction } from './Construction';
 import {PlayOptions} from './Welcome'
 import { House } from './House';
 
-export class Game {
+export class SoloGame {
 
-    @observable private _players: Player[];
-    @observable private _manager: WelcomeModulesManager;
+    @observable private _player: Player;
+    @observable private _manager: SoloWelcomeModulesManager;
     private _startDate: number;
     @observable private endDate: number;
 
-	constructor(players = [new Player()], manager = new WelcomeModulesManager(), startDate = Date.now(), endDate?: number) {
-		this._players = players;
+	constructor(player = new Player(), manager = new SoloWelcomeModulesManager(), startDate = Date.now(), endDate?: number) {
+		this._player = player;
 		this._manager = manager;
 		this._startDate = startDate;
 		this.endDate = endDate;
 	}
 	
 	reset(){
-		this.players = [new Player()]
-		this.manager = new WelcomeModulesManager()
+		this.player = new Player()
+		this.manager = new SoloWelcomeModulesManager()
 		this.startDate = Date.now()
 		this.endDate = null
 	}
@@ -31,16 +31,16 @@ export class Game {
         console.log('Game:play', construction, house, options, player)
 	}
 
-	public get players(): Player[] {
-		return this._players;
+	public get player(): Player {
+		return this._player;
 	}
-	public set players(value: Player[]) {
-		this._players = value;
+	public set player(value: Player) {
+		this._player = value;
 	}
-	public get manager(): WelcomeModulesManager {
+	public get manager(): SoloWelcomeModulesManager {
 		return this._manager;
 	}
-	public set manager(value: WelcomeModulesManager) {
+	public set manager(value: SoloWelcomeModulesManager) {
 		this._manager = value;
 	}
 	public get startDate(): number {

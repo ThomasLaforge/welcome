@@ -98,6 +98,18 @@ export class Deck <T> {
         return this.arrayDeck.slice(start, end)
     }
 
+    addAtBottomMiddle(c: any){
+        let newArrayDeck = this.arrayDeck.slice(0, Math.floor(this.arrayDeck.length / 2))
+        let secondPart = this.arrayDeck.slice(Math.ceil(this.arrayDeck.length / 2), this.arrayDeck.length)
+
+        let randomBottomIndex = Math.floor(Math.random()* (secondPart.length + 1));
+        secondPart.splice(randomBottomIndex, 0, c)
+
+        newArrayDeck = newArrayDeck.concat(secondPart)
+
+        this.arrayDeck = newArrayDeck
+    }
+
     public get arrayDeck(){ return this._arrayDeck }
     public set arrayDeck(newArr){ this._arrayDeck = newArr }
 

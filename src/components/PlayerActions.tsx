@@ -8,6 +8,8 @@ import StepLabel from '@material-ui/core/StepLabel';
 import Button from '@material-ui/core/Button';
 // import Paper from '@material-ui/core/Paper';
 
+// import ConstructionSelected from './ConstructionSelected';
+
 interface PlayerActionsProps extends DefaultProps {
 
 }
@@ -58,8 +60,19 @@ class PlayerActions extends React.Component <PlayerActionsProps, PlayerActionsSt
                 {/* player-actions-stepper-content */}
                 {this.renderStepperContent()}
             </div>
+            <div className='player-actions-content'>
+                {this.props.ui.selectedConstruction &&
+                    // <ConstructionSelected />
+                    <div className="selected-construction"></div>
+                }
+            </div>
             <div className='player-actions-play-btn'>
-                <Button onClick={this.handlePlay}>Play</Button>
+                <Button 
+                    variant='raised'
+                    onClick={this.handlePlay}
+                >
+                    Play
+                </Button>
             </div>   
         </div>
     }
