@@ -7,6 +7,7 @@ import ConstructionEffect from './ConstructionEffect';
 
 interface ConstructionProps extends DefaultProps {
     card: ConstructionModel
+    onClick?: Function
 }
 interface ConstructionState {
 }
@@ -22,7 +23,7 @@ class Construction extends React.Component <ConstructionProps, ConstructionState
 
     render() {
         return (
-            <div className="construction">
+            <div className="construction" onClick={() => this.props.onClick && this.props.onClick()}>
                 <div className='construction-number'>{this.props.card.houseNumber}</div>
                 <ConstructionEffect effect={this.props.card.effect} />
             </div>

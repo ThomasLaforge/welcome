@@ -6,6 +6,7 @@ import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import Button from '@material-ui/core/Button';
+import Construction from '../Common/Construction';
 // import Paper from '@material-ui/core/Paper';
 
 // import ConstructionSelected from './ConstructionSelected';
@@ -61,9 +62,16 @@ class PlayerActions extends React.Component <PlayerActionsProps, PlayerActionsSt
                 {this.renderStepperContent()}
             </div>
             <div className='player-actions-content'>
-                {this.props.ui.selectedConstruction &&
+                {this.props.ui.selectedConstructions &&
                     // <ConstructionSelected />
-                    <div className="selected-construction"></div>
+                    <div className="selected-construction">
+                        {this.props.ui.selectedConstructions.map(indexC => {
+                            let construction = this.props.solo.manager.constructions.actualCards[indexC]
+                            return <Construction key={indexC}
+                                card={construction} 
+                            />
+                        })}
+                    </div>
                 }
             </div>
             <div className='player-actions-play-btn'>

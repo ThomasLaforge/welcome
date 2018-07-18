@@ -22,10 +22,23 @@ class Constructions extends React.Component <ConstructionsProps, ConstructionsSt
         this.state = {}
     }
 
-    handleNext = () => this.props.constructions.nextTurn()
+    handleConstructionSelection = (k: number) => {
+        let constructionIndex = this.props.ui.selectedConstructions.indexOf(k)
+        if(constructionIndex === -1){
+            this.props.ui.selectedConstructions.push(k)
+        }
+        else {
+            this.props.ui.selectedConstructions.splice(constructionIndex, 1)
+        }
+    }
 
     renderCards(){
-        return this.props.constructions.actualCards.map( (c, k) => <Construction card={c} key={k} /> )
+        return this.props.constructions.actualCards.map( (c, k) => 
+            <Construction key={k} 
+                card={c}
+                onClick={() => this.handleConstructionSelection(k)}
+            /> 
+        )
     }
 
     render() {
@@ -33,9 +46,7 @@ class Constructions extends React.Component <ConstructionsProps, ConstructionsSt
 
         return (
             <div className="constructions-zone">
-                <div className="solo-construction-cards">
-                    {this.renderCards()}
-                </div>
+                {this.renderCards()}
             </div>
         );
     }

@@ -24,11 +24,11 @@ class Plan extends React.Component <PlanProps, PlanState> {
     renderDistrictNeeded(){
         return this.props.plan.mission.constructionNeeded.map( (nbCosntructionNeeded, i) =>
             <div className='plan-mission-construction' key={i}>
-                [
+                <div className='plan-mission-construction-start'>[</div>
                     {new Array(nbCosntructionNeeded).fill('').map( (e, j) => 
                         <div className="mission-construction-spot" key={j}>*</div>
                     )}
-                ]
+                <div className='plan-mission-construction-end'>]</div>
             </div>
         )
     }

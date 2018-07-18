@@ -344,17 +344,18 @@ $planHeight: 200px;
                 height: 100%;
                 flex-direction: row;
                 
-                .turn {
-                    width: 10%;
-                }
-                
-                .piles {
-                    width: 90%;
-                    height: 75%;
-                }
-                
-                .constructions-actions {
-                    display: none;
+                .construction {
+                    width: 33%;
+                    display: flex;
+                    flex-direction: row;
+                    
+                    .construction-number {
+                        width: 45%;
+                    }
+
+                    .construction-effect {
+                        width: 55%
+                    }
                 }
             }
             
@@ -363,25 +364,28 @@ $planHeight: 200px;
                 height: 100%;
                 
                 .plans {
-                    height: 80%;
+                    height: 100%;
                 }
                 
                 .plan {
-                    width: 150px;
+                    width: 100px;
                     height: 100%;
                     
                     .plan-mission {
                         padding: 0px 0px;
                         
                         .plan-mission-construction {
-                            // width: 50px;
-                            display: flex;
-                            flex-direction: row;
-                            justify-content: space-around;
-                            margin: 5px 10px;
+                            margin: 5px 3px;
+                            
+                            .mission-construction-spot {
+                                font-size: 12px;
+                                line-height: 24px;
+                                width: 10px;
+                                text-align: center;
+                            }
                         }
                     }
-                }   
+                }
                 
                 .plans-actions {
                     display: none;

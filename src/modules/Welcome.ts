@@ -56,3 +56,7 @@ export interface PlayOptions {
 export interface SpecialSoloCard {
     kind: 'SpecialSoloCard'
 }
+
+export enum Phase {
+    ConstructionSelection,
+}

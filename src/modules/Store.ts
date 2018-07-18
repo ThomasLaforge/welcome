@@ -8,7 +8,7 @@ import { Route } from './Welcome';
 export class UIStore {
 	@observable private _game: Game;
 	@observable private _activePlayerActionStep: number;
-	@observable private _selectedConstruction: number;
+	@observable private _selectedConstructions: number[];
 	@observable private _selectedHouse: number;
 	@observable private _selectedEffectTarget: number;
 	@observable private _route: Route;
@@ -20,7 +20,7 @@ export class UIStore {
 
 	reset(){
 		this.activePlayerActionStep = 0
-		this.selectedConstruction = null;
+		this.selectedConstructions = [];
 		this.selectedHouse = null;
 		this.route = Route.Solo
 	}
@@ -41,11 +41,11 @@ export class UIStore {
 	public set activePlayerActionStep(value: number) {
 		this._activePlayerActionStep = value;
 	}
-	public get selectedConstruction(): number {
-		return this._selectedConstruction;
+	public get selectedConstructions(): number[] {
+		return this._selectedConstructions;
 	}
-	public set selectedConstruction(value: number) {
-		this._selectedConstruction = value;
+	public set selectedConstructions(value: number[]) {
+		this._selectedConstructions = value;
 	}
 	public get selectedHouse(): number {
 		return this._selectedHouse;
