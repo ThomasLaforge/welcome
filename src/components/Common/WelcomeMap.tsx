@@ -11,7 +11,7 @@ interface WelcomeMapProps extends DefaultProps {
     canCheckPark?: boolean
     onHouseClick?: Function
     onParkClick?: Function
-    onLineClick?: Function
+    onStreetClick?: Function
 }
 interface WelcomeMapState {
     map: WelcomeMapModel
@@ -35,22 +35,26 @@ class WelcomeMap extends React.Component <WelcomeMapProps, WelcomeMapState> {
     }
     
     renderStreets(){
-        return this.state.map.streets.map(s => 
-            s.houses.map( (h, i) => {
+        return this.state.map.streets.map( (s, streetIndex) => 
+            <div className={'street street-' + streetIndex} 
+                onClick={() => this.props.onStreetClick(s)}
+            >
+            {s.houses.map( (h, i) => {
                 let house = s.houses[i]
                 return <div 
                     key={s.streetLine + '-' + i} 
                     className={'house-line-' + s.streetLine + '-spot-'+ i +' house'} 
-                    onClick={() => this.clickOnHouse(s, i)}
+                    onClick={() => this.props.onHouseClick(s, i)}
                 >
                     <div className={house.hasPool ? 'house-with-pool-construction-number' : 'house-construction-number'}>
                         {house.construction}
                     </div>
                 </div> 
-            }
+            })}
+            </div>
         )
-    )
-}
+    }
+
 
     clickOnPark(s: Street, i: number){
         console.log('click on park', s, i)
@@ -71,7 +75,7 @@ class WelcomeMap extends React.Component <WelcomeMapProps, WelcomeMapState> {
                 return <div 
                     key={s.streetLine + '-' + i} 
                     className={'park-line-' + s.streetLine + '-spot-'+ i +' park'} 
-                    onClick={() => this.clickOnPark(s, i)}
+                    onClick={() => this.props.onParkClick(s, i)}
                 >
                     {s.parkChecked > i && <div className='park-checked'>X</div>}
                 </div>

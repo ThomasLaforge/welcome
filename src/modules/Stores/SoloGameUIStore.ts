@@ -93,6 +93,16 @@ export class SoloGameUIStore {
 		return this.phaseManager.currentPhase === soloPhase
 	}
 
+	handleHouseClick = () => {
+		console.log('handleHouseClick')
+	}
+	handleParkClick = () => {
+		console.log('handleParkClick')
+	}
+	handleStreetClick = () => {
+		console.log('handleStreetClick')
+	}
+
 	get computedConstruction(){
 		return new Construction(this.selectedConstructions[0].houseNumber, this.selectedConstructions[1].effect)
 	}
