@@ -1,72 +1,10 @@
+import { UIStore } from './Stores/UIStore';
+
 import {observable} from 'mobx'
 
 import {Game} from './Game'
 import { WelcomeModulesManager } from './WelcomeModulesManager';
 import { SoloGame } from './SoloGame';
-import { Route } from './Welcome';
-
-export class UIStore {
-	@observable private _game: Game;
-	@observable private _activePlayerActionStep: number;
-	@observable private _selectedConstructions: number[];
-	@observable private _selectedHouse: number;
-	@observable private _selectedEffectTarget: number;
-	@observable private _route: Route;
-
-    constructor(game: Game){
-		this.game = game
-		this.reset()
-	}
-
-	reset(){
-		this.activePlayerActionStep = 0
-		this.selectedConstructions = [];
-		this.selectedHouse = null;
-		this.route = Route.Solo
-	}
-
-	switchRoute(route: Route){
-		this.route = route
-	}
-
-	public get game(): Game {
-		return this._game;
-	}
-	public set game(value: Game) {
-		this._game = value;
-	}
-	public get activePlayerActionStep(): number {
-		return this._activePlayerActionStep;
-	}
-	public set activePlayerActionStep(value: number) {
-		this._activePlayerActionStep = value;
-	}
-	public get selectedConstructions(): number[] {
-		return this._selectedConstructions;
-	}
-	public set selectedConstructions(value: number[]) {
-		this._selectedConstructions = value;
-	}
-	public get selectedHouse(): number {
-		return this._selectedHouse;
-	}
-	public set selectedHouse(value: number) {
-		this._selectedHouse = value;
-	}
-	public get selectedEffectTarget(): number {
-		return this._selectedEffectTarget;
-	}
-	public set selectedEffectTarget(value: number) {
-		this._selectedEffectTarget = value;
-	}
-	public get route(): Route {
-		return this._route;
-	}
-	public set route(value: Route) {
-		this._route = value;
-	}
-
-}
 
 export class Store {
 
@@ -78,8 +16,7 @@ export class Store {
     constructor(){
         this.gameStore = new Game()
         this.solo = new SoloGame()
-		this.uiStore = new UIStore(this.gameStore)
-		// this.gameStore.ui = this.uiStore
+		this.uiStore = new UIStore(this.solo, this.gameStore)
 		this.manager = new WelcomeModulesManager()
 	}
 	

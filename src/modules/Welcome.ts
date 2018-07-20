@@ -57,6 +57,10 @@ export interface SpecialSoloCard {
     kind: 'SpecialSoloCard'
 }
 
-export enum Phase {
+export enum SoloPhase {
     ConstructionSelection,
+    HouseSelection,
+    EffectChoices,
+    RoundAbout,
+    Confirmation
 }

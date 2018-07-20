@@ -1,4 +1,4 @@
-import { observable } from "../../node_modules/mobx";
+import { observable } from "mobx";
 
 export class House {
 s

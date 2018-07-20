@@ -10,6 +10,8 @@ import Construction from '../Common/Construction';
 // import Paper from '@material-ui/core/Paper';
 
 // import ConstructionSelected from './ConstructionSelected';
+import {Construction as ConstructionModel} from '../../modules/Construction' 
+import { SoloPhase } from '../../modules/Welcome';
 
 interface PlayerActionsProps extends DefaultProps {
 
@@ -28,12 +30,21 @@ class PlayerActions extends React.Component <PlayerActionsProps, PlayerActionsSt
         }
     }
 
-    handlePlay = () => {
-        console.log('handle play')
+    handleBack = () => {
+        console.log('handle back')
+        this.props.ui.solo.back()
+    }
+    handleNext = () => {
+        console.log('handle next')
+        this.props.ui.solo.next()
+    }
+
+    unselectConstruction = (construction: ConstructionModel) => {
+        this.props.ui.solo.unselectConstruction(construction)
     }
 
     renderStepperContent(){
-        console.log('render stepper content', this.props.ui.activePlayerActionStep)
+        console.log('render stepper content', this.props.ui.solo.activePlayerActionStep)
         return <div className='player-actions-stepper-content'>
         </div>
     }
@@ -42,13 +53,17 @@ class PlayerActions extends React.Component <PlayerActionsProps, PlayerActionsSt
         const steps = [
             'Chose a construction',
             'Chose house to build it',
-            'Effect'
+            'Effect',
+            'Confirmation'
         ]
+
+        const uiSolo = this.props.ui.solo
+        // console.log('activePlayerActionStep', this.props.ui, this.props.ui.solo)
 
         return <div className='player-actions'>
             <div className='player-actions-info'>
                 <div className='player-actions-stepper'>
-                <Stepper activeStep={this.props.ui.activePlayerActionStep} alternativeLabel>
+                <Stepper activeStep={uiSolo.activePlayerActionStep || 0} alternativeLabel>
                     {steps.map(label => {
                         return (
                         <Step key={label}>
@@ -62,24 +77,44 @@ class PlayerActions extends React.Component <PlayerActionsProps, PlayerActionsSt
                 {this.renderStepperContent()}
             </div>
             <div className='player-actions-content'>
-                {this.props.ui.selectedConstructions &&
-                    // <ConstructionSelected />
-                    <div className="selected-construction">
-                        {this.props.ui.selectedConstructions.map(indexC => {
-                            let construction = this.props.solo.manager.constructions.actualCards[indexC]
-                            return <Construction key={indexC}
-                                card={construction} 
-                            />
-                        })}
-                    </div>
+                {uiSolo.isInPhase(SoloPhase.ConstructionSelection) &&
+                    <React.Fragment>
+                        <div className="selected-construction">
+                            {uiSolo.selectedConstructionIndexes.map(indexC => {
+                                let construction = this.props.solo.manager.constructions.actualCards[indexC]
+                                return <Construction key={indexC}
+                                    onClick={() => this.unselectConstruction(construction)}
+                                    card={construction} 
+                                />
+                            })}
+                        </div>
+                        <Button disabled={uiSolo.selectedConstructionIndexes.length < 2} onClick={() => uiSolo.switchSelectedConstructions()}>
+                            Switch
+                        </Button>
+                    </React.Fragment>
+                }
+                {uiSolo.isInPhase(SoloPhase.HouseSelection) &&
+                    <React.Fragment>
+                        <div className="merged-construction">
+                            <Construction card={uiSolo.computedConstruction}/>
+                        </div>
+                    </React.Fragment>
                 }
             </div>
             <div className='player-actions-play-btn'>
                 <Button 
                     variant='raised'
-                    onClick={this.handlePlay}
+                    disabled={uiSolo.activePlayerActionStep === SoloPhase.ConstructionSelection}
+                    onClick={this.handleBack}
                 >
-                    Play
+                    Back
+                </Button>
+                <Button 
+                    variant='raised'
+                    onClick={this.handleNext}
+                    disabled={!uiSolo.canGoNext()}
+                >
+                    {uiSolo.activePlayerActionStep === SoloPhase.Confirmation ? 'Play' : 'Next'}
                 </Button>
             </div>   
         </div>

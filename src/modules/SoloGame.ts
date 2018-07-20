@@ -3,7 +3,7 @@ import {observable} from 'mobx'
 import { SoloWelcomeModulesManager } from './SoloWelcomeModulesManager';
 import {Player} from './Player'
 import { Construction } from './Construction';
-import {PlayOptions} from './Welcome'
+import {PlayOptions, GameMode} from './Welcome'
 import { House } from './House';
 
 export class SoloGame {
@@ -11,13 +11,15 @@ export class SoloGame {
     @observable private _player: Player;
     @observable private _manager: SoloWelcomeModulesManager;
     private _startDate: number;
-    @observable private endDate: number;
+	@observable private endDate: number;
+	@observable private _mode: GameMode;	
 
-	constructor(player = new Player(), manager = new SoloWelcomeModulesManager(), startDate = Date.now(), endDate?: number) {
+	constructor(mode = GameMode.Normal, player = new Player(), manager = new SoloWelcomeModulesManager(), startDate = Date.now(), endDate?: number) {
 		this._player = player;
 		this._manager = manager;
 		this._startDate = startDate;
 		this.endDate = endDate;
+		this.mode = mode
 	}
 	
 	reset(){
@@ -25,6 +27,7 @@ export class SoloGame {
 		this.manager = new SoloWelcomeModulesManager()
 		this.startDate = Date.now()
 		this.endDate = null
+		this.mode = GameMode.Normal
 	}
     
     play(construction: Construction, player: Player, house?: House, options?: PlayOptions){
@@ -55,5 +58,12 @@ export class SoloGame {
 	public set $endDate(value: number) {
 		this.endDate = value;
 	}
+	public get mode(): GameMode {
+		return this._mode;
+	}
+	public set mode(value: GameMode) {
+		this._mode = value;
+	}
+
 
 }

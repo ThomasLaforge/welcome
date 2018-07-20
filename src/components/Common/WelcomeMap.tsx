@@ -9,6 +9,9 @@ import { Street } from '../../modules/Street';
 
 interface WelcomeMapProps extends DefaultProps {
     canCheckPark?: boolean
+    onHouseClick?: Function
+    onParkClick?: Function
+    onLineClick?: Function
 }
 interface WelcomeMapState {
     map: WelcomeMapModel

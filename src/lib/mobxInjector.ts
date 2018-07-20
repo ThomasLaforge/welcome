@@ -1,4 +1,5 @@
-import {Store, UIStore} from '../modules/Store'
+import {Store} from '../modules/Store'
+import { UIStore } from "../modules/Stores/UIStore";
 import {Game} from '../modules/Game'
 import { WelcomeModulesManager } from '../modules/WelcomeModulesManager';
 import { SoloGame } from '../modules/SoloGame';
@@ -11,9 +12,9 @@ export interface InjectedStores {
 export interface DefaultProps {
     game?: Game
     ui?: UIStore
-    // store?: Store
     manager?: WelcomeModulesManager
     solo?: SoloGame
+    // store?: Store
 }
 
 export const injector = (injectContent: InjectedStores) : DefaultProps => ({
