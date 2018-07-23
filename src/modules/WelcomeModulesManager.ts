@@ -7,9 +7,9 @@ import { GameMode } from './Welcome';
 
 export class WelcomeModulesManager {
 
-    @observable private _constructions: ConstructionModule;
-	@observable private _plans: PlanModule;
-	@observable private _mode: GameMode;
+    @observable public constructions: ConstructionModule;
+	@observable public plans: PlanModule;
+	@observable public mode: GameMode;
 
 	constructor(gameMode = GameMode.Normal){
 		this.mode = gameMode
@@ -30,25 +30,6 @@ export class WelcomeModulesManager {
 	get nbTurn(){
 		// console.log('nb turn details', this.constructions.piles[0].constructions.length, this.constructions.piles[0].discard.length)
 		return this.constructions.nbTurn
-	}
-
-	public get constructions(): ConstructionModule {
-		return this._constructions;
-	}
-	public set constructions(value: ConstructionModule) {
-		this._constructions = value;
-	}
-	public get plans(): PlanModule {
-		return this._plans;
-	}
-	public set plans(value: PlanModule) {
-		this._plans = value;
-	}
-	public get mode(): GameMode {
-		return this._mode;
-	}
-	public set mode(value: GameMode) {
-		this._mode = value;
 	}
     
 }

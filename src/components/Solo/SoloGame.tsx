@@ -29,7 +29,7 @@ class SoloGame extends React.Component <SoloGameProps, SoloGameState> {
                 <PlayerActions />
             </div>
             <div className="game-paper">
-                <WelcomeMap 
+                <WelcomeMap
                     onHouseClick={this.props.ui.solo.handleHouseClick}
                     onParkClick={this.props.ui.solo.handleParkClick}
                     onStreetClick={this.props.ui.solo.handleStreetClick}

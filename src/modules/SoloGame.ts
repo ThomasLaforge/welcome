@@ -8,16 +8,16 @@ import { House } from './House';
 
 export class SoloGame {
 
-    @observable private _player: Player;
-    @observable private _manager: SoloWelcomeModulesManager;
-    private _startDate: number;
-	@observable private endDate: number;
-	@observable private _mode: GameMode;	
+    @observable public player: Player;
+    @observable public manager: SoloWelcomeModulesManager;
+    public startDate: number;
+	@observable public endDate: number;
+	@observable public mode: GameMode;	
 
 	constructor(mode = GameMode.Normal, player = new Player(), manager = new SoloWelcomeModulesManager(), startDate = Date.now(), endDate?: number) {
-		this._player = player;
-		this._manager = manager;
-		this._startDate = startDate;
+		this.player = player;
+		this.manager = manager;
+		this.startDate = startDate;
 		this.endDate = endDate;
 		this.mode = mode
 	}
@@ -33,37 +33,5 @@ export class SoloGame {
     play(construction: Construction, player: Player, house?: House, options?: PlayOptions){
         console.log('Game:play', construction, house, options, player)
 	}
-
-	public get player(): Player {
-		return this._player;
-	}
-	public set player(value: Player) {
-		this._player = value;
-	}
-	public get manager(): SoloWelcomeModulesManager {
-		return this._manager;
-	}
-	public set manager(value: SoloWelcomeModulesManager) {
-		this._manager = value;
-	}
-	public get startDate(): number {
-		return this._startDate;
-	}
-	public set startDate(value: number) {
-		this._startDate = value;
-	}
-	public get $endDate(): number {
-		return this.endDate;
-	}
-	public set $endDate(value: number) {
-		this.endDate = value;
-	}
-	public get mode(): GameMode {
-		return this._mode;
-	}
-	public set mode(value: GameMode) {
-		this._mode = value;
-	}
-
 
 }

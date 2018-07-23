@@ -7,11 +7,11 @@ import { ConstructionDeck, constructions } from './Decks';
 
 export class ConstructionModule {
 
-    @observable private _piles: ConstructionPile[];
-    @observable private _constructionDeck: ConstructionDeck;
+    @observable public piles: ConstructionPile[];
+    @observable public constructionDeck: ConstructionDeck;
 
 	constructor(nbPiles = 3, constructionDeck = new ConstructionDeck(constructions)) {
-        this._constructionDeck = constructionDeck;
+        this.constructionDeck = constructionDeck;
         // console.log('constructionDeck1', constructionDeck, constructionDeck.length)
         let piles = []
         let lengthOfSlice = Math.trunc(constructionDeck.length / nbPiles)
@@ -22,7 +22,7 @@ export class ConstructionModule {
             let p = new ConstructionPile(constructionSplit)
             piles.push(p)
         }
-        this._piles = piles
+        this.piles = piles
     }
 
     get turn(){
@@ -46,18 +46,5 @@ export class ConstructionModule {
     reshuffle(){
         this.piles.forEach(p => p.reshuffle())
     }
-
-    public get piles(): ConstructionPile[] {
-		return this._piles;
-	}
-    public set piles(value: ConstructionPile[]) {
-		this._piles = value;
-	}
-    public get constructionDeck(): Deck<Construction> {
-		return this._constructionDeck;
-	}
-    public set constructionDeck(value: Deck<Construction>) {
-		this._constructionDeck = value;
-	}
 
 }

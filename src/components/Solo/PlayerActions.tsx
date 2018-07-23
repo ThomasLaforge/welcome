@@ -11,7 +11,7 @@ import Construction from '../Common/Construction';
 
 // import ConstructionSelected from './ConstructionSelected';
 import {Construction as ConstructionModel} from '../../modules/Construction' 
-import { SoloPhase } from '../../modules/Welcome';
+import { SoloPhase, GameMode } from '../../modules/Welcome';
 
 interface PlayerActionsProps extends DefaultProps {
 
@@ -50,15 +50,20 @@ class PlayerActions extends React.Component <PlayerActionsProps, PlayerActionsSt
     }
 
     render() {
-        const steps = [
+        let steps = [
             'Chose a construction',
             'Chose house to build it',
             'Effect',
+            'RoundAbout',
             'Confirmation'
         ]
+        if(this.props.solo.mode === GameMode.Normal){
+            steps.splice(3, 1)
+        }
 
         const uiSolo = this.props.ui.solo
         // console.log('activePlayerActionStep', this.props.ui, this.props.ui.solo)
+        console.log('current phase', uiSolo.currentPhase)
 
         return <div className='player-actions'>
             <div className='player-actions-info'>
@@ -114,7 +119,7 @@ class PlayerActions extends React.Component <PlayerActionsProps, PlayerActionsSt
                     onClick={this.handleNext}
                     disabled={!uiSolo.canGoNext()}
                 >
-                    {uiSolo.activePlayerActionStep === SoloPhase.Confirmation ? 'Play' : 'Next'}
+                    {uiSolo.currentPhase === SoloPhase.Confirmation ? 'Play' : 'Next'}
                 </Button>
             </div>   
         </div>

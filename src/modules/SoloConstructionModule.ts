@@ -9,11 +9,11 @@ const CARD_PER_TURN = 3
 
 export class SoloConstructionModule {
 
-    @observable private _constructionDeck: SoloConstructionDeck;
-    @observable private _actualCards: Construction[];
+    @observable public constructionDeck: SoloConstructionDeck;
+    @observable public actualCards: Construction[];
 
 	constructor(constructionDeck = new SoloConstructionDeck(constructions)) {
-        this._constructionDeck = constructionDeck;
+        this.constructionDeck = constructionDeck;
         this.nextTurn()
     }
 
@@ -37,18 +37,5 @@ export class SoloConstructionModule {
 
         this.actualCards = nextCards as Construction[]
     }
-
-    public get constructionDeck(): Deck<Construction|SpecialSoloCard> {
-		return this._constructionDeck;
-	}
-    public set constructionDeck(value: Deck<Construction|SpecialSoloCard>) {
-		this._constructionDeck = value;
-    }
-    public get actualCards(): Construction[] {
-		return this._actualCards;
-	}
-    public set actualCards(value: Construction[]) {
-		this._actualCards = value;
-	}
     
 }

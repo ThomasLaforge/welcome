@@ -5,12 +5,12 @@ import {PlanDeck} from './Decks'
 import {Plan} from './Plan'
 
 export class PlanModule {
-    @observable private _deck: PlanDeck;
-    @observable private _plans: Plan[];
+    @observable public deck: PlanDeck;
+    @observable public plans: Plan[];
     
 	constructor(gameMode = GameMode.Normal, deck: PlanDeck = new PlanDeck(gameMode), plans: Plan[] = []) {
-        this._plans = plans;
-        this._deck = deck;
+        this.plans = plans;
+        this.deck = deck;
         this.initPlans();
     }
 
@@ -39,19 +39,5 @@ export class PlanModule {
     // allValidate(){
     //     return this.plans.filter(p => p.complete()).length === this.plans.length
     // }
-
-	public get deck(): PlanDeck {
-		return this._deck;
-	}
-	public set deck(value: PlanDeck) {
-		this._deck = value;
-	}
-	public get plans(): Plan[] {
-		return this._plans;
-	}
-	public set plans(value: Plan[]) {
-		this._plans = value;
-	}
-
 
 }

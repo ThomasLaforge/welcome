@@ -3,18 +3,25 @@ import { SoloGame } from '../SoloGame';
 import { Construction } from '../Construction';
 import { SoloPhaseManager } from '../SoloPhaseManager';
 import { SoloPhase, GameMode } from '../Welcome'
+import { House } from '../House';
 
 export class SoloGameUIStore {
-
-	@observable private _game: SoloGame;
-	@observable private _selectedConstructionIndexes: number[];
-	@observable private _selectedHouse: number;
-	@observable private _selectedEffectTarget: number;
-	@observable private _phaseManager: SoloPhaseManager;
-
+	
+	@observable public game: SoloGame;
+	@observable public selectedConstructionIndexes: number[];
+	@observable public selectedHouse: House;
+	@observable public selectedEffectTarget: number;
+	@observable public phaseManager: SoloPhaseManager;
+	
 	constructor(game: SoloGame) {
 		this.game = game;
 		this.reset();
+	}
+	
+	reset() {
+		this.selectedConstructionIndexes = [];
+		this.selectedHouse = null;
+		this.phaseManager = new SoloPhaseManager()
 	}
 
 	canGoNext(): boolean {
@@ -25,6 +32,9 @@ export class SoloGameUIStore {
 				return this.selectedConstructionIndexes.length === 2
 			case SoloPhase.HouseSelection:
 				return !!this.selectedHouse
+			case SoloPhase.EffectChoices:
+			case SoloPhase.Confirmation:
+				return true
 			default:
 				return false
 		}
@@ -43,12 +53,6 @@ export class SoloGameUIStore {
 		// 		return false
 		// }
 		this.phaseManager.back()
-	}
-
-	reset() {
-		this.selectedConstructionIndexes = [];
-		this.selectedHouse = null;
-		this.phaseManager = new SoloPhaseManager()
 	}
 
 	get activePlayerActionStep(){
@@ -93,14 +97,17 @@ export class SoloGameUIStore {
 		return this.phaseManager.currentPhase === soloPhase
 	}
 
-	handleHouseClick = () => {
-		console.log('handleHouseClick')
+	handleHouseClick = (house: House) => {
+		console.log('handleHouseClick', house)
+		this.selectedHouse = house
 	}
+
 	handleParkClick = () => {
-		console.log('handleParkClick')
+		// console.log('handleParkClick')
 	}
+
 	handleStreetClick = () => {
-		console.log('handleStreetClick')
+		// console.log('handleStreetClick')
 	}
 
 	get computedConstruction(){
@@ -113,35 +120,8 @@ export class SoloGameUIStore {
 		)
 	}
 
-	public get game(): SoloGame {
-		return this._game;
-	}
-	public set game(value: SoloGame) {
-		this._game = value;
-	}
-	public get selectedConstructionIndexes(): number[] {
-		return this._selectedConstructionIndexes;
-	}
-	public set selectedConstructionIndexes(value: number[]) {
-		this._selectedConstructionIndexes = value;
-	}
-	public get selectedHouse(): number {
-		return this._selectedHouse;
-	}
-	public set selectedHouse(value: number) {
-		this._selectedHouse = value;
-	}
-	public get selectedEffectTarget(): number {
-		return this._selectedEffectTarget;
-	}
-	public set selectedEffectTarget(value: number) {
-		this._selectedEffectTarget = value;
-	}
-	public get phaseManager(): SoloPhaseManager {
-		return this._phaseManager;
-	}
-	public set phaseManager(value: SoloPhaseManager) {
-		this._phaseManager = value;
+	get currentPhase(){
+		return this.phaseManager.currentPhase
 	}
 
 }

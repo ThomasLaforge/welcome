@@ -4,12 +4,12 @@ import {Construction} from './Construction'
 
 export class ConstructionPile {
 
-    @observable private _constructions: Construction[];
-    @observable private _discard: Construction[];
+    @observable public constructions: Construction[];
+    @observable public discard: Construction[];
 
 	constructor(constructions: Construction[], discard: Construction[] = []) {
-		this._constructions = constructions;
-		this._discard = discard;
+		this.constructions = constructions;
+		this.discard = discard;
 		this.next()
     }
 
@@ -35,19 +35,6 @@ export class ConstructionPile {
 	
 	get lastCard(){
 		return this.discard[this.discard.length - 1]
-	}
-
-	public get constructions(): Construction[] {
-		return this._constructions;
-	}
-	public set constructions(value: Construction[]) {
-		this._constructions = value;
-	}
-	public get discard(): Construction[] {
-		return this._discard;
-	}
-	public set discard(value: Construction[]) {
-		this._discard = value;
 	}
 
 }

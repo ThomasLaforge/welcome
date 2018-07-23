@@ -15,17 +15,10 @@ const DEFAULT_STREETS = require('../datas/map.json').map( (s: boolean[], i) => {
 
 export class WelcomeMap {
 
-    @observable private _streets: Street[];
+    @observable public streets: Street[];
 
 	constructor(streets = DEFAULT_STREETS) {
 		this.streets = streets;
-	}
-
-	public get streets(): Street[] {
-		return this._streets;
-	}
-	public set streets(value: Street[]) {
-		this._streets = value;
 	}
 
 }

@@ -6,9 +6,9 @@ import {House} from './House'
 
 export class Street {
 
-    @observable private _houses: House[];
-    @observable private _streetLine: number; //start to 0
-    @observable private _parkChecked: number;
+    @observable public houses: House[];
+    @observable public streetLine: number; //start to 0
+    @observable public parkChecked: number;
 
 	constructor(streetLine: number, houses: House[], parkChecked = 0) {
         this.streetLine = streetLine
@@ -44,25 +44,5 @@ export class Street {
     removePark(){
         this.parkChecked--
     }
-
-	public get houses(): House[] {
-		return this._houses;
-	}
-	public set houses(value: House[]) {
-		this._houses = value;
-	}
-	public get streetLine(): number {
-		return this._streetLine;
-	}
-	public set streetLine(value: number) {
-		this._streetLine = value;
-	}
-	public get parkChecked(): number {
-		return this._parkChecked;
-	}
-	public set parkChecked(value: number) {
-		this._parkChecked = value;
-	}
-
 
 }

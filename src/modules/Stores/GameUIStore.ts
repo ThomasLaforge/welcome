@@ -3,7 +3,7 @@ import { Game } from '../Game';
 
 export class GameUIStore {
 
-	@observable private _game: Game;
+	@observable public game: Game;
 
 	constructor(game: Game) {
 		this.game = game;
@@ -12,11 +12,5 @@ export class GameUIStore {
 
 	reset() {
 	}
-	
-	public get game(): Game {
-		return this._game;
-	}
-	public set game(value: Game) {
-		this._game = value;
-	}
+
 }

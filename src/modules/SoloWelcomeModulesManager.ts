@@ -7,9 +7,9 @@ import { GameMode } from './Welcome';
 
 export class SoloWelcomeModulesManager {
 
-    @observable private _constructions: SoloConstructionModule;
-	@observable private _plans: PlanModule;
-	@observable private _mode: GameMode;
+    @observable public constructions: SoloConstructionModule;
+	@observable public plans: PlanModule;
+	@observable public mode: GameMode;
 
 	constructor(gameMode = GameMode.Normal){
 		this.mode = gameMode
@@ -27,24 +27,5 @@ export class SoloWelcomeModulesManager {
 	get remainingTurn(){
 		return this.constructions.remainingTurn
 	}
-
-	public get constructions(): SoloConstructionModule {
-		return this._constructions;
-	}
-	public set constructions(value: SoloConstructionModule) {
-		this._constructions = value;
-	}
-	public get plans(): PlanModule {
-		return this._plans;
-	}
-	public set plans(value: PlanModule) {
-		this._plans = value;
-	}
-	public get mode(): GameMode {
-		return this._mode;
-	}
-	public set mode(value: GameMode) {
-		this._mode = value;
-	}
-    
+	
 }

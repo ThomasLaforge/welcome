@@ -4,10 +4,10 @@ import { EffectType } from './Welcome'
 
 export class ConstructionEffect {
 
-    @observable private _type: EffectType;
+    @observable public type: EffectType;
 
 	constructor(type: EffectType) {
-		this._type = type;
+		this.type = type;
     }
     
     get imageName(){
@@ -52,12 +52,5 @@ export class ConstructionEffect {
                 return 'real_estate_agent'
         }
     }
-
-	public get type(): EffectType {
-		return this._type;
-	}
-	public set type(value: EffectType) {
-		this._type = value;
-	}
 
 }

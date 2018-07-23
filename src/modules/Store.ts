@@ -8,10 +8,10 @@ import { SoloGame } from './SoloGame';
 
 export class Store {
 
-    @observable private _uiStore: UIStore;
-    @observable private _gameStore: Game;
-	@observable private _manager: WelcomeModulesManager;
-	@observable private _solo: SoloGame;
+    @observable public uiStore: UIStore;
+    @observable public gameStore: Game;
+	@observable public manager: WelcomeModulesManager;
+	@observable public solo: SoloGame;
 
     constructor(){
         this.gameStore = new Game()
@@ -24,31 +24,6 @@ export class Store {
 		this.gameStore.reset()
 		this.uiStore.reset()
 		this.manager.reset()
-	}
-
-	public get uiStore(): UIStore {
-		return this._uiStore;
-	}
-	public set uiStore(value: UIStore) {
-		this._uiStore = value;
-	}
-	public get gameStore(): Game {
-		return this._gameStore;
-	}
-	public set gameStore(value: Game) {
-		this._gameStore = value;
-	}
-	public get manager(): WelcomeModulesManager {
-		return this._manager;
-	}
-	public set manager(value: WelcomeModulesManager) {
-		this._manager = value;
-	}
-	public get solo(): SoloGame {
-		return this._solo;
-	}
-	public set solo(value: SoloGame) {
-		this._solo = value;
 	}
 
 }

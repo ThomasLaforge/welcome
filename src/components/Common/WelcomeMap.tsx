@@ -36,7 +36,7 @@ class WelcomeMap extends React.Component <WelcomeMapProps, WelcomeMapState> {
     
     renderStreets(){
         return this.state.map.streets.map( (s, streetIndex) => 
-            <div className={'street street-' + streetIndex} 
+            <div className={'street street-' + streetIndex} key={streetIndex}
                 onClick={() => this.props.onStreetClick(s)}
             >
             {s.houses.map( (h, i) => {
@@ -44,7 +44,7 @@ class WelcomeMap extends React.Component <WelcomeMapProps, WelcomeMapState> {
                 return <div 
                     key={s.streetLine + '-' + i} 
                     className={'house-line-' + s.streetLine + '-spot-'+ i +' house'} 
-                    onClick={() => this.props.onHouseClick(s, i)}
+                    onClick={() => this.props.onHouseClick(h)}
                 >
                     <div className={house.hasPool ? 'house-with-pool-construction-number' : 'house-construction-number'}>
                         {house.construction}

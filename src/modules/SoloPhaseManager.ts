@@ -13,14 +13,17 @@ export class SoloPhaseManager {
     }
 
     get length(){
-        return Object.keys(SoloPhase).length / 2
+        let nbPhases = Object.keys(SoloPhase).length / 2
+        return nbPhases
     }
 
     next(){
+        console.log('before next', this.currentPhase)
         this.currentPhase++
-        if(this.mode === GameMode.Advanced && this.currentPhase === SoloPhase.RoundAbout){
+        if(this.mode === GameMode.Normal && this.currentPhase === SoloPhase.RoundAbout){
             this.next()
         }
+
         if(this.currentPhase === this.length){
             this.currentPhase = SoloPhase.ConstructionSelection
         }
@@ -28,7 +31,7 @@ export class SoloPhaseManager {
 
     back(){
         this.currentPhase--
-        if(this.mode === GameMode.Advanced && this.currentPhase === SoloPhase.RoundAbout){
+        if(this.mode === GameMode.Normal && this.currentPhase === SoloPhase.RoundAbout){
             this.back()
         }
         if(this.currentPhase < SoloPhase.ConstructionSelection){
@@ -38,6 +41,10 @@ export class SoloPhaseManager {
 
     goTo(newPhase: SoloPhase){
         this.currentPhase = newPhase
+    }
+
+    progress(){
+        return this.length
     }
 
 }
