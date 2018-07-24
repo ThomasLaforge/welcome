@@ -255,6 +255,10 @@ $planHeight: 200px;
         // }
     }
 
+    .house-selected {
+        border: 3px solid blue;
+    }
+
     $topFirstLinePark: 8.3%;
     $parkWidth: 3.2%;
     $nbParksOnLine: 3;

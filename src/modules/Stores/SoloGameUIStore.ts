@@ -2,7 +2,7 @@ import { observable } from 'mobx';
 import { SoloGame } from '../SoloGame';
 import { Construction } from '../Construction';
 import { SoloPhaseManager } from '../SoloPhaseManager';
-import { SoloPhase, GameMode } from '../Welcome'
+import { SoloPhase, GameMode, PlayOptions } from '../Welcome'
 import { House } from '../House';
 
 export class SoloGameUIStore {
@@ -12,6 +12,7 @@ export class SoloGameUIStore {
 	@observable public selectedHouse: House;
 	@observable public selectedEffectTarget: number;
 	@observable public phaseManager: SoloPhaseManager;
+	@observable public optionsPlay: PlayOptions;
 	
 	constructor(game: SoloGame) {
 		this.game = game;
@@ -41,7 +42,16 @@ export class SoloGameUIStore {
 	}
 
 	next(){
-		this.canGoNext() && this.phaseManager.next()
+		if(this.canGoNext()){
+			if(this.currentPhase === SoloPhase.Confirmation){
+				this.game.play(this.computedConstruction, this.selectedHouse, this.optionsPlay)
+				this.selectedHouse = null
+				this.selectedConstructionIndexes = []
+				this.game.manager.constructions.nextTurn()
+			}
+
+			this.phaseManager.next()
+		}
 	}
 
 	back(){
@@ -99,7 +109,9 @@ export class SoloGameUIStore {
 
 	handleHouseClick = (house: House) => {
 		console.log('handleHouseClick', house)
-		this.selectedHouse = house
+		if(this.currentPhase === SoloPhase.HouseSelection && !house.built){
+			this.selectedHouse = house
+		}
 	}
 
 	handleParkClick = () => {

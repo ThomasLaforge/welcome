@@ -30,8 +30,9 @@ export class SoloGame {
 		this.mode = GameMode.Normal
 	}
     
-    play(construction: Construction, player: Player, house?: House, options?: PlayOptions){
-        console.log('Game:play', construction, house, options, player)
+    play(construction: Construction, house?: House, options?: PlayOptions){
+		console.log('Game:play', construction, house, options)
+		house.build(construction.houseNumber)
 	}
 
 }

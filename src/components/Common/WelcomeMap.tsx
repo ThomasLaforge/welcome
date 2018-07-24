@@ -41,9 +41,10 @@ class WelcomeMap extends React.Component <WelcomeMapProps, WelcomeMapState> {
             >
             {s.houses.map( (h, i) => {
                 let house = s.houses[i]
+                let isHouseSelected = house === this.props.ui.solo.selectedHouse
                 return <div 
                     key={s.streetLine + '-' + i} 
-                    className={'house-line-' + s.streetLine + '-spot-'+ i +' house'} 
+                    className={'house-line-' + s.streetLine + '-spot-'+ i +' house ' + (isHouseSelected ? 'house-selected' : '')} 
                     onClick={() => this.props.onHouseClick(h)}
                 >
                     <div className={house.hasPool ? 'house-with-pool-construction-number' : 'house-construction-number'}>
