@@ -31,7 +31,6 @@ class WelcomeMap extends React.Component <WelcomeMapProps, WelcomeMapState> {
     clickOnHouse(s: Street, i: number){
         let house = s.houses[i]
         console.log('click on house', /*s.streetLine, i, house,*/ house.hasPool)
-        house.build(20)
     }
     
     renderStreets(){
@@ -48,7 +47,7 @@ class WelcomeMap extends React.Component <WelcomeMapProps, WelcomeMapState> {
                     onClick={() => this.props.onHouseClick(h)}
                 >
                     <div className={house.hasPool ? 'house-with-pool-construction-number' : 'house-construction-number'}>
-                        {house.construction}
+                        {house.construction && house.construction.houseNumber}
                     </div>
                 </div> 
             })}

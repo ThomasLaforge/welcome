@@ -51,6 +51,11 @@ export class SoloGameUIStore {
 			}
 
 			this.phaseManager.next()
+
+			// Before implementing effects
+			if(this.currentPhase === SoloPhase.EffectChoices){
+				this.next()
+			}
 		}
 	}
 

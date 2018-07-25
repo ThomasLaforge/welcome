@@ -1,12 +1,15 @@
 import { observable } from "mobx";
 
+import { Construction } from './Construction'
+import ConstructionEffect from "../components/Common/ConstructionEffect";
+import { EffectType } from "./Welcome";
+
 export class House {
 
     @observable public leftFence: boolean;
     @observable public rightFence: boolean;
     @observable public hasPool: boolean;
-    @observable public poolBuilt: boolean;
-    @observable public construction: number;
+    @observable public construction: Construction;
     @observable public hasRoundabout: boolean;
 
 	constructor(
@@ -14,22 +17,20 @@ export class House {
         leftFence = false, 
         rightFence = false, 
         hasRoundabout = false,
-        poolBuilt = false, 
         construction = null
     ) {
 		this.leftFence = leftFence;
 		this.rightFence = rightFence;
 		this.hasPool = hasPool;
 		this.hasRoundabout = hasRoundabout;
-		this.poolBuilt = poolBuilt;
 		this.construction = construction;
     }
     
     get built(){
         return !!this.construction
     }
-    build(constructionNumber: number){
-        this.construction = constructionNumber
+    build(construction: Construction){
+        this.construction = construction
     }
 
     buildRoundabout(){
@@ -37,13 +38,6 @@ export class House {
     }
     destroyRoundabout(){
         this.hasRoundabout = true
-    }
-
-    buildPool(){
-        this.poolBuilt = true
-    }
-    removePool(){
-        this.poolBuilt = false
     }
     
     // Fences methods
@@ -58,6 +52,12 @@ export class House {
     }
     destroyRightFence(){
         this.rightFence = false
+    }
+
+    get poolBuilt(){
+        return  this.construction 
+                && this.construction.effect === EffectType.PoolManufacturer 
+                && this.hasPool
     }
 
 }
