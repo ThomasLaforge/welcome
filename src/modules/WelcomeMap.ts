@@ -21,4 +21,8 @@ export class WelcomeMap {
 		this.streets = streets;
 	}
 
+	get nbPoolBuilt(){
+		return this.streets.reduce( (cpt, s) => cpt + s.houses.filter(h => h.poolBuilt).length, 0)
+	}
+
 }

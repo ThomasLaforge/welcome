@@ -10,5 +10,8 @@ export class Player {
 		this.map = map;
 		this.name = name;
 	}
-    
+	
+	get nbPoolBuilt(){
+		return this.map.nbPoolBuilt 
+	}
 }

@@ -311,41 +311,244 @@ $planHeight: 200px;
     background-repeat: no-repeat;
     position: relative;
 
+    @mixin scoreBoxFamily($width, $height){
+        position: absolute;
+        // border: 1px solid green;
+        width: $width;
+        height: $height;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
     @mixin scoreBox($top, $left) {
         top: $top;
         left: $left;
     }
 
     // plan scores
+    $planScore_width: 5%;
+    $planScore_height: 10%;
+
     .plan-score {
-        position: absolute;
+        @include scoreBoxFamily($planScore_width, $planScore_height);
     }
-    .plan-score-0 {
-        @include scoreBox(10%, 20%);
-        top: 20%;
-        left: 30%;
-    }
-    .plan-score-1 {
-        @include scoreBox(20%, 20%);
-    }
-    .plan-score-2 {
-        @include scoreBox(30%, 20%);
-    }
+    
+    $leftPlanScore: 7.3%;
+
+    .plan-score-0 { @include scoreBox(21.5%, $leftPlanScore - $planScore_width / 2); }
+    .plan-score-1 { @include scoreBox(40.5%, $leftPlanScore - $planScore_width / 2); }
+    .plan-score-2 { @include scoreBox(59.5%, $leftPlanScore - $planScore_width / 2); }
 
     // pool scores
+    $poolScore_width: 3%;
+    $poolScore_height: 6%;
+
+    .pool-score {
+        @include scoreBoxFamily($poolScore_width, $poolScore_height);
+        // color: red;
+    }
+    
+    $leftPoolScore: 23.2%;
+
+    .pool-score-0 { @include scoreBox(32%, $leftPoolScore - $poolScore_width / 2);}
+    .pool-score-1 { @include scoreBox(32%, $leftPoolScore + 3 - $poolScore_width / 2);}
+    .pool-score-2 { @include scoreBox(39%, $leftPoolScore - $poolScore_width / 2);}
+    .pool-score-3 { @include scoreBox(39%, $leftPoolScore + 3 - $poolScore_width / 2);}
+    .pool-score-4 { @include scoreBox(47.6%, $leftPoolScore - $poolScore_width / 2);}
+    .pool-score-5 { @include scoreBox(47.6%, $leftPoolScore + 3 - $poolScore_width / 2);}
+    .pool-score-6 { @include scoreBox(55.7%, $leftPoolScore - $poolScore_width / 2);}
+    .pool-score-7 { @include scoreBox(55.7%, $leftPoolScore + 3 - $poolScore_width / 2);}
+    .pool-score-8 { @include scoreBox(63%, $leftPoolScore - $poolScore_width / 2);}
 
     // interim score
+    $interimScore_width: 3%;
+    $interimScore_height: 6%;
+
+    .interim-score {
+        @include scoreBoxFamily($interimScore_width, $interimScore_height);
+        // color: red;
+    }
+    
+    $leftinterimScore: 33.3%;
+
+    .interim-score-0 { @include scoreBox(28.2%, $leftinterimScore - $interimScore_width / 2);}
+    .interim-score-1 { @include scoreBox(28.2%, $leftinterimScore + 4.15 - $interimScore_width / 2);}
+    .interim-score-2 { @include scoreBox(32.6%, $leftinterimScore + 2.1 - $interimScore_width / 2);}
+
+    .interim-score-3 { @include scoreBox(37%, $leftinterimScore - $interimScore_width / 2);}
+    .interim-score-4 { @include scoreBox(37%, $leftinterimScore + 4.15 - $interimScore_width / 2);}
+    .interim-score-5 { @include scoreBox(41.3%, $leftinterimScore + 2.1 - $interimScore_width / 2);}
+
+    .interim-score-6 { @include scoreBox(46.1%, $leftinterimScore - $interimScore_width / 2);}
+    .interim-score-7 { @include scoreBox(46.1%, $leftinterimScore + 4.15 - $interimScore_width / 2);}
+    .interim-score-8 { @include scoreBox(50.4%, $leftinterimScore + 2.1 - $interimScore_width / 2);}
+
+    .interim-score-9 { @include scoreBox(55.7%, $leftinterimScore + 4.15 - $interimScore_width / 2);}
+    .interim-score-10 { @include scoreBox(55.7%, $leftinterimScore - $interimScore_width / 2);}
 
     // park score
+    $parkScore_width: 4%;
+    $parkScore_height: 9%;
+
+    .park-score {
+        @include scoreBoxFamily($parkScore_width, $parkScore_height);
+    }
+    
+    $leftParkScore: 15.55%;
+
+    .park-score-0 { @include scoreBox(36%, $leftParkScore - $parkScore_width / 2); }
+    .park-score-1 { @include scoreBox(48%, $leftParkScore - $parkScore_width / 2); }
+    .park-score-2 { @include scoreBox(59.5%, $leftParkScore - $parkScore_width / 2); }
 
     // estate agent score
+    $estateScore_width: 4%;
+    $estateScore_height: 9%;
 
+    .estate-improvement {
+        @include scoreBoxFamily($estateScore_width, $estateScore_height);
+    }
+    
+    $leftestateScore: 45.9%;
+
+    .estate-improvement-0-0 { @include scoreBox(40.5%, $leftestateScore - $estateScore_width / 2); }
+
+    .estate-improvement-1-0 { @include scoreBox(37%, $leftestateScore + 4.48 - $estateScore_width / 2); }
+    .estate-improvement-1-1 { @include scoreBox(44%, $leftestateScore + 4.48 - $estateScore_width / 2); }
+
+    .estate-improvement-2-0 { @include scoreBox(33.4%, $leftestateScore + 4.48 * 2 - $estateScore_width / 2); }
+    .estate-improvement-2-1 { @include scoreBox(39.5%, $leftestateScore + 4.48 * 2 - $estateScore_width / 2); }
+    .estate-improvement-2-2 { @include scoreBox(46.5%, $leftestateScore + 4.48 * 2 - $estateScore_width / 2); }
+
+    .estate-improvement-3-0 { @include scoreBox(29.5%, $leftestateScore + 4.48 * 3 - $estateScore_width / 2); }
+    .estate-improvement-3-1 { @include scoreBox(36%, $leftestateScore + 4.48 * 3 - $estateScore_width / 2); }
+    .estate-improvement-3-2 { @include scoreBox(43%, $leftestateScore + 4.48 * 3 - $estateScore_width / 2); }
+    .estate-improvement-3-3 { @include scoreBox(49.5%, $leftestateScore + 4.48 * 3 - $estateScore_width / 2); }
+
+    .estate-improvement-4-0 { @include scoreBox(25.5%, $leftestateScore + 4.48 * 4 - $estateScore_width / 2); }
+    .estate-improvement-4-1 { @include scoreBox(32.5%, $leftestateScore + 4.48 * 4 - $estateScore_width / 2); }
+    .estate-improvement-4-2 { @include scoreBox(39.5%, $leftestateScore + 4.48 * 4 - $estateScore_width / 2); }
+    .estate-improvement-4-3 { @include scoreBox(46.2%, $leftestateScore + 4.48 * 4 - $estateScore_width / 2); }
+
+    .estate-improvement-5-0 { @include scoreBox(21.8%, $leftestateScore + 4.48 * 5 - $estateScore_width / 2); }
+    .estate-improvement-5-1 { @include scoreBox(28.5%, $leftestateScore + 4.48 * 5 - $estateScore_width / 2); }
+    .estate-improvement-5-2 { @include scoreBox(35.8%, $leftestateScore + 4.48 * 5 - $estateScore_width / 2); }
+    .estate-improvement-5-3 { @include scoreBox(42.5%, $leftestateScore + 4.48 * 5 - $estateScore_width / 2); }
+
+    .estate-multiplicator {
+        @include scoreBoxFamily($estateScore_width, $estateScore_height);
+    }
+
+    $leftestateMultiplicator: 45.9%;
+    $estateMultiplicator_top: 62.7%;
+
+    .estate-multiplicator-0 { @include scoreBox($estateMultiplicator_top, $leftestateMultiplicator + 4.8 * 0 - $estateScore_width / 2); }
+    .estate-multiplicator-1 { @include scoreBox($estateMultiplicator_top, $leftestateMultiplicator + 4.8 * 1 - $estateScore_width / 2); }
+    .estate-multiplicator-2 { @include scoreBox($estateMultiplicator_top, $leftestateMultiplicator + 4.8 * 2 - $estateScore_width / 2); }
+    .estate-multiplicator-3 { @include scoreBox($estateMultiplicator_top, $leftestateMultiplicator + 4.8 * 3 - $estateScore_width / 2); }
+    .estate-multiplicator-4 { @include scoreBox($estateMultiplicator_top, $leftestateMultiplicator + 4.8 * 4 - $estateScore_width / 2); }
+    .estate-multiplicator-5 { @include scoreBox($estateMultiplicator_top, $leftestateMultiplicator + 4.8 * 5 - $estateScore_width / 2); }
+    
+    
+    $estateTotal_width: 3.8%;
+    .estate-total {
+        @include scoreBoxFamily($estateTotal_width, $estateScore_height);
+    }
+    $leftestatetotal: 45.4%;
+    $estatetotal_top: 77.5%;
+    $estateTotal_step: 4.7%;
+
+    .estate-total-0 { @include scoreBox($estatetotal_top, $leftestatetotal + $estateTotal_step * 0 - $estateTotal_width / 2); }
+    .estate-total-1 { @include scoreBox($estatetotal_top, $leftestatetotal + $estateTotal_step * 1 - $estateTotal_width / 2); }
+    .estate-total-2 { @include scoreBox($estatetotal_top, $leftestatetotal + $estateTotal_step * 2 - $estateTotal_width / 2); }
+    .estate-total-3 { @include scoreBox($estatetotal_top, $leftestatetotal + $estateTotal_step * 3 - $estateTotal_width / 2); }
+    .estate-total-4 { @include scoreBox($estatetotal_top, $leftestatetotal + $estateTotal_step * 4 - $estateTotal_width / 2); }
+    .estate-total-5 { @include scoreBox($estatetotal_top, $leftestatetotal + $estateTotal_step * 5 - $estateTotal_width / 2); }
+    
     // bis score
+    $bisScore_width: 3%;
+    $bisScore_height: 6%;
+
+    .bis-score {
+        @include scoreBoxFamily($bisScore_width, $bisScore_height);
+        // color: red;
+    }
+    
+    $leftbisScore: 76.3%;
+    $bisScore_step: 3.5%;
+
+    .bis-score-0 { @include scoreBox(25%, $leftbisScore - $bisScore_width / 2);}
+    .bis-score-1 { @include scoreBox(25%, $leftbisScore + $bisScore_step - $bisScore_width / 2);}
+    .bis-score-2 { @include scoreBox(34%, $leftbisScore - $bisScore_width / 2);}
+    .bis-score-3 { @include scoreBox(34%, $leftbisScore + $bisScore_step - $bisScore_width / 2);}
+    .bis-score-4 { @include scoreBox(44.6%, $leftbisScore - $bisScore_width / 2);}
+    .bis-score-5 { @include scoreBox(44.6%, $leftbisScore + $bisScore_step - $bisScore_width / 2);}
+    .bis-score-6 { @include scoreBox(53.7%, $leftbisScore - $bisScore_width / 2);}
+    .bis-score-7 { @include scoreBox(53.7%, $leftbisScore + $bisScore_step - $bisScore_width / 2);}
+    .bis-score-8 { @include scoreBox(63.5%, $leftbisScore - $bisScore_width / 2);}
 
     // roundabout score
+    $roundaboutScore_width: 3%;
+    $roundaboutScore_height: 6%;
 
-    // total score
+    .roundabout-score {
+        @include scoreBoxFamily($roundaboutScore_width, $roundaboutScore_height);
+        // color: red;
+    }
+    
+    $leftroundaboutScore: 86.65%;
 
+    .roundabout-score-0 { @include scoreBox(9.1%, $leftroundaboutScore - $roundaboutScore_width / 2);}
+    .roundabout-score-1 { @include scoreBox(18.3%, $leftroundaboutScore - $roundaboutScore_width / 2);}
+
+    // unbuilt score
+    $unbuiltScore_width: 3%;
+    $unbuiltScore_height: 6%;
+
+    .unbuilt-score {
+        @include scoreBoxFamily($unbuiltScore_width, $unbuiltScore_height);
+        // color: red;
+    }
+    
+    $leftunbuiltScore: 86.65%;
+
+    .unbuilt-score-0 { @include scoreBox(38%, $leftunbuiltScore - $unbuiltScore_width / 2);}
+    .unbuilt-score-1 { @include scoreBox(47.3%, $leftunbuiltScore - $unbuiltScore_width / 2);}
+    .unbuilt-score-2 { @include scoreBox(56.5%, $leftunbuiltScore - $unbuiltScore_width / 2);}
+
+    // total scores
+    $totalScores_top: 81.5%;
+    $totalScore_width: 5%;
+    $totalScore_height: 10%;
+
+    .total-plan-score {
+        @include scoreBoxFamily($totalScore_width, $totalScore_height);
+        @include scoreBox($totalScores_top - $totalScore_height / 2, $leftPlanScore + 0.1 - $totalScore_width / 2);
+    }
+    .total-pool-score {
+        @include scoreBoxFamily($totalScore_width, $totalScore_height);
+        @include scoreBox($totalScores_top - $totalScore_height / 2, $leftPoolScore + 1.4 - $totalScore_width / 2);
+    }
+    .total-park-score {
+        @include scoreBoxFamily($totalScore_width, $totalScore_height);
+        @include scoreBox($totalScores_top - $totalScore_height / 2, $leftParkScore - $totalScore_width / 2);
+    }
+    .total-interim-score {
+        @include scoreBoxFamily($totalScore_width, $totalScore_height);
+        @include scoreBox($totalScores_top - $totalScore_height / 2, 35.1% - $totalScore_width / 2);
+    }
+    .total-bis-score {
+        @include scoreBoxFamily($totalScore_width, $totalScore_height);
+        @include scoreBox($totalScores_top - $totalScore_height / 2, 78.3% - $totalScore_width / 2);
+    }
+    .total-penalties-score {
+        @include scoreBoxFamily($totalScore_width, $totalScore_height);
+        @include scoreBox($totalScores_top - $totalScore_height / 2, 86.9% - $totalScore_width / 2);
+    }
+    .total-score {
+        @include scoreBoxFamily($totalScore_width, $totalScore_height);
+        @include scoreBox(81.5% - $totalScore_height / 2, 93.7% - $totalScore_width / 2);
+    }
 }
 
 .game {
@@ -435,6 +638,7 @@ $planHeight: 200px;
         $mapHeight: 58%;
         $scoreBoardHeigth: 100% - $mapHeight;
         width: 60%;
+        width: 100%;
         // max-width: 800px;
         height: 100%;
         display: flex;
