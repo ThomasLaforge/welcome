@@ -10,9 +10,10 @@ export class SoloGameUIStore {
 	@observable public game: SoloGame;
 	@observable public selectedConstructionIndexes: number[];
 	@observable public selectedHouse: House;
-	@observable public selectedEffectTarget: number;
+	@observable public selectedEffectTarget: House;
 	@observable public phaseManager: SoloPhaseManager;
 	@observable public optionsPlay: PlayOptions;
+	@observable public selectedRoundabout: House;
 	
 	constructor(game: SoloGame) {
 		this.game = game;
@@ -22,7 +23,10 @@ export class SoloGameUIStore {
 	reset() {
 		this.selectedConstructionIndexes = [];
 		this.selectedHouse = null;
-		this.phaseManager = new SoloPhaseManager()
+		this.selectedRoundabout = null;
+		this.selectedEffectTarget = null;
+		this.optionsPlay = {};
+		this.phaseManager = new SoloPhaseManager();
 	}
 
 	canGoNext(): boolean {
@@ -53,9 +57,9 @@ export class SoloGameUIStore {
 			this.phaseManager.next()
 
 			// Before implementing effects
-			if(this.currentPhase === SoloPhase.EffectChoices){
-				this.next()
-			}
+			// if(this.currentPhase === SoloPhase.EffectChoices){
+			// 	this.next()
+			// }
 		}
 	}
 
@@ -112,10 +116,31 @@ export class SoloGameUIStore {
 		return this.phaseManager.currentPhase === soloPhase
 	}
 
+	handleEstateChoice(choice: number){
+		console.log('handle estate choice', choice)
+		this.optionsPlay.estateChoice = choice
+	}
+
 	handleHouseClick = (house: House) => {
 		console.log('handleHouseClick', house)
-		if(this.currentPhase === SoloPhase.HouseSelection && !house.built){
-			this.selectedHouse = house
+		switch (this.currentPhase) {
+			case SoloPhase.HouseSelection:
+				if(this.game.houseCanBeSelected(house, this.computedConstruction)) {
+					this.selectedHouse = house
+				}
+				break;
+			case SoloPhase.EffectChoices:
+				if(!house.built) {
+					this.selectedEffectTarget = house
+				}
+				break;
+			case SoloPhase.RoundAbout:
+				if(!house.built) {
+					this.selectedRoundabout = house
+				}
+				break;
+			default:
+				break;
 		}
 	}
 

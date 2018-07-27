@@ -6,6 +6,7 @@ import Manager from './Manager'
 import WelcomeMap from '../Common/WelcomeMap'
 import ScoreBoard from '../Common/ScoreBoard'
 import PlayerActions from './PlayerActions'
+import { MapMode } from '../../modules/Welcome';
 
 interface SoloGameProps extends DefaultProps {
 }
@@ -30,6 +31,7 @@ class SoloGame extends React.Component <SoloGameProps, SoloGameState> {
             </div>
             <div className="game-paper">
                 <WelcomeMap
+                    mode={MapMode.Solo}
                     onHouseClick={this.props.ui.solo.handleHouseClick}
                     onParkClick={this.props.ui.solo.handleParkClick}
                     onStreetClick={this.props.ui.solo.handleStreetClick}

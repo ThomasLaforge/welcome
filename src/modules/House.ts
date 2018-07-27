@@ -54,7 +54,7 @@ export class House {
         this.rightFence = false
     }
 
-    get poolBuilt(){
+    get hasPoolBuilt(){
         return  this.construction 
                 && this.construction.effect === EffectType.PoolManufacturer 
                 && this.hasPool

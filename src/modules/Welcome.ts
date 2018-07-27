@@ -50,7 +50,7 @@ export enum GameMode {
 }
 
 export interface PlayOptions {
-
+    estateChoice?: number
 }
 
 export interface SpecialSoloCard {
@@ -63,4 +63,10 @@ export enum SoloPhase {
     EffectChoices,
     RoundAbout,
     Confirmation
+}
+
+export enum MapMode {
+    Solo,
+    Multi,
+    MapOnly
 }

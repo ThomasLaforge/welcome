@@ -22,7 +22,11 @@ export class WelcomeMap {
 	}
 
 	get nbPoolBuilt(){
-		return this.streets.reduce( (cpt, s) => cpt + s.houses.filter(h => h.poolBuilt).length, 0)
+		return this.streets.reduce( (cpt, s) => cpt + s.houses.filter(h => h.hasPoolBuilt).length, 0)
+	}
+
+	getStreetOfHouse(h: House){
+		return this.streets.filter(s => s.houses.indexOf(h) !== -1)[0]
 	}
 
 }

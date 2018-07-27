@@ -1,6 +1,6 @@
 import {observable} from 'mobx'
 
-import { Reward, PlanLevel } from './Welcome'
+import { Reward, PlanLevel, EffectType } from './Welcome'
 import {House} from './House'
 
 
@@ -8,12 +8,10 @@ export class Street {
 
     @observable public houses: House[];
     @observable public streetLine: number; //start to 0
-    @observable public parkChecked: number;
 
 	constructor(streetLine: number, houses: House[], parkChecked = 0) {
         this.streetLine = streetLine
         this.houses = houses
-        this.parkChecked = parkChecked
     }
 
     getDistricts(){
@@ -33,16 +31,17 @@ export class Street {
         scores.push(lastEltAdded + scores.length * 2)
 
         return scores
-    } 
-    
-    parkScore(){
-        return this.getParksScores()[this.parkChecked]
-    }
-    buildPark(){
-        this.parkChecked++
-    }
-    removePark(){
-        this.parkChecked--
     }
 
+    get nbParkChecked(){
+        return this.houses.filter(h => h.construction && h.construction.effect === EffectType.Landscaper).length
+    }
+    
+    get parkScore(){
+        return this.getParksScores()[this.nbParkChecked]
+    }
+
+    get length(){
+        return this.houses.length
+    }
 }

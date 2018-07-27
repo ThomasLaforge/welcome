@@ -49,7 +49,7 @@ class ScoreBoard extends React.Component <ScoreBoardProps, ScoreBoardState> {
         for (let i = 0; i < nbPark; i++) {
             parkScores.push(
                 <div className={'park-score park-score-' + i}>
-                    {this.props.solo.parkScore()}
+                    {this.props.solo.parkScore(i)}
                 </div>
             )            
         }

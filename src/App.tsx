@@ -4,7 +4,7 @@ import {observer, Provider } from 'mobx-react';
 import DevTools from 'mobx-react-devtools';
 
 import { Store } from './modules/Store'
-import { Route } from './modules/Welcome'
+import { Route, MapMode } from './modules/Welcome'
 
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
@@ -96,7 +96,7 @@ class App extends React.Component<{}, { store: Store, drawerOpened: boolean} > {
             </Drawer>
 
             {route === Route.Manager && <Manager />}
-            {route === Route.Map && <WelcomeMap />}
+            {route === Route.Map && <WelcomeMap mode={MapMode.MapOnly} />}
             {route === Route.Solo && <SoloGame />}
 
           </div>

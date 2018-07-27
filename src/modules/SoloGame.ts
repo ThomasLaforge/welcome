@@ -3,8 +3,9 @@ import {observable} from 'mobx'
 import { SoloWelcomeModulesManager } from './SoloWelcomeModulesManager';
 import {Player} from './Player'
 import { Construction } from './Construction';
-import {PlayOptions, GameMode, PlanLevel} from './Welcome'
+import {PlayOptions, GameMode, PlanLevel, EffectType} from './Welcome'
 import { House } from './House';
+import { Street } from './Street';
 
 export class SoloGame {
 
@@ -50,6 +51,47 @@ export class SoloGame {
 		house.build(construction)
 	}
 
+	getAllHouseConstructable(construction: Construction){
+		let houses = []
+		this.map.streets.forEach(s => {
+			houses = houses.concat(s.houses.filter(h => this.houseCanBeSelected(h, construction)))
+		})
+		return houses
+	}
+
+	constructionCanBeConstructed(construction: Construction){
+		return this.getAllHouseConstructable(construction).length
+	}
+
+	houseCanBeSelected(h: House, construction: Construction){
+		let canBeSelected = !h.built
+		let street = this.map.getStreetOfHouse(h)
+		let indexOfHouse = street.houses.indexOf(h)
+		let i;
+
+		// check left is ok
+		i = 0
+		while(canBeSelected && i < indexOfHouse){
+			let currentHouse = street.houses[i]
+			if(currentHouse.construction && construction.houseNumber < currentHouse.construction.houseNumber){
+				canBeSelected = false
+			}
+			i++
+		}
+
+		// check right is ok
+		i = indexOfHouse + 1
+		while(canBeSelected && i < street.length){
+			let currentHouse = street.houses[i]
+			if(currentHouse.construction && construction.houseNumber > currentHouse.construction.houseNumber){
+				canBeSelected = false
+			}
+			i++
+		}
+
+		return canBeSelected
+	}
+
 	completePlan(planLevel: PlanLevel){
 		this.plansDone.push(planLevel)
 	}
@@ -61,8 +103,8 @@ export class SoloGame {
 		return 0
 	}
 
-	parkScore(){
-		return 0
+	parkScore(streetIndex: number){
+		return this.player.map.streets[streetIndex].parkScore 
 	}
 	get totalParkScore(){
 		return 0
@@ -92,5 +134,11 @@ export class SoloGame {
 		return 0
 	}
 
+	get map(){
+		return this.player.map
+	}
 
+	isInAdvancedMode(){
+		return this.mode === GameMode.Advanced
+	}
 }
