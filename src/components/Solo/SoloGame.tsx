@@ -35,6 +35,7 @@ class SoloGame extends React.Component <SoloGameProps, SoloGameState> {
                     onHouseClick={this.props.ui.solo.handleHouseClick}
                     onParkClick={this.props.ui.solo.handleParkClick}
                     onStreetClick={this.props.ui.solo.handleStreetClick}
+                    onFenceClick={this.props.ui.solo.handleFenceClick}
                 />
                 <ScoreBoard />
             </div>

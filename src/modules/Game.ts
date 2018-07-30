@@ -3,7 +3,7 @@ import {observable} from 'mobx'
 import { WelcomeModulesManager } from './WelcomeModulesManager';
 import {Player} from './Player'
 import { Construction } from './Construction';
-import {PlayOptions} from './Welcome'
+import {OptionsPlay} from './Welcome'
 import { House } from './House';
 
 export class Game {
@@ -27,7 +27,7 @@ export class Game {
 		this.endDate = null
 	}
     
-    play(construction: Construction, player: Player, house?: House, options?: PlayOptions){
+    play(construction: Construction, player: Player, house?: House, options?: OptionsPlay){
         console.log('Game:play', construction, house, options, player)
 	}
 

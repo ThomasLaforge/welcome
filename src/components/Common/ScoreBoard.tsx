@@ -24,13 +24,13 @@ class ScoreBoard extends React.Component <ScoreBoardProps, ScoreBoardState> {
 
         for (let i = 0; i < nbPlan; i++) {
             planScores.push(
-                <div className={'plan-score plan-score-' + i}>
+                <div key={i} className={'plan-score plan-score-' + i}>
                     {this.props.solo.planScore(i)}
                 </div>
             )            
         }
         planScores.push(
-            <div className='total-plan-score'>
+            <div key={nbPlan} className='total-plan-score'>
                 {this.props.solo.totalPlanScore}
             </div>
         )
@@ -48,13 +48,13 @@ class ScoreBoard extends React.Component <ScoreBoardProps, ScoreBoardState> {
 
         for (let i = 0; i < nbPark; i++) {
             parkScores.push(
-                <div className={'park-score park-score-' + i}>
+                <div key={i} className={'park-score park-score-' + i}>
                     {this.props.solo.parkScore(i)}
                 </div>
             )            
         }
         parkScores.push(
-            <div className='total-park-score'>
+            <div key={nbPark} className='total-park-score'>
                 {this.props.solo.totalParkScore}
             </div>
         )
@@ -67,14 +67,14 @@ class ScoreBoard extends React.Component <ScoreBoardProps, ScoreBoardState> {
         let i = 0
         while (i < this.props.solo.nbPoolBuilt && i < maxNbPool + 1) {
             poolScores.push(
-                <div className={'pool-score pool-score-' + i}>
+                <div key={i} className={'pool-score pool-score-' + i}>
                     {'X'}
                 </div>
             )
             i++
         }
         poolScores.push(
-            <div className='total-pool-score'>
+            <div key={maxNbPool + 1} className='total-pool-score'>
                 {this.props.solo.totalPoolScore}
             </div>
         )
@@ -87,14 +87,14 @@ class ScoreBoard extends React.Component <ScoreBoardProps, ScoreBoardState> {
         let i = 0
         while (i < this.props.solo.nbBisBuilt && i <= maxNbBis) {
             bisScores.push(
-                <div className={'bis-score bis-score-' + i}>
+                <div key={i} className={'bis-score bis-score-' + i}>
                     {'X'}
                 </div>
             )
             i++
         }
         bisScores.push(
-            <div className='total-bis-score'>
+            <div key={maxNbBis + 1} className='total-bis-score'>
                 {this.props.solo.bisScore}
             </div>
         )
@@ -108,16 +108,16 @@ class ScoreBoard extends React.Component <ScoreBoardProps, ScoreBoardState> {
             // Estate improvements
             for (let j = 0; j < Math.min(4, i + 1); j++) {
                 estateScores.push(
-                    <div className={'estate-improvement estate-improvement-' + i + '-' + j} key={i + '' + j}>{false ? 'X' : ''}</div>
+                    <div className={'estate-improvement estate-improvement-' + i + '-' + j} key={i + '-' + j}>{false ? 'X' : ''}</div>
                 )
             }
             // Mulitplicators
             estateScores.push(
-                <div className={'estate-multiplicator estate-multiplicator-' + i} key={i + '0'}>0</div>
+                <div className={'estate-multiplicator estate-multiplicator-' + i} key={i + 'multiplicator'}>0</div>
             )
             // Totals
             estateScores.push(
-                <div className={'estate-total estate-total-' + i} key={i + '1'}>0</div>
+                <div className={'estate-total estate-total-' + i} key={i + 'total'}>0</div>
             )
         }
 
@@ -129,14 +129,14 @@ class ScoreBoard extends React.Component <ScoreBoardProps, ScoreBoardState> {
 
         while (i < this.props.solo.nbInterimUsed) {
             interimScores.push(
-                <div className={'interim-score interim-score-' + i}>
+                <div key={i} className={'interim-score interim-score-' + i}>
                     {'X'}
                 </div>
             )
             i++
         }
         interimScores.push(
-            <div className='total-interim-score'>
+            <div key={this.props.solo.nbInterimUsed} className='total-interim-score'>
                 {this.props.solo.InterimScore}
             </div>
         )

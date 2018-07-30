@@ -2,8 +2,9 @@ import { observable } from 'mobx';
 import { SoloGame } from '../SoloGame';
 import { Construction } from '../Construction';
 import { SoloPhaseManager } from '../SoloPhaseManager';
-import { SoloPhase, GameMode, PlayOptions } from '../Welcome'
+import { SoloPhase, GameMode, OptionsPlay, EffectType } from '../Welcome'
 import { House } from '../House';
+import { Fence } from '../Fence';
 
 export class SoloGameUIStore {
 	
@@ -12,7 +13,7 @@ export class SoloGameUIStore {
 	@observable public selectedHouse: House;
 	@observable public selectedEffectTarget: House;
 	@observable public phaseManager: SoloPhaseManager;
-	@observable public optionsPlay: PlayOptions;
+	@observable public optionsPlay: OptionsPlay;
 	@observable public selectedRoundabout: House;
 	
 	constructor(game: SoloGame) {
@@ -49,8 +50,7 @@ export class SoloGameUIStore {
 		if(this.canGoNext()){
 			if(this.currentPhase === SoloPhase.Confirmation){
 				this.game.play(this.computedConstruction, this.selectedHouse, this.optionsPlay)
-				this.selectedHouse = null
-				this.selectedConstructionIndexes = []
+				this.reset()
 				this.game.manager.constructions.nextTurn()
 			}
 
@@ -144,6 +144,11 @@ export class SoloGameUIStore {
 		}
 	}
 
+	handleFenceClick = (f: Fence) => {
+		console.log('handle fence click')
+		this.optionsPlay.surveyorFence = f
+	}
+
 	handleParkClick = () => {
 		// console.log('handleParkClick')
 	}
@@ -153,7 +158,8 @@ export class SoloGameUIStore {
 	}
 
 	get computedConstruction(){
-		return new Construction(this.selectedConstructions[0].houseNumber, this.selectedConstructions[1].effect)
+		// return new Construction(this.selectedConstructions[0].houseNumber, this.selectedConstructions[1].effect)
+		return new Construction(this.selectedConstructions[0].houseNumber, EffectType.Surveyor)
 	}
 
 	get selectedConstructions(){

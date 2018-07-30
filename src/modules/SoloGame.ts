@@ -3,7 +3,7 @@ import {observable} from 'mobx'
 import { SoloWelcomeModulesManager } from './SoloWelcomeModulesManager';
 import {Player} from './Player'
 import { Construction } from './Construction';
-import {PlayOptions, GameMode, PlanLevel, EffectType} from './Welcome'
+import {OptionsPlay, GameMode, PlanLevel, EffectType} from './Welcome'
 import { House } from './House';
 import { Street } from './Street';
 
@@ -46,9 +46,14 @@ export class SoloGame {
 		this.nbUnbuiltUsed = 0;
 	}
     
-    play(construction: Construction, house?: House, options?: PlayOptions){
+    play(construction: Construction, house?: House, options?: OptionsPlay){
 		console.log('Game:play', construction, house, options)
 		house.build(construction)
+		if(options){
+			if(options.surveyorFence){
+				options.surveyorFence.build()
+			}
+		}
 	}
 
 	getAllHouseConstructable(construction: Construction){

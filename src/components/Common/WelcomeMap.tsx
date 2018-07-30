@@ -2,9 +2,10 @@ import * as React from 'react';
 import {observer, inject} from 'mobx-react';
 import { DefaultProps, injector } from '../../lib/mobxInjector'
 
-import {WelcomeMap as WelcomeMapModel} from '../../modules/WelcomeMap'
+import Fence from './Fence';
 
-import { MissionType, MapMode, SoloPhase } from '../../modules/Welcome';
+import {WelcomeMap as WelcomeMapModel} from '../../modules/WelcomeMap'
+import { MissionType, MapMode, SoloPhase, EffectType } from '../../modules/Welcome';
 import { Street } from '../../modules/Street';
 
 interface WelcomeMapProps extends DefaultProps {
@@ -12,6 +13,7 @@ interface WelcomeMapProps extends DefaultProps {
     onHouseClick?: Function
     onParkClick?: Function
     onStreetClick?: Function
+    onFenceClick?: Function
     mode: MapMode
 }
 interface WelcomeMapState {
@@ -35,20 +37,22 @@ class WelcomeMap extends React.Component <WelcomeMapProps, WelcomeMapState> {
     }
     
     renderStreets(){
+        let uiSolo = this.props.ui.solo
+
         return this.state.map.streets.map( (s, streetIndex) => 
             <div className={'street street-' + streetIndex} key={streetIndex}
                 onClick={() => this.props.onStreetClick(s)}
             >
             {s.houses.map( (h, i) => {
                 let house = s.houses[i]
-                let isHouseSelected = house === this.props.ui.solo.selectedHouse
+                let isHouseSelected = house === uiSolo.selectedHouse
 
                 let houseClassName = 'house-line-' + s.streetLine + '-spot-'+ i +' house'
                 if(isHouseSelected) { houseClassName += ' ' + 'house-selected' }
                 if(
-                        this.props.ui.solo.currentPhase === SoloPhase.HouseSelection 
+                        uiSolo.currentPhase === SoloPhase.HouseSelection 
                     &&  this.props.mode === MapMode.Solo 
-                    &&  this.props.solo.houseCanBeSelected(house, this.props.ui.solo.computedConstruction)
+                    &&  this.props.solo.houseCanBeSelected(house, uiSolo.computedConstruction)
                 ) { 
                     houseClassName += ' ' + 'house-can-be-selected' 
                 }
@@ -62,6 +66,13 @@ class WelcomeMap extends React.Component <WelcomeMapProps, WelcomeMapState> {
                     </div>
                 </div> 
             })}
+            {s.fences.map( (f, i) => <Fence 
+                key={i}
+                streetNumber={streetIndex}
+                fence={f} 
+                onClick={() => this.props.onFenceClick(f)}
+                selectionMode={uiSolo.currentPhase === SoloPhase.EffectChoices && uiSolo.computedConstruction.effect === EffectType.Surveyor} 
+            />)}
             </div>
         )
     }

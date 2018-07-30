@@ -1,3 +1,5 @@
+import { Fence } from "./Fence";
+
 export enum EffectType {
     Surveyor = 0,
     RealEstateAgent = 1,
@@ -49,8 +51,9 @@ export enum GameMode {
     Advanced
 }
 
-export interface PlayOptions {
-    estateChoice?: number
+export interface OptionsPlay {
+    estateChoice?: number,
+    surveyorFence?: Fence
 }
 
 export interface SpecialSoloCard {

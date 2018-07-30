@@ -13,6 +13,7 @@ import Construction from '../Common/Construction';
 import {Construction as ConstructionModel} from '../../modules/Construction' 
 import { SoloPhase, GameMode, EffectType } from '../../modules/Welcome';
 import ConstructionEffect from '../Common/ConstructionEffect';
+import Summary from './Summary';
 
 interface PlayerActionsProps extends DefaultProps {
 
@@ -105,11 +106,9 @@ class PlayerActions extends React.Component <PlayerActionsProps, PlayerActionsSt
                     </React.Fragment>
                 }
                 {uiSolo.isInPhase(SoloPhase.HouseSelection) &&
-                    <React.Fragment>
-                        <div className="merged-construction">
-                            <Construction card={uiSolo.computedConstruction}/>
-                        </div>
-                    </React.Fragment>
+                    <div className="merged-construction">
+                        <Construction card={uiSolo.computedConstruction}/>
+                    </div>
                 }
                 {uiSolo.isInPhase(SoloPhase.EffectChoices) &&
                     <div className="effect-zone">
@@ -129,38 +128,7 @@ class PlayerActions extends React.Component <PlayerActionsProps, PlayerActionsSt
                         }
                     </div>
                 }
-                {uiSolo.isInPhase(SoloPhase.Confirmation) &&
-                    <div className='confirmation'>
-                        <div className='confirmation-construction'>
-                            <div className='confirmation-construction'>
-                                Vous souhaitew construire cette construction:
-                            </div>
-                            <div className="merged-construction">
-                                <Construction card={uiSolo.computedConstruction}/>
-                            </div>                            
-                        </div>
-                        <div className='confirmation-where'>
-                            <div className='confirmation-where-text'>
-                                Au lieu indiqué par une bordure bleu 
-                            </div>                            
-                        </div>
-                        <div className='confirmation-effect'>
-                            <div className='confirmation-effect-text'>
-                                Et appliquer cet effet:
-                            </div>                            
-                            <div className='confirmation-effect-type'>
-                            </div>                            
-                        </div>
-                        {
-                            uiSolo.game.isInAdvancedMode() && uiSolo.selectedRoundabout &&
-                            <div className='confirmation-roundabout'>
-                                <div className='confirmation-roundabout-text'>
-                                    Et ajouter un rond point à l'endroit indiqué en orange:
-                                </div>
-                            </div>
-                        }
-                    </div>
-                }
+                {uiSolo.isInPhase(SoloPhase.Confirmation) && <Summary />}
             </div>
             <div className='player-actions-play-btn'>
                 <Button 

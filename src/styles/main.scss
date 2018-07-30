@@ -221,7 +221,7 @@ $planHeight: 200px;
         left: $left;
     }
 
-    .house, .park {
+    .house, .park, .fence {
         position: absolute;
     }
     
@@ -280,6 +280,20 @@ $planHeight: 200px;
         }
     }
 
+    .fence {
+        width: 1%;
+        height: $houseHeight;
+    }
+    .fence-built {
+        background-color: black;
+    }
+    .fence-selectable {
+        border: 2px solid green;
+    }
+    .fence-selected {
+        border: 2px solid blue;
+    }
+
     @for $i from 0 to $nbLines {
         // Houses
         @for $j from 0 to $nbHouseOnLine {
@@ -290,6 +304,16 @@ $planHeight: 200px;
                 )
             }
         }
+        @for $fencePosition from 0 to $nbHouseOnLine - 1 {
+            .fence-#{$i}-#{$fencePosition} {
+                @include mapBox(
+                    $topFirstLineHouse + $i * ($topFirstLineHouse + $gapBetweenTwoLinesHouse), 
+                    $startHouseX + $houseWidth + $fencePosition * ($spaceBeetweenTwoHouses + $houseWidth) - $i * ($spaceBeetweenTwoHouses + $houseWidth)
+                )
+            }
+        }
+
+        // Next line has one more house / fence
         $nbHouseOnLine: $nbHouseOnLine + 1;
 
         // Parks
@@ -302,7 +326,6 @@ $planHeight: 200px;
             }
         }
         $nbParksOnLine: $nbParksOnLine + 1;
-
     }
 
 }
@@ -413,30 +436,31 @@ $planHeight: 200px;
     }
     
     $leftestateScore: 45.9%;
+    $estateStep: 4.48%;
 
     .estate-improvement-0-0 { @include scoreBox(40.5%, $leftestateScore - $estateScore_width / 2); }
 
-    .estate-improvement-1-0 { @include scoreBox(37%, $leftestateScore + 4.48 - $estateScore_width / 2); }
-    .estate-improvement-1-1 { @include scoreBox(44%, $leftestateScore + 4.48 - $estateScore_width / 2); }
+    .estate-improvement-1-0 { @include scoreBox(37%, $leftestateScore + $estateStep - $estateScore_width / 2); }
+    .estate-improvement-1-1 { @include scoreBox(44%, $leftestateScore + $estateStep - $estateScore_width / 2); }
 
-    .estate-improvement-2-0 { @include scoreBox(33.4%, $leftestateScore + 4.48 * 2 - $estateScore_width / 2); }
-    .estate-improvement-2-1 { @include scoreBox(39.5%, $leftestateScore + 4.48 * 2 - $estateScore_width / 2); }
-    .estate-improvement-2-2 { @include scoreBox(46.5%, $leftestateScore + 4.48 * 2 - $estateScore_width / 2); }
+    .estate-improvement-2-0 { @include scoreBox(33.4%, $leftestateScore + $estateStep * 2 - $estateScore_width / 2); }
+    .estate-improvement-2-1 { @include scoreBox(39.5%, $leftestateScore + $estateStep * 2 - $estateScore_width / 2); }
+    .estate-improvement-2-2 { @include scoreBox(46.5%, $leftestateScore + $estateStep * 2 - $estateScore_width / 2); }
 
-    .estate-improvement-3-0 { @include scoreBox(29.5%, $leftestateScore + 4.48 * 3 - $estateScore_width / 2); }
-    .estate-improvement-3-1 { @include scoreBox(36%, $leftestateScore + 4.48 * 3 - $estateScore_width / 2); }
-    .estate-improvement-3-2 { @include scoreBox(43%, $leftestateScore + 4.48 * 3 - $estateScore_width / 2); }
-    .estate-improvement-3-3 { @include scoreBox(49.5%, $leftestateScore + 4.48 * 3 - $estateScore_width / 2); }
+    .estate-improvement-3-0 { @include scoreBox(29.5%, $leftestateScore + $estateStep * 3 - $estateScore_width / 2); }
+    .estate-improvement-3-1 { @include scoreBox(36%, $leftestateScore + $estateStep * 3 - $estateScore_width / 2); }
+    .estate-improvement-3-2 { @include scoreBox(43%, $leftestateScore + $estateStep * 3 - $estateScore_width / 2); }
+    .estate-improvement-3-3 { @include scoreBox(49.5%, $leftestateScore + $estateStep * 3 - $estateScore_width / 2); }
 
-    .estate-improvement-4-0 { @include scoreBox(25.5%, $leftestateScore + 4.48 * 4 - $estateScore_width / 2); }
-    .estate-improvement-4-1 { @include scoreBox(32.5%, $leftestateScore + 4.48 * 4 - $estateScore_width / 2); }
-    .estate-improvement-4-2 { @include scoreBox(39.5%, $leftestateScore + 4.48 * 4 - $estateScore_width / 2); }
-    .estate-improvement-4-3 { @include scoreBox(46.2%, $leftestateScore + 4.48 * 4 - $estateScore_width / 2); }
+    .estate-improvement-4-0 { @include scoreBox(25.5%, $leftestateScore + $estateStep * 4 - $estateScore_width / 2); }
+    .estate-improvement-4-1 { @include scoreBox(32.5%, $leftestateScore + $estateStep * 4 - $estateScore_width / 2); }
+    .estate-improvement-4-2 { @include scoreBox(39.5%, $leftestateScore + $estateStep * 4 - $estateScore_width / 2); }
+    .estate-improvement-4-3 { @include scoreBox(46.2%, $leftestateScore + $estateStep * 4 - $estateScore_width / 2); }
 
-    .estate-improvement-5-0 { @include scoreBox(21.8%, $leftestateScore + 4.48 * 5 - $estateScore_width / 2); }
-    .estate-improvement-5-1 { @include scoreBox(28.5%, $leftestateScore + 4.48 * 5 - $estateScore_width / 2); }
-    .estate-improvement-5-2 { @include scoreBox(35.8%, $leftestateScore + 4.48 * 5 - $estateScore_width / 2); }
-    .estate-improvement-5-3 { @include scoreBox(42.5%, $leftestateScore + 4.48 * 5 - $estateScore_width / 2); }
+    .estate-improvement-5-0 { @include scoreBox(21.8%, $leftestateScore + $estateStep * 5 - $estateScore_width / 2); }
+    .estate-improvement-5-1 { @include scoreBox(28.5%, $leftestateScore + $estateStep * 5 - $estateScore_width / 2); }
+    .estate-improvement-5-2 { @include scoreBox(35.8%, $leftestateScore + $estateStep * 5 - $estateScore_width / 2); }
+    .estate-improvement-5-3 { @include scoreBox(42.5%, $leftestateScore + $estateStep * 5 - $estateScore_width / 2); }
 
     .estate-multiplicator {
         @include scoreBoxFamily($estateScore_width, $estateScore_height);
@@ -572,9 +596,9 @@ $planHeight: 200px;
             justify-content: space-around;
             
             .constructions-zone {
-                width: 45%;
+                width: 33%;
                 height: 100%;
-                flex-direction: row;
+                flex-direction: column;
                 
                 .construction {
                     width: 33%;
@@ -592,7 +616,7 @@ $planHeight: 200px;
             }
             
             .plans-zone {
-                width: 45%;
+                width: 66%;
                 height: 100%;
                 
                 .plans {

@@ -1,21 +1,35 @@
 import {observable} from 'mobx'
 
-import { Reward, PlanLevel, EffectType } from './Welcome'
+import { EffectType } from './Welcome'
 import {House} from './House'
+import { Fence } from './Fence';
 
 
 export class Street {
 
     @observable public houses: House[];
     @observable public streetLine: number; //start to 0
+    @observable public fences: Fence[];
+    @observable public usedHouseForPlans: House[];
 
-	constructor(streetLine: number, houses: House[], parkChecked = 0) {
+	constructor(streetLine: number, houses: House[], fences: Fence[] = [], usedHouseForPlans: House[] = []) {
         this.streetLine = streetLine
         this.houses = houses
+        this.usedHouseForPlans = usedHouseForPlans
+        if(!fences.length){
+            for (let i = 0; i < this.houses.length - 1; i++) {
+                fences.push(new Fence(i))
+            }
+        }
+        this.fences = fences
     }
 
     getDistricts(){
         return []
+    }
+
+    getFreeFences(){
+        return this.fences.filter(f => !f.built)
     }
 
     getParksScores(){
@@ -44,4 +58,5 @@ export class Street {
     get length(){
         return this.houses.length
     }
+    
 }
