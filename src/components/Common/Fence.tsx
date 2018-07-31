@@ -7,7 +7,6 @@ interface FenceProps extends DefaultProps {
     fence: FenceModel
     streetNumber: number
     onClick: Function
-    selectionMode: boolean
 }
 interface FenceState {
 }
@@ -27,7 +26,7 @@ class Fence extends React.Component <FenceProps, FenceState> {
         if(this.props.fence.built){
             className += ' ' + 'fence-built'
         }
-        else if(this.props.selectionMode){
+        else {
             if(this.props.ui.solo.optionsPlay.surveyorFence === this.props.fence){
                 className += ' ' + 'fence-selected'
             }

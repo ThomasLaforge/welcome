@@ -18,7 +18,6 @@ export class SoloPhaseManager {
     }
 
     next(){
-        console.log('before next', this.currentPhase)
         this.currentPhase++
         if(this.mode === GameMode.Normal && this.currentPhase === SoloPhase.RoundAbout){
             this.next()

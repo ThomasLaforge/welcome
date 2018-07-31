@@ -23,15 +23,10 @@ class Constructions extends React.Component <ConstructionsProps, ConstructionsSt
         this.state = {}
     }
 
-    handleConstructionSelection = (c: ConstructionModel) => {
-        this.props.ui.solo.switchConstruction(c)
-    }
-
     renderCards(){
         return this.props.constructions.actualCards.map( (c, k) => 
             <Construction key={k} 
                 card={c}
-                onClick={() => this.handleConstructionSelection(c)}
             /> 
         )
     }

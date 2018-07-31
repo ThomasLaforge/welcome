@@ -13,4 +13,8 @@ export class Construction {
 		this.effect = effect;
 	}
 
+	isEqual(c: Construction){
+		return c.houseNumber === this.houseNumber && c.effect === this.effect 
+	}
+
 }

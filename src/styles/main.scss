@@ -584,6 +584,21 @@ $planHeight: 200px;
     height: 100%;
     width: 100%;
     padding: 30px;
+
+    .construction {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        
+        .construction-number {
+            width: 45%;
+            text-align: center;
+        }
+
+        .construction-effect {
+            width: 55%
+        }
+    }
     
     .game-main {
         height: 100%;
@@ -599,20 +614,6 @@ $planHeight: 200px;
                 width: 33%;
                 height: 100%;
                 flex-direction: column;
-                
-                .construction {
-                    width: 33%;
-                    display: flex;
-                    flex-direction: row;
-                    
-                    .construction-number {
-                        width: 45%;
-                    }
-
-                    .construction-effect {
-                        width: 55%
-                    }
-                }
             }
             
             .plans-zone {
@@ -650,12 +651,38 @@ $planHeight: 200px;
         }
 
         .player-actions {
-            height: 100%;
+            height: 80%;
             display: flex;
             flex-direction: column;
             justify-content: space-around;
 
+            .player-actions-stepper {
+                height: 20%;
+            }
+
+            .player-actions-content {
+                height: 60%;
+            }
+
+            .card-selector {
+                width: 100%;
+                height: 100%;
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+                align-content: space-around;
+
+                .possible-card {
+                    width: 1 / 3 * 100%;
+                }
+
+                .possible-card-selected {
+                    outline: 1px solid red;
+                }
+            }
+
             .player-actions-play-btn {
+                height: 20%;
                 margin: auto;
             }
         }

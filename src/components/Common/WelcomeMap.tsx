@@ -30,14 +30,10 @@ class WelcomeMap extends React.Component <WelcomeMapProps, WelcomeMapState> {
             map: new WelcomeMapModel()
         }
     }
-
-    clickOnHouse(s: Street, i: number){
-        let house = s.houses[i]
-        console.log('click on house', /*s.streetLine, i, house,*/ house.hasPool)
-    }
     
     renderStreets(){
         let uiSolo = this.props.ui.solo
+        let inSurveyorPhase = uiSolo.currentPhase === SoloPhase.EffectChoices && uiSolo.computedConstruction.effect === EffectType.Surveyor
 
         return this.state.map.streets.map( (s, streetIndex) => 
             <div className={'street street-' + streetIndex} key={streetIndex}
@@ -66,12 +62,11 @@ class WelcomeMap extends React.Component <WelcomeMapProps, WelcomeMapState> {
                     </div>
                 </div> 
             })}
-            {s.fences.map( (f, i) => <Fence 
+            {inSurveyorPhase && s.fences.map( (f, i) => <Fence 
                 key={i}
                 streetNumber={streetIndex}
                 fence={f} 
                 onClick={() => this.props.onFenceClick(f)}
-                selectionMode={uiSolo.currentPhase === SoloPhase.EffectChoices && uiSolo.computedConstruction.effect === EffectType.Surveyor} 
             />)}
             </div>
         )

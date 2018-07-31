@@ -24,17 +24,25 @@ export default class Summary extends React.Component <SummaryProps, SummaryState
         
         return (
             <div className='confirmation'>
-                <div className='confirmation-construction'>
+                {!uiSolo.constructionSkipped ?
                     <div className='confirmation-construction'>
-                        Vous souhaitew construire cette construction:
+                        <div className='confirmation-construction'>
+                            Vous souhaitez construire cette construction:
+                        </div>
+                        <div className="merged-construction">
+                            <Construction card={uiSolo.computedConstruction} />
+                        </div>                            
                     </div>
-                    <div className="merged-construction">
-                        <Construction card={uiSolo.computedConstruction} />
-                    </div>                            
-                </div>
+                    :
+                    <div className='confirmation-no-construction'>
+                         <div className='confirmation-no-construction'>
+                            Vous ne souhaitez pas construire de bâtiments:
+                        </div>
+                    </div>
+                }
                 <div className='confirmation-where'>
                     <div className='confirmation-where-text'>
-                        Au lieu indiqué par une bordure bleu 
+                        Au lieu indiqué par une bordure bleu
                     </div>                            
                 </div>
                 <div className='confirmation-effect'>
@@ -42,12 +50,14 @@ export default class Summary extends React.Component <SummaryProps, SummaryState
                         Et appliquer cet effet:
                     </div>                            
                     <div className='confirmation-effect-type'>
-                        <ConstructionEffect effect={uiSolo.computedConstruction.effect} />
+                        <ConstructionEffect effect={uiSolo.computedConstruction && uiSolo.computedConstruction.effect} />
                     </div>
                     <div className='confirmation-effect-where-text'>
                         Au lieu indiqué par une bordure bleu 
                     </div>    
                 </div>
+
+                {/* Roundabout */}
                 { uiSolo.game.isInAdvancedMode() && uiSolo.selectedRoundabout &&
                     <div className='confirmation-roundabout'>
                         <div className='confirmation-roundabout-text'>

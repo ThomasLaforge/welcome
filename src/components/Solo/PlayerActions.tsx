@@ -2,24 +2,22 @@ import * as React from 'react';
 import {observer, inject} from 'mobx-react';
 import { DefaultProps, injector } from '../../lib/mobxInjector'
 
-import Stepper from '@material-ui/core/Stepper';
-import Step from '@material-ui/core/Step';
-import StepLabel from '@material-ui/core/StepLabel';
 import Button from '@material-ui/core/Button';
 import Construction from '../Common/Construction';
+import CardSelector from './CardSelector'
 // import Paper from '@material-ui/core/Paper';
 
 // import ConstructionSelected from './ConstructionSelected';
 import {Construction as ConstructionModel} from '../../modules/Construction' 
-import { SoloPhase, GameMode, EffectType } from '../../modules/Welcome';
+import { SoloPhase, EffectType } from '../../modules/Welcome';
+
 import ConstructionEffect from '../Common/ConstructionEffect';
+import GameStepper from '../Common/GameStepper';
 import Summary from './Summary';
 
 interface PlayerActionsProps extends DefaultProps {
-
 }
 interface PlayerActionsState {
-
 }
 
 @inject(injector)
@@ -46,64 +44,18 @@ class PlayerActions extends React.Component <PlayerActionsProps, PlayerActionsSt
         this.props.ui.solo.handleEstateChoice(choice)
     }
 
-    unselectConstruction = (construction: ConstructionModel) => {
-        this.props.ui.solo.unselectConstruction(construction)
-    }
-
-    renderStepperContent(){
-        console.log('render stepper content', this.props.ui.solo.activePlayerActionStep)
-        return <div className='player-actions-stepper-content'>
-        </div>
-    }
-
     render() {
-        let steps = [
-            'Chose a construction',
-            'Chose house to build it',
-            'Effect',
-            'RoundAbout',
-            'Confirmation'
-        ]
-        if(this.props.solo.mode === GameMode.Normal){
-            steps.splice(3, 1)
-        }
-
         const uiSolo = this.props.ui.solo
-        // console.log('activePlayerActionStep', this.props.ui, this.props.ui.solo)
-        console.log('current phase', uiSolo.currentPhase)
 
         return <div className='player-actions'>
             <div className='player-actions-info'>
-                <div className='player-actions-stepper'>
-                <Stepper activeStep={uiSolo.activePlayerActionStep || 0} alternativeLabel>
-                    {steps.map(label => {
-                        return (
-                        <Step key={label}>
-                            <StepLabel>{label}</StepLabel>
-                        </Step>
-                        );
-                    })}
-                </Stepper>
-                </div>
-                {/* player-actions-stepper-content */}
-                {this.renderStepperContent()}
+                <GameStepper />
             </div>
             <div className='player-actions-content'>
                 {uiSolo.isInPhase(SoloPhase.ConstructionSelection) &&
-                    <React.Fragment>
-                        <div className="selected-construction">
-                            {uiSolo.selectedConstructionIndexes.map(indexC => {
-                                let construction = this.props.solo.manager.constructions.actualCards[indexC]
-                                return <Construction key={indexC}
-                                    onClick={() => this.unselectConstruction(construction)}
-                                    card={construction} 
-                                />
-                            })}
-                        </div>
-                        <Button disabled={uiSolo.selectedConstructionIndexes.length < 2} onClick={() => uiSolo.switchSelectedConstructions()}>
-                            Switch
-                        </Button>
-                    </React.Fragment>
+                    <CardSelector
+                        drawedCards={this.props.solo.manager.constructions.actualCards}
+                    />
                 }
                 {uiSolo.isInPhase(SoloPhase.HouseSelection) &&
                     <div className="merged-construction">

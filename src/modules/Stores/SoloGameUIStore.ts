@@ -5,37 +5,39 @@ import { SoloPhaseManager } from '../SoloPhaseManager';
 import { SoloPhase, GameMode, OptionsPlay, EffectType } from '../Welcome'
 import { House } from '../House';
 import { Fence } from '../Fence';
+import { Effect } from '../Effect';
 
 export class SoloGameUIStore {
 	
 	@observable public game: SoloGame;
-	@observable public selectedConstructionIndexes: number[];
 	@observable public selectedHouse: House;
 	@observable public selectedEffectTarget: House;
+	@observable public selectedRoundabout: House;
 	@observable public phaseManager: SoloPhaseManager;
 	@observable public optionsPlay: OptionsPlay;
-	@observable public selectedRoundabout: House;
+	@observable public selectedCombinationIndex: number;
 	
-	constructor(game: SoloGame) {
+	constructor(game: SoloGame, phaseManager = new SoloPhaseManager()) {
 		this.game = game;
+		this.phaseManager = phaseManager
 		this.reset();
 	}
 	
 	reset() {
-		this.selectedConstructionIndexes = [];
+		this.selectedCombinationIndex = null;
 		this.selectedHouse = null;
 		this.selectedRoundabout = null;
 		this.selectedEffectTarget = null;
 		this.optionsPlay = {};
-		this.phaseManager = new SoloPhaseManager();
+		this.phaseManager.goTo(SoloPhase.ConstructionSelection)
+		this.game.manager.constructions.nextTurn()
 	}
 
 	canGoNext(): boolean {
-		console.log('canGoNext', this.phaseManager.currentPhase)
+		// console.log('canGoNext', this.phaseManager.currentPhase)
 		switch (this.phaseManager.currentPhase) {
 			case SoloPhase.ConstructionSelection:
-				console.log('on', this.selectedConstructionIndexes.length , this.selectedConstructionIndexes.length === 2)
-				return this.selectedConstructionIndexes.length === 2
+				return !!this.computedConstruction
 			case SoloPhase.HouseSelection:
 				return !!this.selectedHouse
 			case SoloPhase.EffectChoices:
@@ -47,19 +49,29 @@ export class SoloGameUIStore {
 	}
 
 	next(){
-		if(this.canGoNext()){
+		let goNext = this.canGoNext()
+		if(goNext){
+			// before next
 			if(this.currentPhase === SoloPhase.Confirmation){
 				this.game.play(this.computedConstruction, this.selectedHouse, this.optionsPlay)
 				this.reset()
-				this.game.manager.constructions.nextTurn()
+				goNext = false
+			}
+			if(this.currentPhase === SoloPhase.ConstructionSelection && (!this.computedConstruction || !this.game.constructionCanBeConstructed(this.computedConstruction))){
+				goNext = false
+				this.phaseManager.goTo(this.game.mode === GameMode.Advanced ? SoloPhase.RoundAbout : SoloPhase.Confirmation)
 			}
 
-			this.phaseManager.next()
+			goNext && this.phaseManager.next()
 
-			// Before implementing effects
-			// if(this.currentPhase === SoloPhase.EffectChoices){
-			// 	this.next()
-			// }
+			// after next
+			if(
+				// Auto skip if effect is automatically used
+				this.currentPhase === SoloPhase.EffectChoices && (this.computedConstruction && Effect.isAutoActivateEffect(this.computedConstruction.effect))
+			){
+				this.phaseManager.next()
+			}
+
 		}
 	}
 
@@ -82,38 +94,15 @@ export class SoloGameUIStore {
 		return this.phaseManager.currentPhase
 	}
 
-	switchConstruction(construction: Construction){
-		let indexOfConstruction = this.game.manager.constructions.actualCards.indexOf(construction)
-        let indexOfSelectedConstruction = this.selectedConstructionIndexes.indexOf(indexOfConstruction)
-        if(indexOfSelectedConstruction === -1){
-			this.selectConstruction(construction)
-		}
-		else {
-			this.unselectConstruction(construction)
-		}
-	}
-
-	selectConstruction(construction: Construction){
-		if(this.selectedConstructionIndexes.length < 2){
-			let index = this.game.manager.constructions.actualCards.indexOf(construction)
-			this.selectedConstructionIndexes.push(index)
-		}
-		else {
-			console.warn('too many selected construction')
-		}
-	}
-
-	unselectConstruction(construction: Construction){
-		let indexConstruction = this.game.manager.constructions.actualCards.indexOf(construction)
-		this.selectedConstructionIndexes = this.selectedConstructionIndexes.filter( index => index !== indexConstruction)
-	}
-
-	switchSelectedConstructions(){
-		this.selectedConstructionIndexes = [this.selectedConstructionIndexes[1], this.selectedConstructionIndexes[0]]
-	}
-	
 	isInPhase(soloPhase: SoloPhase){
 		return this.phaseManager.currentPhase === soloPhase
+	}
+
+	handleClickOnPossibleCard = (index) => {
+		let c = this.game.allCardsCombinations[index]
+		if(!this.game.cardIsDisabled(c)) {
+			this.selectedCombinationIndex = index
+		}
 	}
 
 	handleEstateChoice(choice: number){
@@ -150,26 +139,28 @@ export class SoloGameUIStore {
 	}
 
 	handleParkClick = () => {
-		// console.log('handleParkClick')
+		console.log('handleParkClick')
 	}
 
 	handleStreetClick = () => {
-		// console.log('handleStreetClick')
-	}
-
-	get computedConstruction(){
-		// return new Construction(this.selectedConstructions[0].houseNumber, this.selectedConstructions[1].effect)
-		return new Construction(this.selectedConstructions[0].houseNumber, EffectType.Surveyor)
-	}
-
-	get selectedConstructions(){
-		return this.selectedConstructionIndexes.map(i => 
-			this.game.manager.constructions.actualCards[i]
-		)
+		console.log('handleStreetClick')
 	}
 
 	get currentPhase(){
 		return this.phaseManager.currentPhase
+	}
+
+	get constructionSkipped(){
+		return this.currentPhase > SoloPhase.HouseSelection && this.selectedHouse === null
+	}
+
+	get effectSkipped(){
+		// Not true. to work
+		return this.currentPhase > SoloPhase.EffectChoices && this.optionsPlay === {}
+	}
+
+	get computedConstruction(){
+		return this.selectedCombinationIndex && this.game.allCardsCombinations[this.selectedCombinationIndex]
 	}
 
 }

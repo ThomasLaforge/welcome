@@ -14,7 +14,6 @@ export class SoloConstructionModule {
 
 	constructor(constructionDeck = new SoloConstructionDeck(constructions)) {
         this.constructionDeck = constructionDeck;
-        this.nextTurn()
     }
 
     get remainingTurn(){
@@ -26,7 +25,6 @@ export class SoloConstructionModule {
     }
 
     nextTurn(){
-        console.log('next turn')
         let nextCards = this.constructionDeck.drawCards(CARD_PER_TURN)
         let isSoloSpecialCard = nextCards.filter(c => c.kind === 'SpecialSoloCard').length === 1
 

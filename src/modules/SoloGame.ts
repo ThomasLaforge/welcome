@@ -65,7 +65,40 @@ export class SoloGame {
 	}
 
 	constructionCanBeConstructed(construction: Construction){
-		return this.getAllHouseConstructable(construction).length
+		return !!this.getAllHouseConstructable(construction).length
+	}
+
+	get possibleCards(){
+		return this.allCardsCombinations.filter(c => this.constructionCanBeConstructed(c))
+	}
+	
+	get allCardsCombinations(){
+		let possibleCards: Construction[] = []
+		let cards = this.manager.constructions.actualCards
+        for (let i = 0; i < cards.length; i++) {
+            for (let j = 0; j < cards.length; j++) {
+                if(i !== j){
+                    let cardA = cards[i]
+					let cardB = cards[j]
+					let computedConstruction = new Construction(cardB.houseNumber, cardA.effect)
+					possibleCards.push(computedConstruction)
+                }                
+            }            
+		}
+		// Reorder for UI. Maybe in UI (Css: flex order / React render)
+        return [
+			possibleCards[0],
+			possibleCards[2],
+			possibleCards[4],
+			possibleCards[1],
+			possibleCards[3],
+			possibleCards[5]
+		]
+		// return possibleCards
+	}
+
+	cardIsDisabled(c: Construction){
+		return this.possibleCards.filter(card => c.isEqual(card)).length === 0
 	}
 
 	houseCanBeSelected(h: House, construction: Construction){
