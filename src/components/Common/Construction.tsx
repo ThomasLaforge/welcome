@@ -25,7 +25,7 @@ class Construction extends React.Component <ConstructionProps, ConstructionState
         return (
             <div className="construction" onClick={() => this.props.onClick && this.props.onClick()}>
                 <div className='construction-number'>{this.props.card.houseNumber}</div>
-                <ConstructionEffect effect={this.props.card.effect} />
+                <ConstructionEffect effect={this.props.card.effectType} />
             </div>
         );
     }

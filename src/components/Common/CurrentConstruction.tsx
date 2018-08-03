@@ -26,7 +26,7 @@ class CurrentConstruction extends React.Component <CurrentConstructionProps, Cur
             <div className="current-construction">
                 <div className='house-number'>{this.props.card.houseNumber}</div>
                 <div className='effect'>
-                    <ConstructionEffect effect={this.props.card.effect} />
+                    <ConstructionEffect effect={this.props.card.effectType} />
                 </div>
             </div>
         );

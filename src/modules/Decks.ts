@@ -3,6 +3,7 @@ import {Plan} from './Plan'
 import {Construction} from './Construction'
 import { JsonPlan, GameMode, SpecialSoloCard } from './Welcome';
 import { Mission } from './Mission';
+import { Effect } from './Effect';
 
 /**
  * Plans
@@ -51,7 +52,7 @@ Object.keys(datasConstruction).forEach( (effect: string) => {
         let houseNumber = Number.parseInt(houseNumberStr)
         // console.log('nb cards', datas[effect][houseNumberStr])
         for (let index = 0; index < datasConstruction[effect][houseNumberStr]; index++) {
-            constructionList.push(new Construction(houseNumber, effectType))
+            constructionList.push(new Construction(houseNumber, new Effect(effectType)))
         }
     })
 })

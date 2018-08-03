@@ -24,7 +24,8 @@ export class SoloConstructionModule {
         p.complete()
     }
 
-    nextTurn(){
+    // next turn return true if draw special card 
+    nextTurn(): boolean {
         let nextCards = this.constructionDeck.drawCards(CARD_PER_TURN)
         let isSoloSpecialCard = nextCards.filter(c => c.kind === 'SpecialSoloCard').length === 1
 
@@ -34,6 +35,7 @@ export class SoloConstructionModule {
         }
 
         this.actualCards = nextCards as Construction[]
+        return isSoloSpecialCard
     }
     
 }

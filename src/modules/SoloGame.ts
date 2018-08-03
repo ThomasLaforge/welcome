@@ -4,8 +4,8 @@ import { SoloWelcomeModulesManager } from './SoloWelcomeModulesManager';
 import {Player} from './Player'
 import { Construction } from './Construction';
 import {OptionsPlay, GameMode, PlanLevel, EffectType} from './Welcome'
-import { House } from './House';
-import { Street } from './Street';
+import { Field } from './Field';
+import { Plan } from './Plan';
 
 export class SoloGame {
 
@@ -46,7 +46,7 @@ export class SoloGame {
 		this.nbUnbuiltUsed = 0;
 	}
     
-    play(construction: Construction, house?: House, options?: OptionsPlay){
+    play(construction: Construction, house?: Field, options?: OptionsPlay){
 		console.log('Game:play', construction, house, options)
 		house.build(construction)
 		if(options){
@@ -56,16 +56,59 @@ export class SoloGame {
 		}
 	}
 
+	getPlansComplete(){
+		return this.manager.plans.plans.filter(p => this.isPlanComplete(p))
+	}
+
+	isAtLeatOnePlanComplete(){
+		return this.getPlansComplete().length > 0
+	}
+
+	isPlanComplete(p:Plan){
+		let mission = p.mission.constructionNeeded
+		let ownDistrictLengths = this.map.getDistrictsForPlansLengths()
+		const objectifyMission = (mission: number[]) => {
+			let obj = {}
+			mission.forEach(elt => {
+				obj[elt] = obj[elt] || 0
+				obj[elt]++
+			})
+			return obj
+		}
+
+		let missionObj = objectifyMission(mission)
+		let districtsObj = objectifyMission(ownDistrictLengths)
+
+		console.log('plan complete?', missionObj, districtsObj)
+
+		let constructionSizes = Object.keys(missionObj)
+		let constructionLengthAvailable = (i) => {
+			let constructionLengthToTest = constructionSizes[i]
+			return districtsObj[constructionLengthToTest] >= missionObj[constructionLengthToTest]
+		}
+
+		let i = 0
+		while(i < constructionSizes.length && constructionLengthAvailable(i)){
+			i++
+		}
+
+		return i === constructionSizes.length
+	}
+
 	getAllHouseConstructable(construction: Construction){
 		let houses = []
 		this.map.streets.forEach(s => {
-			houses = houses.concat(s.houses.filter(h => this.houseCanBeSelected(h, construction)))
+			houses = houses.concat(s.fields.filter(h => this.fieldCanBeSelected(h, construction)))
 		})
 		return houses
 	}
 
 	constructionCanBeConstructed(construction: Construction){
 		return !!this.getAllHouseConstructable(construction).length
+	}
+
+	getAllBisPossible(){
+		return this.map.getAllBisPossible()
 	}
 
 	get possibleCards(){
@@ -101,16 +144,16 @@ export class SoloGame {
 		return this.possibleCards.filter(card => c.isEqual(card)).length === 0
 	}
 
-	houseCanBeSelected(h: House, construction: Construction){
+	fieldCanBeSelected(h: Field, construction: Construction){
 		let canBeSelected = !h.built
 		let street = this.map.getStreetOfHouse(h)
-		let indexOfHouse = street.houses.indexOf(h)
+		let indexOfHouse = street.fields.indexOf(h)
 		let i;
 
 		// check left is ok
 		i = 0
 		while(canBeSelected && i < indexOfHouse){
-			let currentHouse = street.houses[i]
+			let currentHouse = street.fields[i]
 			if(currentHouse.construction && construction.houseNumber < currentHouse.construction.houseNumber){
 				canBeSelected = false
 			}
@@ -120,7 +163,7 @@ export class SoloGame {
 		// check right is ok
 		i = indexOfHouse + 1
 		while(canBeSelected && i < street.length){
-			let currentHouse = street.houses[i]
+			let currentHouse = street.fields[i]
 			if(currentHouse.construction && construction.houseNumber > currentHouse.construction.houseNumber){
 				canBeSelected = false
 			}
@@ -131,7 +174,13 @@ export class SoloGame {
 	}
 
 	completePlan(planLevel: PlanLevel){
+		// win reward
+		
+		// completePlan
 		this.plansDone.push(planLevel)
+
+		// mark houses used
+
 	}
 
 	planScore(planLevel: PlanLevel){

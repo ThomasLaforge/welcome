@@ -1,4 +1,6 @@
 import { Fence } from "./Fence";
+import { Construction } from "./Construction";
+import { Field } from "./Field";
 
 export enum EffectType {
     Surveyor = 0,
@@ -53,7 +55,9 @@ export enum GameMode {
 
 export interface OptionsPlay {
     estateChoice?: number,
-    surveyorFence?: Fence
+    surveyorFence?: Fence,
+    tempAgencyConstruction?: Construction
+    bisField?: Field
 }
 
 export interface SpecialSoloCard {

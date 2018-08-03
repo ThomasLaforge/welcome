@@ -30,7 +30,7 @@ export default class Summary extends React.Component <SummaryProps, SummaryState
                             Vous souhaitez construire cette construction:
                         </div>
                         <div className="merged-construction">
-                            <Construction card={uiSolo.computedConstruction} />
+                            <Construction card={uiSolo.actualConstructionToBuild} />
                         </div>                            
                     </div>
                     :
@@ -50,11 +50,11 @@ export default class Summary extends React.Component <SummaryProps, SummaryState
                         Et appliquer cet effet:
                     </div>                            
                     <div className='confirmation-effect-type'>
-                        <ConstructionEffect effect={uiSolo.computedConstruction && uiSolo.computedConstruction.effect} />
+                        <ConstructionEffect effect={uiSolo.computedConstruction && uiSolo.computedConstruction.effectType} />
                     </div>
                     <div className='confirmation-effect-where-text'>
-                        Au lieu indiqué par une bordure bleu 
-                    </div>    
+                        Au lieu indiqué par une bordure gris
+                    </div>
                 </div>
 
                 {/* Roundabout */}

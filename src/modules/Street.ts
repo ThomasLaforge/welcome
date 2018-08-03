@@ -1,34 +1,80 @@
 import {observable} from 'mobx'
 
 import { EffectType } from './Welcome'
-import {House} from './House'
+import {Field} from './Field'
 import { Fence } from './Fence';
+import { District } from './District';
+import { House } from './House';
 
 
 export class Street {
 
-    @observable public houses: House[];
+    @observable public fields: Field[];
     @observable public streetLine: number; //start to 0
     @observable public fences: Fence[];
-    @observable public usedHouseForPlans: House[];
+    @observable public usedHouseForPlans: Field[];
 
-	constructor(streetLine: number, houses: House[], fences: Fence[] = [], usedHouseForPlans: House[] = []) {
+	constructor(streetLine: number, fields: Field[], fences: Fence[] = [], usedHouseForPlans: Field[] = []) {
         this.streetLine = streetLine
-        this.houses = houses
+        this.fields = fields
         this.usedHouseForPlans = usedHouseForPlans
         if(!fences.length){
-            for (let i = 0; i < this.houses.length - 1; i++) {
-                fences.push(new Fence(i))
+            for (let i = 0; i < this.fields.length - 1; i++) {
+                fences.push(new Fence(i, streetLine))
             }
         }
         this.fences = fences
     }
 
-    getDistricts(){
-        return []
+    getDistrictsForPlans(){
+        return this.districts.filter(d => d.isReasyForPlan())
     }
 
-    getFreeFences(){
+    get districts(){
+        let lastFenceIndex = 0
+        let districts = this.fences.map(f => {
+            let houses = this.fields.slice(lastFenceIndex, f.position)
+            lastFenceIndex = f.position + 1
+            return new District(houses)
+        })
+        // Add last
+        let lastDistrict = new District(this.fields.slice(lastFenceIndex))
+        districts.push(lastDistrict)
+        
+        return districts
+    }
+    get CompleteDistricts(){
+        return this.districts.filter(d => d.isComplete())
+    }
+    get notCompleteDistricts(){
+        return this.districts.filter(d => !d.isComplete())
+    }
+
+    get possiblyBisHouses(){
+        return this.notCompleteDistricts.reduce( (houses: Field[], d) =>
+            d.fields.filter( (h, i) => {
+                let leftNeighbor = i > 0 && d.fields[i-1]
+                let rightNeighbor = i < d.fields.length - 1 - 1 && d.fields[i+1]
+                return h.built && (!leftNeighbor.built || !rightNeighbor.built)
+            })
+        , [])
+    }
+    getNeighborsToBuild(house: Field){
+        let neighbors = []
+        let houseIndex = this.fields.indexOf(house)
+        if(houseIndex - 1 >= 0 && !this.fields[houseIndex - 1].built && !this.fences[houseIndex - 1].built){
+            neighbors.push(this.fields[houseIndex - 1])
+        }
+        if(houseIndex + 1 < this.length && !this.fields[houseIndex + 1].built && !this.fences[houseIndex].built){
+            neighbors.push(this.fields[houseIndex - 1])
+        }
+        return neighbors
+    }
+
+    get builtFences(){
+        return this.fences.filter(f => f.built)
+    }
+    get freeFences(){
         return this.fences.filter(f => !f.built)
     }
 
@@ -48,7 +94,7 @@ export class Street {
     }
 
     get nbParkChecked(){
-        return this.houses.filter(h => h.construction && h.construction.effect === EffectType.Landscaper).length
+        return this.fields.filter(f => f.isHouse() && (f.construction as House).effect.type === EffectType.Landscaper).length
     }
     
     get parkScore(){
@@ -56,7 +102,7 @@ export class Street {
     }
 
     get length(){
-        return this.houses.length
+        return this.fields.length
     }
     
 }

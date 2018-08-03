@@ -14,6 +14,9 @@ import { SoloPhase, EffectType } from '../../modules/Welcome';
 import ConstructionEffect from '../Common/ConstructionEffect';
 import GameStepper from '../Common/GameStepper';
 import Summary from './Summary';
+import EstateZone from './EffectZones/EstateZone'
+import BisZone from './EffectZones/BisZone'
+import TempAgencyZone from './EffectZones/TempAgencyZone'
 
 interface PlayerActionsProps extends DefaultProps {
 }
@@ -38,6 +41,10 @@ class PlayerActions extends React.Component <PlayerActionsProps, PlayerActionsSt
         console.log('handle next')
         this.props.ui.solo.next()
     }
+    handleSkip = () => {
+        console.log('handle skip')
+        this.props.ui.solo.skip()
+    }
 
     handleClickOnEstateChoice = (choice: number) => {
         console.log('estate choice', choice)
@@ -46,6 +53,8 @@ class PlayerActions extends React.Component <PlayerActionsProps, PlayerActionsSt
 
     render() {
         const uiSolo = this.props.ui.solo
+        const showSkipBtn = false
+        console.log('effect type', uiSolo.computedConstruction && uiSolo.computedConstruction.effect, EffectType.TempAgency )
 
         return <div className='player-actions'>
             <div className='player-actions-info'>
@@ -59,25 +68,18 @@ class PlayerActions extends React.Component <PlayerActionsProps, PlayerActionsSt
                 }
                 {uiSolo.isInPhase(SoloPhase.HouseSelection) &&
                     <div className="merged-construction">
-                        <Construction card={uiSolo.computedConstruction}/>
+                        { uiSolo.computedConstruction.effectType === EffectType.TempAgency ?
+                            <TempAgencyZone />
+                        :
+                            <Construction card={uiSolo.computedConstruction} />
+                        }
                     </div>
                 }
                 {uiSolo.isInPhase(SoloPhase.EffectChoices) &&
                     <div className="effect-zone">
-                        <ConstructionEffect effect={uiSolo.computedConstruction.effect} />
-                        { uiSolo.computedConstruction.effect === EffectType.RealEstateAgent && 
-                        <React.Fragment>
-                            <div className='effect-zone-estate-text'></div>
-                            <div className='effect-estate-choices'>
-                                <div className='effect-estate-choices-1' onClick={() => this.handleClickOnEstateChoice(1)}>1</div>
-                                <div className='effect-estate-choices-2' onClick={() => this.handleClickOnEstateChoice(2)}>2</div>
-                                <div className='effect-estate-choices-3' onClick={() => this.handleClickOnEstateChoice(3)}>3</div>
-                                <div className='effect-estate-choices-4' onClick={() => this.handleClickOnEstateChoice(4)}>4</div>
-                                <div className='effect-estate-choices-5' onClick={() => this.handleClickOnEstateChoice(5)}>5</div>
-                                <div className='effect-estate-choices-6' onClick={() => this.handleClickOnEstateChoice(6)}>6</div>
-                            </div>
-                        </React.Fragment>                        
-                        }
+                        <ConstructionEffect effect={uiSolo.computedConstruction.effectType} />
+                        { uiSolo.computedConstruction.effectType === EffectType.RealEstateAgent && <EstateZone estateChoiceSelection={uiSolo.handleEstateChoice} /> }
+                        { uiSolo.computedConstruction.effectType === EffectType.Bis && <BisZone /> }
                     </div>
                 }
                 {uiSolo.isInPhase(SoloPhase.Confirmation) && <Summary />}
@@ -90,6 +92,14 @@ class PlayerActions extends React.Component <PlayerActionsProps, PlayerActionsSt
                 >
                     Back
                 </Button>
+                    {showSkipBtn && <Button 
+                        variant='raised'
+                        disabled={false}
+                        onClick={this.handleSkip}
+                    >
+                        Skip
+                    </Button>
+                }
                 <Button 
                     variant='raised'
                     onClick={this.handleNext}

@@ -4,7 +4,7 @@ import { WelcomeModulesManager } from './WelcomeModulesManager';
 import {Player} from './Player'
 import { Construction } from './Construction';
 import {OptionsPlay} from './Welcome'
-import { House } from './House';
+import { Field } from './Field';
 
 export class Game {
 
@@ -27,8 +27,8 @@ export class Game {
 		this.endDate = null
 	}
     
-    play(construction: Construction, player: Player, house?: House, options?: OptionsPlay){
-        console.log('Game:play', construction, house, options, player)
+    play(construction: Construction, player: Player, house?: Field, options?: OptionsPlay){
+		console.log('Game:play', construction, house, options, player)
 	}
 
 }

@@ -2,9 +2,11 @@ import {observable} from 'mobx'
 
 export class Fence {
     public position: number;
-    @observable built: boolean;
+    public street: number;
+    @observable public built: boolean;
 
-    constructor(position: number, built = false){
+    constructor(position: number, street: number, built = false){
+        this.street = street
         this.position = position
         this.built = built
     }

@@ -2,11 +2,13 @@ import * as React from 'react';
 import {observer, inject} from 'mobx-react';
 import { DefaultProps, injector } from '../../lib/mobxInjector'
 import { Fence as FenceModel } from '../../modules/Fence';
+import { SoloPhase } from '../../modules/Welcome';
 
 interface FenceProps extends DefaultProps {
     fence: FenceModel
     streetNumber: number
-    onClick: Function
+    onClick?: Function
+    show?: boolean
 }
 interface FenceState {
 }
@@ -27,17 +29,22 @@ class Fence extends React.Component <FenceProps, FenceState> {
             className += ' ' + 'fence-built'
         }
         else {
-            if(this.props.ui.solo.optionsPlay.surveyorFence === this.props.fence){
-                className += ' ' + 'fence-selected'
+            if([SoloPhase.EffectChoices, SoloPhase.RoundAbout, SoloPhase.Confirmation].indexOf(this.props.ui.solo.currentPhase) !== -1){
+                if(this.props.ui.solo.optionsPlay.surveyorFence === this.props.fence){
+                    className += ' ' + 'fence-selected'
+                }
+                else {
+                    className += ' ' + 'fence-selectable'
+                }
             }
-            else {
-                className += ' ' + 'fence-selectable'
+            else{
+                return null
             }
         }
 
         return <div 
             className={className} 
-            onClick={() => this.props.onClick()}
+            onClick={() => this.props.onClick && this.props.onClick()}
         />
     }
 }

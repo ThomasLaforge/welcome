@@ -1,63 +1,17 @@
-import { observable } from "mobx";
+import {FieldConstruction} from './FieldConstruction'
+import { Effect } from './Effect';
 
-import { Construction } from './Construction'
-import ConstructionEffect from "../components/Common/ConstructionEffect";
-import { EffectType } from "./Welcome";
+export class House extends FieldConstruction {
 
-export class House {
+	public effect: Effect;
 
-    @observable public leftFence: boolean;
-    @observable public rightFence: boolean;
-    @observable public hasPool: boolean;
-    @observable public construction: Construction;
-    @observable public hasRoundabout: boolean;
-
-	constructor(
-        hasPool = false,
-        leftFence = false, 
-        rightFence = false, 
-        hasRoundabout = false,
-        construction = null
-    ) {
-		this.leftFence = leftFence;
-		this.rightFence = rightFence;
-		this.hasPool = hasPool;
-		this.hasRoundabout = hasRoundabout;
-		this.construction = construction;
-    }
-    
-    get built(){
-        return !!this.construction
-    }
-    build(construction: Construction){
-        this.construction = construction
+    constructor(houseNumber: number, effect: Effect){
+		super(houseNumber)
+		this.effect = effect
     }
 
-    buildRoundabout(){
-        this.hasRoundabout = true
-    }
-    destroyRoundabout(){
-        this.hasRoundabout = true
-    }
-    
-    // Fences methods
-    createLeftFence(){
-        this.leftFence = true
-    }
-    destroyLeftFence(){
-        this.leftFence = false
-    }
-    createRightFence(){
-        this.rightFence = true
-    }
-    destroyRightFence(){
-        this.rightFence = false
-    }
-
-    get hasPoolBuilt(){
-        return  this.construction 
-                && this.construction.effect === EffectType.PoolManufacturer 
-                && this.hasPool
-    }
+	get effectType(){
+		return this.effect.type
+	}
 
 }

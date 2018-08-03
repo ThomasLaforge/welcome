@@ -6,7 +6,7 @@ import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 
-import { GameMode } from '../../modules/Welcome';
+import { GameMode, SoloPhase, EffectType } from '../../modules/Welcome';
 
 interface GameStepperProps extends DefaultProps {
 }
@@ -25,6 +25,9 @@ class GameStepper extends React.Component <GameStepperProps, GameStepperState> {
     renderStepperContent(){
         // console.log('render stepper content', this.props.ui.solo.activePlayerActionStep)
         return <div className='player-actions-stepper-content'>
+            {this.props.ui.solo.currentPhase === SoloPhase.EffectChoices && this.props.ui.solo.actualConstructionToBuild.effectType === EffectType.Surveyor &&
+                `Choissisez une bordure à construire`
+            }
         </div>
     }
 

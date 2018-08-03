@@ -24,7 +24,7 @@ class LastConstruction extends React.Component <LastConstructionProps, LastConst
     render() {
         return (
             <div className="last-construction">
-                <ConstructionEffect effect={this.props.card.effect} />
+                <ConstructionEffect effect={this.props.card.effectType} />
             </div>
         );
     }

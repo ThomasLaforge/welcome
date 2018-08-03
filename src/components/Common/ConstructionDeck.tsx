@@ -19,7 +19,7 @@ class ConstructionDeck extends React.Component <ConstructionDeckProps, Construct
     renderConstructions(){
         return this.props.manager.constructions.constructionDeck.arrayDeck.map( (c, k) =>
             <span key={k}>
-                {c.houseNumber} : {c.effect} ///
+                {c.houseNumber} : {c.effect}
             </span>
         )
     }

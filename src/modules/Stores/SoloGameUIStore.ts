@@ -3,16 +3,16 @@ import { SoloGame } from '../SoloGame';
 import { Construction } from '../Construction';
 import { SoloPhaseManager } from '../SoloPhaseManager';
 import { SoloPhase, GameMode, OptionsPlay, EffectType } from '../Welcome'
-import { House } from '../House';
+import { Field } from '../Field';
 import { Fence } from '../Fence';
 import { Effect } from '../Effect';
 
 export class SoloGameUIStore {
 	
 	@observable public game: SoloGame;
-	@observable public selectedHouse: House;
-	@observable public selectedEffectTarget: House;
-	@observable public selectedRoundabout: House;
+	@observable public selectedHouse: Field;
+	@observable public selectedEffectTarget: Field;
+	@observable public selectedRoundabout: Field;
 	@observable public phaseManager: SoloPhaseManager;
 	@observable public optionsPlay: OptionsPlay;
 	@observable public selectedCombinationIndex: number;
@@ -53,26 +53,49 @@ export class SoloGameUIStore {
 		if(goNext){
 			// before next
 			if(this.currentPhase === SoloPhase.Confirmation){
-				this.game.play(this.computedConstruction, this.selectedHouse, this.optionsPlay)
+				console.log('play')
+				this.game.play(this.actualConstructionToBuild, this.selectedHouse, this.optionsPlay)
 				this.reset()
-				goNext = false
 			}
-			if(this.currentPhase === SoloPhase.ConstructionSelection && (!this.computedConstruction || !this.game.constructionCanBeConstructed(this.computedConstruction))){
+			else if(this.currentPhase === SoloPhase.ConstructionSelection && (!this.actualConstructionToBuild || !this.game.constructionCanBeConstructed(this.actualConstructionToBuild))){
+				console.log('no play so go at end')				
 				goNext = false
 				this.phaseManager.goTo(this.game.mode === GameMode.Advanced ? SoloPhase.RoundAbout : SoloPhase.Confirmation)
 			}
 
+			console.log('actually go next?', goNext)
 			goNext && this.phaseManager.next()
 
 			// after next
-			if(
+			if( 
 				// Auto skip if effect is automatically used
-				this.currentPhase === SoloPhase.EffectChoices && (this.computedConstruction && Effect.isAutoActivateEffect(this.computedConstruction.effect))
+				this.currentPhase === SoloPhase.EffectChoices && (this.computedConstruction && Effect.isAutoActivateEffect(this.computedConstruction.effectType))
 			){
 				this.phaseManager.next()
 			}
 
 		}
+	}
+
+	skip(){
+		// When ? => 
+		if(this.currentPhase === SoloPhase.RoundAbout){
+			this.selectedRoundabout = null
+		}
+		if(this.currentPhase === SoloPhase.EffectChoices){
+			if(this.actualConstructionToBuild.effectType === EffectType.Bis){
+				this.optionsPlay.bisField = null
+			}
+			if(this.actualConstructionToBuild.effectType === EffectType.RealEstateAgent){
+				this.optionsPlay.estateChoice = null
+			}
+			if(this.actualConstructionToBuild.effectType === EffectType.Surveyor){
+				this.optionsPlay.surveyorFence = null
+			}
+		}
+
+		this.next()
+
 	}
 
 	back(){
@@ -110,11 +133,11 @@ export class SoloGameUIStore {
 		this.optionsPlay.estateChoice = choice
 	}
 
-	handleHouseClick = (house: House) => {
+	handleHouseClick = (house: Field) => {
 		console.log('handleHouseClick', house)
 		switch (this.currentPhase) {
 			case SoloPhase.HouseSelection:
-				if(this.game.houseCanBeSelected(house, this.computedConstruction)) {
+				if(this.game.fieldCanBeSelected(house, this.actualConstructionToBuild)) {
 					this.selectedHouse = house
 				}
 				break;
@@ -135,7 +158,9 @@ export class SoloGameUIStore {
 
 	handleFenceClick = (f: Fence) => {
 		console.log('handle fence click')
-		this.optionsPlay.surveyorFence = f
+		if(this.currentPhase === SoloPhase.EffectChoices && this.actualConstructionToBuild.effect.type === EffectType.Surveyor){
+			this.optionsPlay.surveyorFence = f
+		}
 	}
 
 	handleParkClick = () => {
@@ -160,7 +185,46 @@ export class SoloGameUIStore {
 	}
 
 	get computedConstruction(){
-		return this.selectedCombinationIndex && this.game.allCardsCombinations[this.selectedCombinationIndex]
+		return (this.selectedCombinationIndex || this.selectedCombinationIndex === 0) && this.game.allCardsCombinations[this.selectedCombinationIndex]
 	}
+
+	get actualConstructionToBuild(){
+		return (this.optionsPlay && this.optionsPlay.tempAgencyConstruction) || this.computedConstruction
+	}
+
+	
+    get canDecrementConstruction(){
+		if(!this.optionsPlay.tempAgencyConstruction){
+			this.optionsPlay.tempAgencyConstruction = this.computedConstruction
+		}
+        let modified = this.optionsPlay.tempAgencyConstruction.houseNumber
+        let initial = this.computedConstruction.houseNumber
+        return initial - modified < 2 
+    }
+    get canIncrementConstruction(){
+		if(!this.optionsPlay.tempAgencyConstruction){
+			this.optionsPlay.tempAgencyConstruction = this.computedConstruction
+		}
+        let modified = this.optionsPlay.tempAgencyConstruction.houseNumber
+        let initial = this.computedConstruction.houseNumber
+        return modified - initial < 2 
+    }
+
+    handleDecrementConstruction = () => {
+        if(this.canDecrementConstruction) {
+			this.optionsPlay.tempAgencyConstruction = new Construction(
+				this.optionsPlay.tempAgencyConstruction ? this.optionsPlay.tempAgencyConstruction.houseNumber - 1 : this.computedConstruction.houseNumber - 1, 
+				this.computedConstruction.effect
+			)
+		}
+    }
+    handleIncrementConstruction = () => {
+        if(this.canIncrementConstruction) {
+			this.optionsPlay.tempAgencyConstruction = new Construction(
+				this.optionsPlay.tempAgencyConstruction ? this.optionsPlay.tempAgencyConstruction.houseNumber + 1 : this.computedConstruction.houseNumber + 1, 
+				this.computedConstruction.effect
+			)		
+		}
+    }
 
 }

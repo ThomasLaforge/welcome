@@ -1,20 +1,23 @@
 import {observable} from 'mobx'
-
-import { EffectType } from './Welcome'
+import {Effect} from './Effect'
 
 export class Construction {
 
     @observable public houseNumber: number;
-	@observable public effect: EffectType;
-	public kind = 'Construction';
+	@observable public effect: Effect;
+	public kind = 'Construction'
 
-	constructor(houseNumber: number, effect: EffectType) {
+	constructor(houseNumber: number, effect: Effect) {
 		this.houseNumber = houseNumber;
 		this.effect = effect;
 	}
 
-	isEqual(c: Construction){
-		return c.houseNumber === this.houseNumber && c.effect === this.effect 
+	isEqual(h: Construction){
+		return h.houseNumber === this.houseNumber && h.effectType === this.effectType
+	}
+
+	get effectType(){
+		return this.effect.type
 	}
 
 }

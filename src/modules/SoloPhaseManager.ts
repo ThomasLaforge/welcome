@@ -20,10 +20,12 @@ export class SoloPhaseManager {
     next(){
         this.currentPhase++
         if(this.mode === GameMode.Normal && this.currentPhase === SoloPhase.RoundAbout){
+            console.log('next cause normal mode and in roundabout phase')
             this.next()
         }
-
+        console.log('next', this.length, this.currentPhase)
         if(this.currentPhase === this.length){
+            console.log('next: end to start')
             this.currentPhase = SoloPhase.ConstructionSelection
         }
     }
