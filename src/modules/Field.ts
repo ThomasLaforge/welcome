@@ -1,6 +1,6 @@
 import { observable } from "mobx";
 
-import { Construction } from './Construction'
+import { FieldConstruction } from './FieldConstruction'
 import ConstructionEffect from "../components/Common/ConstructionEffect";
 import { EffectType } from "./Welcome";
 import { House } from "./House";
@@ -34,7 +34,7 @@ export class Field {
     get built(){
         return !!this.construction
     }
-    build(construction: Construction){
+    build(construction: FieldConstruction){
         this.construction = construction
     }
 

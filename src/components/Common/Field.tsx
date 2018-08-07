@@ -37,20 +37,20 @@ class Field extends React.Component <FieldProps, FieldState> {
         let field = this.props.field
         let isHouseSelected = field === uiSolo.selectedHouse
 
-        let fieldClassName = 'house-line-' + this.props.streetLine + '-spot-'+ this.props.position +' house'
-        if(isHouseSelected) { fieldClassName += ' ' + 'house-selected' }
+        let fieldClassName = 'field-line-' + this.props.streetLine + '-spot-'+ this.props.position +' house'
+        if(isHouseSelected) { fieldClassName += ' ' + 'field-selected' }
         if(     uiSolo.currentPhase === SoloPhase.HouseSelection 
             &&  game.fieldCanBeSelected(field, uiSolo.actualConstructionToBuild)
         ) { 
-            fieldClassName += ' ' + 'house-can-be-selected'
+            fieldClassName += ' ' + 'field-can-be-selected'
         }
         return <div 
             key={this.props.streetLine + '-' + this.props.position} 
             className={fieldClassName} 
             onClick={() => this.props.onFieldClick(field)}
         >
-            <div className={field.hasPoolBuilt ? 'house-with-pool-construction-number' : 'house-construction-number'}>
-                {(field.construction && field.construction.houseNumber) + (field.isBis() && ' bis') }
+            <div className={field.hasPoolBuilt ? 'field-with-pool-construction-number' : 'field-construction-number'}>
+                {field.construction && field.construction.houseNumber} {field.isBis() && 'bis'}
             </div>
         </div>
     }

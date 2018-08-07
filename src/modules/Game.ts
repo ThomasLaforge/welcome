@@ -28,7 +28,7 @@ export class Game {
 	}
     
     play(construction: Construction, player: Player, house?: Field, options?: OptionsPlay){
-		console.log('Game:play', construction, house, options, player)
+		// console.log('Game:play', construction, house, options, player)
 	}
 
 }

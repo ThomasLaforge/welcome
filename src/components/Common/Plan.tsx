@@ -8,6 +8,7 @@ import { MissionType } from '../../modules/Welcome';
 
 interface PlanProps extends DefaultProps {
     plan: PlanModel
+    onClick?: Function
 }
 interface PlanState {
 }
@@ -38,7 +39,7 @@ class Plan extends React.Component <PlanProps, PlanState> {
         let classNameDone = plan.isComplete ? 'rewards-first-complete' : ''
 
         return (
-            <div className="plan" onClick={() => plan.complete() }>
+            <div className="plan" onClick={() => this.props.onClick && this.props.onClick() }>
                 <div className='plan-mission'>
                     {plan.mission.type === MissionType.District ? this.renderDistrictNeeded() : plan.mission.type}
                 </div>

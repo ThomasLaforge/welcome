@@ -6,18 +6,22 @@ import {Plan} from './Plan'
 
 export class PlanModule {
     @observable public deck: PlanDeck;
-    @observable public plans: Plan[];
+    @observable public plansSelected: Plan[];
     
 	constructor(gameMode = GameMode.Normal, deck: PlanDeck = new PlanDeck(gameMode), plans: Plan[] = []) {
-        this.plans = plans;
+        this.plansSelected = plans;
         this.deck = deck;
         this.initPlans();
     }
 
     resetComplete(){
-        this.plans.forEach(p => {
+        this.plansSelected.forEach(p => {
             p.isComplete = false
         })
+    }
+
+    completeAll(){
+        this.plansSelected.forEach(p => p.complete())
     }
     
     plansByLevel(l: PlanLevel){
@@ -29,15 +33,13 @@ export class PlanModule {
     }
 
     initPlans(){
-        this.plans = [
-            this.getRandomPlan(PlanLevel.One),
-            this.getRandomPlan(PlanLevel.Two),
-            this.getRandomPlan(PlanLevel.Three),
-        ]
+        this.plansSelected[PlanLevel.One]   = this.getRandomPlan(PlanLevel.One)
+        this.plansSelected[PlanLevel.Two]   = this.getRandomPlan(PlanLevel.Two)
+        this.plansSelected[PlanLevel.Three] = this.getRandomPlan(PlanLevel.Three)
     }
 
-    // allValidate(){
-    //     return this.plans.filter(p => p.complete()).length === this.plans.length
-    // }
+    getSelectedPlanByLevel(lvl: PlanLevel){
+        return this.plansSelected[lvl]
+    }
 
 }

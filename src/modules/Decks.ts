@@ -76,4 +76,9 @@ export class SoloConstructionDeck extends Deck<Construction | SpecialSoloCard> {
             this.addAtBottomMiddle(c)
         }
     }
+
+    get soloCardHasBeenDrawed(){
+        return this.arrayDeck.findIndex(c => !(c instanceof Construction) ) === -1
+    }
+
 }

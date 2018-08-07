@@ -28,7 +28,7 @@ class Manager extends React.Component <ManagerProps, ManagerState> {
             <div className="manager">
                 <Constructions constructions={manager.constructions} />
                 <hr />           
-                <Plans plans={manager.plans}/>
+                <Plans plans={manager.plans} />
             </div>
         );
     }

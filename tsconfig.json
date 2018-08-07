@@ -13,7 +13,8 @@
     "noImplicitThis": true,
     "noImplicitAny": false,
     "suppressImplicitAnyIndexErrors": true,
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "baseUrl": "."
   },
   "exclude": [
     // "node_modules",

@@ -51,7 +51,7 @@ class ScoreBoard extends React.Component <ScoreBoardProps, ScoreBoardState> {
                 <div key={i} className={'park-score park-score-' + i}>
                     {this.props.solo.parkScore(i)}
                 </div>
-            )            
+            )
         }
         parkScores.push(
             <div key={nbPark} className='total-park-score'>
@@ -103,21 +103,27 @@ class ScoreBoard extends React.Component <ScoreBoardProps, ScoreBoardState> {
     }
     renderRealEstateScores(){
         let estateScores = []
-        
+        let solo = this.props.solo
+
         for (let i = 0; i < 6; i++) {
+            let nbDistrictOfSize = solo.map.getNbCompleteDistricts(i+1) 
+            let districtEstateValue = solo.estate.getDistrictValue(i+1)
+            let multiplicator = solo.estate.getMultiplicator(i+1)
+            let score = nbDistrictOfSize * multiplicator
+
             // Estate improvements
             for (let j = 0; j < Math.min(4, i + 1); j++) {
                 estateScores.push(
-                    <div className={'estate-improvement estate-improvement-' + i + '-' + j} key={i + '-' + j}>{false ? 'X' : ''}</div>
+                    <div className={'estate-improvement estate-improvement-' + i + '-' + j} key={i + '-' + j}>{districtEstateValue > j ? 'X' : ''}</div>
                 )
             }
             // Mulitplicators
             estateScores.push(
-                <div className={'estate-multiplicator estate-multiplicator-' + i} key={i + 'multiplicator'}>0</div>
+                <div className={'estate-multiplicator estate-multiplicator-' + i} key={i + 'multiplicator'}>{nbDistrictOfSize}</div>
             )
             // Totals
             estateScores.push(
-                <div className={'estate-total estate-total-' + i} key={i + 'total'}>0</div>
+                <div className={'estate-total estate-total-' + i} key={i + 'total'}>{score}</div>
             )
         }
 
@@ -137,7 +143,7 @@ class ScoreBoard extends React.Component <ScoreBoardProps, ScoreBoardState> {
         }
         interimScores.push(
             <div key={this.props.solo.nbInterimUsed} className='total-interim-score'>
-                {this.props.solo.InterimScore}
+                {this.props.solo.interimScore}
             </div>
         )
 

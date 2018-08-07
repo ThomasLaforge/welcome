@@ -27,7 +27,7 @@ class Plans extends React.Component <PlansProps, PlansState> {
     }
 
     renderPlans(){
-        return this.props.plans.plans.map( (p, k) => <Plan plan={p} key={k} />)
+        return this.props.plans.plansSelected.map( (p, k) => <Plan plan={p} key={k} />)
     }
 
     render() {

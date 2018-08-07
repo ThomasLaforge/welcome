@@ -2,7 +2,7 @@ import * as React from 'react';
 import {observer, inject} from 'mobx-react';
 import { DefaultProps, injector } from '../../lib/mobxInjector'
 import { Fence as FenceModel } from '../../modules/Fence';
-import { SoloPhase } from '../../modules/Welcome';
+import { SoloPhase, EffectType } from '../../modules/Welcome';
 
 interface FenceProps extends DefaultProps {
     fence: FenceModel
@@ -29,7 +29,10 @@ class Fence extends React.Component <FenceProps, FenceState> {
             className += ' ' + 'fence-built'
         }
         else {
-            if([SoloPhase.EffectChoices, SoloPhase.RoundAbout, SoloPhase.Confirmation].indexOf(this.props.ui.solo.currentPhase) !== -1){
+            if( 
+                [SoloPhase.EffectChoices, SoloPhase.RoundAbout, SoloPhase.Confirmation].includes(this.props.ui.solo.currentPhase) 
+                && this.props.ui.solo.actualConstructionToBuild.effectType === EffectType.Surveyor
+            ){
                 if(this.props.ui.solo.optionsPlay.surveyorFence === this.props.fence){
                     className += ' ' + 'fence-selected'
                 }

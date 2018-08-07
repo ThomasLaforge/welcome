@@ -28,6 +28,9 @@ class GameStepper extends React.Component <GameStepperProps, GameStepperState> {
             {this.props.ui.solo.currentPhase === SoloPhase.EffectChoices && this.props.ui.solo.actualConstructionToBuild.effectType === EffectType.Surveyor &&
                 `Choissisez une bordure à construire`
             }
+            {this.props.ui.solo.currentPhase === SoloPhase.ConstructionSelection &&
+                `Cliquez sur la combinaison de construction qui vous convient`
+            }
         </div>
     }
 

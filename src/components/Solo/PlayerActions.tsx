@@ -34,20 +34,20 @@ class PlayerActions extends React.Component <PlayerActionsProps, PlayerActionsSt
     }
 
     handleBack = () => {
-        console.log('handle back')
+        // console.log('handle back')
         this.props.ui.solo.back()
     }
     handleNext = () => {
-        console.log('handle next')
+        // console.log('handle next')
         this.props.ui.solo.next()
     }
     handleSkip = () => {
-        console.log('handle skip')
+        // console.log('handle skip')
         this.props.ui.solo.skip()
     }
 
     handleClickOnEstateChoice = (choice: number) => {
-        console.log('estate choice', choice)
+        // console.log('estate choice', choice)
         this.props.ui.solo.handleEstateChoice(choice)
     }
 
@@ -67,19 +67,23 @@ class PlayerActions extends React.Component <PlayerActionsProps, PlayerActionsSt
                     />
                 }
                 {uiSolo.isInPhase(SoloPhase.HouseSelection) &&
-                    <div className="merged-construction">
+                    <div className="merged-construction-zone">
                         { uiSolo.computedConstruction.effectType === EffectType.TempAgency ?
                             <TempAgencyZone />
                         :
+                        <div className="merged-construction">
                             <Construction card={uiSolo.computedConstruction} />
+                        </div>
                         }
                     </div>
                 }
                 {uiSolo.isInPhase(SoloPhase.EffectChoices) &&
                     <div className="effect-zone">
                         <ConstructionEffect effect={uiSolo.computedConstruction.effectType} />
-                        { uiSolo.computedConstruction.effectType === EffectType.RealEstateAgent && <EstateZone estateChoiceSelection={uiSolo.handleEstateChoice} /> }
-                        { uiSolo.computedConstruction.effectType === EffectType.Bis && <BisZone /> }
+                        { uiSolo.computedConstruction.effectType === EffectType.RealEstateAgent && 
+                            <EstateZone estateChoiceSelection={uiSolo.handleEstateChoice} /> }
+                        { uiSolo.computedConstruction.effectType === EffectType.Bis && 
+                            <BisZone /> }
                     </div>
                 }
                 {uiSolo.isInPhase(SoloPhase.Confirmation) && <Summary />}
@@ -100,13 +104,14 @@ class PlayerActions extends React.Component <PlayerActionsProps, PlayerActionsSt
                         Skip
                     </Button>
                 }
-                <Button 
-                    variant='raised'
-                    onClick={this.handleNext}
-                    disabled={!uiSolo.canGoNext()}
-                >
-                    {uiSolo.currentPhase === SoloPhase.Confirmation ? 'Play' : 'Next'}
-                </Button>
+                {![SoloPhase.ConstructionSelection].includes(uiSolo.currentPhase)  && <Button 
+                        variant='raised'
+                        onClick={this.handleNext}
+                        disabled={!uiSolo.canGoNext()}
+                    >
+                        {uiSolo.currentPhase === SoloPhase.Confirmation ? 'Play' : 'Next'}
+                    </Button>
+                }
             </div>   
         </div>
     }

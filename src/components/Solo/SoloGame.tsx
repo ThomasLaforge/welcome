@@ -7,6 +7,7 @@ import WelcomeMap from '../Common/WelcomeMap'
 import ScoreBoard from '../Common/ScoreBoard'
 import PlayerActions from './PlayerActions'
 import { MapMode } from '../../modules/Welcome';
+import GameOverScreen from '../Common/GameOverScreen';
 
 interface SoloGameProps extends DefaultProps {
 }
@@ -26,11 +27,16 @@ class SoloGame extends React.Component <SoloGameProps, SoloGameState> {
     render() {
         return <div className='game'>
             <div className="game-main">
-                <Manager />
-                <PlayerActions />
+                {this.props.solo.isGameOver() ? 
+                    <GameOverScreen />
+                : <>
+                    <Manager />
+                    <PlayerActions />
+                </>
+                }
             </div>
             <div className="game-paper">
-                <WelcomeMap
+               <WelcomeMap
                     mode={MapMode.Solo}
                     onHouseClick={this.props.ui.solo.handleHouseClick}
                     onParkClick={this.props.ui.solo.handleParkClick}

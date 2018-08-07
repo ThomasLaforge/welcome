@@ -25,7 +25,16 @@ class EstateZone extends React.Component <EstateZoneProps, EstateZoneState> {
         return <div className='effect-estate-choices'>
             {new Array(6).fill(0).map( (v, i) => {
                 let choiceIndex = i + 1
-                return <div className={'effect-estate-choices-' + choiceIndex} onClick={() => this.props.estateChoiceSelection(choiceIndex)}>{choiceIndex}</div>
+                let className = 'effect-estate-choice effect-estate-choice-' + choiceIndex
+                if(this.props.ui.solo.optionsPlay.estateChoice === choiceIndex){
+                    className += ' effect-estate-choice-selected'
+                }
+                return  <div className={className}
+                             key={choiceIndex}
+                             onClick={() => this.props.estateChoiceSelection(choiceIndex)}
+                        >
+                            {choiceIndex}
+                        </div>
             })}
         </div>
     }

@@ -1,4 +1,5 @@
-import {observable} from 'mobx'
+import {observable, $mobx} from 'mobx'
+import * as _ from 'lodash'
 
 import { SoloWelcomeModulesManager } from './SoloWelcomeModulesManager';
 import {Player} from './Player'
@@ -6,27 +7,29 @@ import { Construction } from './Construction';
 import {OptionsPlay, GameMode, PlanLevel, EffectType} from './Welcome'
 import { Field } from './Field';
 import { Plan } from './Plan';
+import { House } from './House';
+import { EstateManager } from './EstateManager';
 
 export class SoloGame {
 
     @observable public player: Player;
     @observable public manager: SoloWelcomeModulesManager;
+    @observable public estate: EstateManager;
     public startDate: number;
 	@observable public endDate: number;
 	@observable public mode: GameMode;
-	@observable public plansDone: PlanLevel[];
 	@observable public nbInterimUsed: number;
 	@observable public nbroundaboutUsed: number;
 	@observable public nbBisBuilt: number;
 	@observable public nbUnbuiltUsed: number;
 
-	constructor(mode = GameMode.Normal, player = new Player(), manager = new SoloWelcomeModulesManager(), plansDone = [], startDate = Date.now(), endDate?: number, nbInterimUsed = 0, nbBisBuilt = 0, nbroundaboutUsed = 0, nbUnbuiltUsed = 0) {
+	constructor(mode = GameMode.Normal, player = new Player(), manager = new SoloWelcomeModulesManager(), estate = new EstateManager(), plansDone = [], startDate = Date.now(), endDate?: number, nbInterimUsed = 0, nbBisBuilt = 0, nbroundaboutUsed = 0, nbUnbuiltUsed = 0) {
 		this.player = player;
 		this.manager = manager;
+		this.estate = estate
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.mode = mode
-		this.plansDone = plansDone;
 		this.nbInterimUsed = nbInterimUsed;
 		this.nbBisBuilt = nbBisBuilt
 		this.nbroundaboutUsed = nbroundaboutUsed
@@ -36,28 +39,31 @@ export class SoloGame {
 	reset(){
 		this.player = new Player()
 		this.manager = new SoloWelcomeModulesManager()
+		this.estate = new EstateManager()
 		this.startDate = Date.now()
 		this.endDate = null
 		this.mode = GameMode.Normal
-		this.plansDone = [];
 		this.nbInterimUsed = 0;
 		this.nbBisBuilt = 0;
 		this.nbroundaboutUsed = 0;
 		this.nbUnbuiltUsed = 0;
 	}
     
-    play(construction: Construction, house?: Field, options?: OptionsPlay){
-		console.log('Game:play', construction, house, options)
-		house.build(construction)
+    play(construction: Construction, field?: Field, options?: OptionsPlay){
+		console.log('Game:play', construction, field, options)
+		field.build(new House(construction.houseNumber, construction.effect))
 		if(options){
-			if(options.surveyorFence){
+			if(construction.effectType === EffectType.Surveyor && options.surveyorFence){
 				options.surveyorFence.build()
+			}
+			else if(construction.effectType === EffectType.RealEstateAgent && !!options.estateChoice){
+				this.estate.increment(options.estateChoice)
 			}
 		}
 	}
 
 	getPlansComplete(){
-		return this.manager.plans.plans.filter(p => this.isPlanComplete(p))
+		return this.manager.plans.plansSelected.filter(p => this.isPlanComplete(p))
 	}
 
 	isAtLeatOnePlanComplete(){
@@ -79,7 +85,7 @@ export class SoloGame {
 		let missionObj = objectifyMission(mission)
 		let districtsObj = objectifyMission(ownDistrictLengths)
 
-		console.log('plan complete?', missionObj, districtsObj)
+		// console.log('plan complete?', missionObj, districtsObj)
 
 		let constructionSizes = Object.keys(missionObj)
 		let constructionLengthAvailable = (i) => {
@@ -140,6 +146,22 @@ export class SoloGame {
 		// return possibleCards
 	}
 
+	get allCardsCombinationsUniq(){
+		let i = 0
+		let uniq = []
+		this.allCardsCombinations.forEach( (c) => {
+			if(uniq.findIndex(uniqConstr => uniqConstr.isEqual(c)) === -1){
+				uniq.push(c)
+			}
+		})
+
+		return uniq
+	}
+
+	get allCardsPossibleUniq(){
+		return this.allCardsCombinationsUniq.filter(c => this.constructionCanBeConstructed(c))
+	}
+
 	cardIsDisabled(c: Construction){
 		return this.possibleCards.filter(card => c.isEqual(card)).length === 0
 	}
@@ -154,7 +176,7 @@ export class SoloGame {
 		i = 0
 		while(canBeSelected && i < indexOfHouse){
 			let currentHouse = street.fields[i]
-			if(currentHouse.construction && construction.houseNumber < currentHouse.construction.houseNumber){
+			if(currentHouse.construction && construction.houseNumber <= currentHouse.construction.houseNumber){
 				canBeSelected = false
 			}
 			i++
@@ -164,7 +186,7 @@ export class SoloGame {
 		i = indexOfHouse + 1
 		while(canBeSelected && i < street.length){
 			let currentHouse = street.fields[i]
-			if(currentHouse.construction && construction.houseNumber > currentHouse.construction.houseNumber){
+			if(currentHouse.construction && construction.houseNumber >= currentHouse.construction.houseNumber){
 				canBeSelected = false
 			}
 			i++
@@ -174,13 +196,16 @@ export class SoloGame {
 	}
 
 	completePlan(planLevel: PlanLevel){
-		// win reward
-		
 		// completePlan
-		this.plansDone.push(planLevel)
+		let plan = this.manager.plans.getSelectedPlanByLevel(planLevel)
+		this.player.completePlan(plan)
 
 		// mark houses used
 
+	}
+
+	get soloCardHasBeenDrawed(){
+		return this.constructions.soloCardHasBeenDrawed
 	}
 
 	planScore(planLevel: PlanLevel){
@@ -191,17 +216,18 @@ export class SoloGame {
 	}
 
 	parkScore(streetIndex: number){
-		return this.player.map.streets[streetIndex].parkScore 
+		return this.map.streets[streetIndex].parkScore 
 	}
 	get totalParkScore(){
-		return 0
+		return this.map.streets.reduce( (total, s) => total + s.parkScore, 0 )
 	}
 	
 	get nbPoolBuilt(){
-		return this.player.nbPoolBuilt
+		return this.map.nbPoolBuilt 
 	}
 	get totalPoolScore(){
-		return 0
+		let scores = [0, 3, 6, 9, 13, 17, 21, 26, 31, 36]
+		return scores[this.nbPoolBuilt]
 	}
 	
 	get bisScore(){
@@ -209,23 +235,53 @@ export class SoloGame {
 		return scores[this.nbBisBuilt]
 	}
 	get roundaboutScore(){
-		let scores = [0, 3, 8]
-		return scores[this.nbBisBuilt]
+		// let scores = [0, 3, 8]
+		// return scores[this.nbBisBuilt]
+		return 0
+	}
+
+	get refusalScore(){
+		return 0
 	}
 	
-	get InterimScore(){
+	get interimScore(){
 		return this.nbInterimUsed >= 6 ? 7 : 0
 	}
 
 	get totalScore(){
-		return 0
+		return  this.totalPlanScore
+			+	this.totalParkScore
+			+	this.totalPoolScore
+			+	this.interimScore
+			// +	this.totalEstateScore
+			-	this.roundaboutScore
+			-	this.bisScore
+			-	this.refusalScore
 	}
 
 	get map(){
 		return this.player.map
 	}
 
+	get constructions(){
+		return this.manager.constructions
+	}
+
 	isInAdvancedMode(){
 		return this.mode === GameMode.Advanced
+	}
+
+	playerHasTooManyRefusal(){
+		return this.nbUnbuiltUsed >= 3
+	}
+
+	isGameOver(){
+		const deckIsEmpty = this.manager.constructions.constructionDeck.isEmpty()
+
+		// const mapIsFull = this.map.isFull()
+		const tooManyRefusal = this.playerHasTooManyRefusal()
+		// const playerHasBuiltAllPlans = this.player.hasAllPlansDone()
+		
+		return deckIsEmpty || tooManyRefusal //|| mapIsFull || playerHasBuiltAllPlans
 	}
 }

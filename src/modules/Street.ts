@@ -25,15 +25,19 @@ export class Street {
         }
         this.fences = fences
     }
-
+    
     getDistrictsForPlans(){
         return this.districts.filter(d => d.isReasyForPlan())
     }
 
+    getDistrictsForEstate(){
+        return this.districts.filter(d => d.isComplete())
+    }
+
     get districts(){
         let lastFenceIndex = 0
-        let districts = this.fences.map(f => {
-            let houses = this.fields.slice(lastFenceIndex, f.position)
+        let districts = this.builtFences.map(f => {
+            let houses = this.fields.slice(lastFenceIndex, f.position + 1)
             lastFenceIndex = f.position + 1
             return new District(houses)
         })
@@ -43,7 +47,7 @@ export class Street {
         
         return districts
     }
-    get CompleteDistricts(){
+    get completeDistricts(){
         return this.districts.filter(d => d.isComplete())
     }
     get notCompleteDistricts(){
@@ -104,5 +108,6 @@ export class Street {
     get length(){
         return this.fields.length
     }
+    
     
 }

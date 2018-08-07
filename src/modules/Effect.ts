@@ -10,7 +10,7 @@ export class Effect {
 
     // Statics
 	static isAutoActivateEffect(effect: EffectType){
-		return effect === EffectType.PoolManufacturer || effect === EffectType.Landscaper
+		return [EffectType.PoolManufacturer, EffectType.Landscaper, EffectType.TempAgency].includes(effect) 
 	}
 	static isSkippableEffect(effect: EffectType){
 		return !Effect.isAutoActivateEffect(effect)

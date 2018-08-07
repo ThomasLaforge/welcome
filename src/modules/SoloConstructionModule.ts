@@ -12,8 +12,9 @@ export class SoloConstructionModule {
     @observable public constructionDeck: SoloConstructionDeck;
     @observable public actualCards: Construction[];
 
-	constructor(constructionDeck = new SoloConstructionDeck(constructions)) {
+	constructor(constructionDeck = new SoloConstructionDeck(constructions), actualCards = []) {
         this.constructionDeck = constructionDeck;
+        this.actualCards = actualCards
     }
 
     get remainingTurn(){
@@ -36,6 +37,10 @@ export class SoloConstructionModule {
 
         this.actualCards = nextCards as Construction[]
         return isSoloSpecialCard
+    }
+
+    get soloCardHasBeenDrawed(){
+        return this.constructionDeck.soloCardHasBeenDrawed
     }
     
 }

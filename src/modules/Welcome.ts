@@ -1,6 +1,7 @@
 import { Fence } from "./Fence";
 import { Construction } from "./Construction";
 import { Field } from "./Field";
+import { Plan } from "./Plan";
 
 export enum EffectType {
     Surveyor = 0,
@@ -76,4 +77,9 @@ export enum MapMode {
     Solo,
     Multi,
     MapOnly
+}
+
+export interface CompletedPlan {
+    plan: Plan,
+    soloCardDrawed: boolean
 }

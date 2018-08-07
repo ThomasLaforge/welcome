@@ -44,6 +44,7 @@ class WelcomeMap extends React.Component <WelcomeMapProps, WelcomeMapState> {
             >
             {s.fields.map( (field, i) => 
                 <Field 
+                    key={i}
                     field={field}
                     streetLine={streetIndex}
                     position={i}
@@ -52,7 +53,7 @@ class WelcomeMap extends React.Component <WelcomeMapProps, WelcomeMapState> {
             )}
             {s.fences.map( (f, i) => <Fence 
                 key={i}
-                streetNumber={streetIndex}
+                streetNumber={streetIndex}  
                 fence={f}
                 show={inSurveyorPhase}
                 onClick={() => this.props.onFenceClick(f)}
@@ -62,6 +63,7 @@ class WelcomeMap extends React.Component <WelcomeMapProps, WelcomeMapState> {
     }
     
     renderParks(){
+        // console.log('renderParks', this.state.map.streets.map(s => s.nbParkChecked))
         return this.state.map.streets.map(s => 
             s.getParksScores().slice(0, -1).map( (pSpot, i) => {
                 return <div 

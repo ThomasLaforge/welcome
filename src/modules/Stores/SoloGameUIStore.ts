@@ -29,13 +29,13 @@ export class SoloGameUIStore {
 		this.selectedRoundabout = null;
 		this.selectedEffectTarget = null;
 		this.optionsPlay = {};
-		this.phaseManager.goTo(SoloPhase.ConstructionSelection)
 		this.game.manager.constructions.nextTurn()
+		// this.phaseManager.goTo(SoloPhase.ConstructionSelection)
 	}
 
-	canGoNext(): boolean {
-		// console.log('canGoNext', this.phaseManager.currentPhase)
-		switch (this.phaseManager.currentPhase) {
+	canGoNext(phase = this.phaseManager.currentPhase): boolean {
+		// console.log('canGoNext', phase)
+		switch (phase) {
 			case SoloPhase.ConstructionSelection:
 				return !!this.computedConstruction
 			case SoloPhase.HouseSelection:
@@ -54,16 +54,15 @@ export class SoloGameUIStore {
 			// before next
 			if(this.currentPhase === SoloPhase.Confirmation){
 				console.log('play')
-				this.game.play(this.actualConstructionToBuild, this.selectedHouse, this.optionsPlay)
+				if(this.actualConstructionToBuild){
+					this.game.play(this.actualConstructionToBuild, this.selectedHouse, this.optionsPlay)
+				}
+				else {
+					this.game.nbUnbuiltUsed++
+				}
 				this.reset()
 			}
-			else if(this.currentPhase === SoloPhase.ConstructionSelection && (!this.actualConstructionToBuild || !this.game.constructionCanBeConstructed(this.actualConstructionToBuild))){
-				console.log('no play so go at end')				
-				goNext = false
-				this.phaseManager.goTo(this.game.mode === GameMode.Advanced ? SoloPhase.RoundAbout : SoloPhase.Confirmation)
-			}
 
-			console.log('actually go next?', goNext)
 			goNext && this.phaseManager.next()
 
 			// after next
@@ -72,6 +71,10 @@ export class SoloGameUIStore {
 				this.currentPhase === SoloPhase.EffectChoices && (this.computedConstruction && Effect.isAutoActivateEffect(this.computedConstruction.effectType))
 			){
 				this.phaseManager.next()
+			}
+			else if(this.currentPhase === SoloPhase.ConstructionSelection && this.game.allCardsPossibleUniq.length === 0){
+				console.log('no play so go at end')				
+				this.phaseManager.goTo(this.game.mode === GameMode.Advanced ? SoloPhase.RoundAbout : SoloPhase.Confirmation)
 			}
 
 		}
@@ -107,6 +110,14 @@ export class SoloGameUIStore {
 		// 		return false
 		// }
 		this.phaseManager.back()
+
+		if( 
+			// Auto skip if effect is automatically used
+			this.currentPhase === SoloPhase.EffectChoices && (this.computedConstruction && Effect.isAutoActivateEffect(this.computedConstruction.effectType))
+		){
+			this.phaseManager.back()
+		}
+
 	}
 
 	get activePlayerActionStep(){
@@ -122,13 +133,14 @@ export class SoloGameUIStore {
 	}
 
 	handleClickOnPossibleCard = (index) => {
-		let c = this.game.allCardsCombinations[index]
+		let c = this.game.allCardsPossibleUniq[index]
 		if(!this.game.cardIsDisabled(c)) {
 			this.selectedCombinationIndex = index
 		}
+		this.next()
 	}
 
-	handleEstateChoice(choice: number){
+	handleEstateChoice = (choice: number) => {
 		console.log('handle estate choice', choice)
 		this.optionsPlay.estateChoice = choice
 	}
@@ -185,7 +197,7 @@ export class SoloGameUIStore {
 	}
 
 	get computedConstruction(){
-		return (this.selectedCombinationIndex || this.selectedCombinationIndex === 0) && this.game.allCardsCombinations[this.selectedCombinationIndex]
+		return (this.selectedCombinationIndex || this.selectedCombinationIndex === 0) && this.game.allCardsPossibleUniq[this.selectedCombinationIndex]
 	}
 
 	get actualConstructionToBuild(){

@@ -240,25 +240,25 @@ $planHeight: 200px;
         // border: 1px solid red;
         font-size: 100%;
 
-        .house-construction-number ,.house-with-pool-construction-number {
+        .field-construction-number ,.field-with-pool-construction-number {
             height: 100%;
             text-align: center;
             display: flex;
             flex-direction: column;
             justify-content: center;
         }
-        // .house-construction-number {
+        // .field-construction-number {
         //     padding-top: 40%;
         // }
-        // .house-with-pool-construction-number {
+        // .field-with-pool-construction-number {
         //     padding-top: 57%; 
         // }
     }
 
-    .house-can-be-selected {
+    .field-can-be-selected {
         border: 2px solid green;
     }
-    .house-selected {
+    .field-selected {
         border: 3px solid blue;
     }
 
@@ -297,7 +297,7 @@ $planHeight: 200px;
     @for $i from 0 to $nbLines {
         // Houses
         @for $j from 0 to $nbHouseOnLine {
-            .house-line-#{$i}-spot-#{$j} {
+            .field-line-#{$i}-spot-#{$j} {
                 @include mapBox(
                     $topFirstLineHouse + $i * ($topFirstLineHouse + $gapBetweenTwoLinesHouse), 
                     $startHouseX + $j * ($spaceBeetweenTwoHouses + $houseWidth) - $i * ($spaceBeetweenTwoHouses + $houseWidth)
@@ -580,7 +580,7 @@ $planHeight: 200px;
 
 .game {
     display: flex;
-    flex-direction: row;
+    flex-direction: row-reverse ;
     height: 100%;
     width: 100%;
     padding: 30px;
@@ -656,12 +656,48 @@ $planHeight: 200px;
             flex-direction: column;
             justify-content: space-around;
 
-            .player-actions-stepper {
+            .player-actions-info {
                 height: 20%;
+
+                .player-actions-Gamestepper {
+                    height: 100%;
+                }
             }
+
 
             .player-actions-content {
                 height: 60%;
+
+                .estate-zone {
+                    height: 100%;
+
+                    .effect-estate-choices {
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: space-around;
+
+                        .effect-estate-choice {
+                            width: 80% / 6;
+                        }
+                        .effect-estate-choice-selected {
+                            border: 1px solid violet;
+                        }
+                    }
+                }
+
+                .merged-construction-zone {
+                    height: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-content: space-around;
+
+                    .merged-construction {
+                        width: 80%;
+                        margin: auto;
+                    }
+                }
+
             }
 
             .card-selector {
@@ -671,6 +707,7 @@ $planHeight: 200px;
                 flex-direction: row;
                 flex-wrap: wrap;
                 align-content: space-around;
+                justify-content: space-around;
 
                 .possible-card {
                     width: 1 / 3 * 100%;
@@ -683,7 +720,14 @@ $planHeight: 200px;
 
             .player-actions-play-btn {
                 height: 20%;
-                margin: auto;
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-around;
+
+                button {
+                    min-width: 35%;
+                } 
             }
         }
     }
@@ -692,7 +736,6 @@ $planHeight: 200px;
         $mapHeight: 58%;
         $scoreBoardHeigth: 100% - $mapHeight;
         width: 60%;
-        width: 100%;
         // max-width: 800px;
         height: 100%;
         display: flex;
@@ -713,4 +756,35 @@ $planHeight: 200px;
         
     }
     
+}
+
+.game-over {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    .game-over-title {
+        width: 100%;
+        height: 20%;
+        margin: auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        background-color: black;
+        color: white;
+        font-size: 44px;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    .game-over-content {
+        height: 60%;
+        
+    }
+
+    .game-over-actions {
+        height: 20%;
+    }
 }

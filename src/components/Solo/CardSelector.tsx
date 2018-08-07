@@ -26,7 +26,7 @@ class CardSelector extends React.Component <CardSelectorProps, CardSelectorState
     }
 
     renderPossibleCards(){
-        return this.props.solo.allCardsCombinations.map( (c, k) => { 
+        return this.props.solo.allCardsPossibleUniq.map( (c, k) => { 
             let bonusClasses = ''
             if(this.props.ui.solo.selectedCombinationIndex === k){
                 bonusClasses += ' possible-card-selected'

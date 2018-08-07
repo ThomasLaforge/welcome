@@ -38,7 +38,20 @@ export class WelcomeMap {
 		return this.getDistrictsForPlans().map(d => d.length)
 	}
 
+	getDistrictsForEstate(){
+		return this.streets.reduce( (districtsForEstate: District[], s) => districtsForEstate.concat(s.getDistrictsForEstate()), [] )
+	}
+
+	getDistrictsForEstateLengths(){
+		return this.getDistrictsForEstate().map(d => d.length)
+	}
+
+	getNbCompleteDistricts(estateDistrictSize: number){
+		return this.getDistrictsForEstateLengths().filter( size => size === estateDistrictSize).length
+	}
+
 	getAllBisPossible(){
 		return this.streets.reduce( (bisPossible: Field[], s) => bisPossible.concat(s.possiblyBisHouses), [] )		
 	}
+
 }
