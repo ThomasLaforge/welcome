@@ -6,3 +6,5 @@ Design:
 Core:
     - Bis
     - retry
+    - You can indeed build a fence between 2 empty spaces. You can build the fence anywhere you like except between a house and its « bis » as they must be in the same housing lot.
+    - used fields

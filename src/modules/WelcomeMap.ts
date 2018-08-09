@@ -8,7 +8,7 @@ import { District } from './District';
 const DEFAULT_STREETS = require('../datas/map.json').map( (s: boolean[], i) => {
 	let houses = s.map( (pool, j) => {
 		let hasPool = !!pool
-		return new Field(hasPool, j === 0, j === (s.length - 1))
+		return new Field(i, j, hasPool, j === 0, j === (s.length - 1))
 	})
 	return new Street(i, houses)
 })
@@ -50,8 +50,12 @@ export class WelcomeMap {
 		return this.getDistrictsForEstateLengths().filter( size => size === estateDistrictSize).length
 	}
 
-	getAllBisPossible(){
-		return this.streets.reduce( (bisPossible: Field[], s) => bisPossible.concat(s.possiblyBisHouses), [] )		
+	getAllBisHousesPossible(){
+		return this.streets.reduce( (bisPossible: Field[], s) => bisPossible.concat(s.getPossiblyBisHouses()), [] )		
+	}
+
+	getAllBisFieldPossible(){
+		return this.streets.reduce( (bisPossible: Field[], s) => bisPossible.concat(s.getPossiblyBisFields()), [] )			
 	}
 
 }

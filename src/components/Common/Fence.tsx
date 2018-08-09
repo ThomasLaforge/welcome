@@ -36,7 +36,7 @@ class Fence extends React.Component <FenceProps, FenceState> {
                 if(this.props.ui.solo.optionsPlay.surveyorFence === this.props.fence){
                     className += ' ' + 'fence-selected'
                 }
-                else {
+                else if(this.props.ui.solo.currentPhase !== SoloPhase.Confirmation ) {
                     className += ' ' + 'fence-selectable'
                 }
             }

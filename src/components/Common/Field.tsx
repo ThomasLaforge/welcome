@@ -31,18 +31,19 @@ class Field extends React.Component <FieldProps, FieldState> {
     render(){
         let uiSolo = this.props.ui.solo
         let game = this.props.solo
-        let inSurveyorPhase = uiSolo.currentPhase === SoloPhase.EffectChoices && uiSolo.computedConstruction.effectType === EffectType.Surveyor
         let inBisPhase = uiSolo.currentPhase === SoloPhase.EffectChoices && uiSolo.computedConstruction.effectType === EffectType.Bis
+        let inHouseSelectionPhase = uiSolo.currentPhase === SoloPhase.HouseSelection
 
         let field = this.props.field
         let isHouseSelected = field === uiSolo.selectedHouse
 
         let fieldClassName = 'field-line-' + this.props.streetLine + '-spot-'+ this.props.position +' house'
         if(isHouseSelected) { fieldClassName += ' ' + 'field-selected' }
-        if(     uiSolo.currentPhase === SoloPhase.HouseSelection 
-            &&  game.fieldCanBeSelected(field, uiSolo.actualConstructionToBuild)
-        ) { 
+        if( inHouseSelectionPhase &&  game.fieldCanBeSelected(field, uiSolo.actualConstructionToBuild) ) { 
             fieldClassName += ' ' + 'field-can-be-selected'
+        }
+        if( inBisPhase && game.isPossibleBis(field) ) { 
+            fieldClassName += ' ' + 'field-can-be-selected-for-bis'
         }
         return <div 
             key={this.props.streetLine + '-' + this.props.position} 

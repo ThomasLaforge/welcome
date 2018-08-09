@@ -261,6 +261,13 @@ $planHeight: 200px;
     .field-selected {
         border: 3px solid blue;
     }
+    
+    .field-can-be-selected-for-bis {
+        border: 2px solid red;
+    }
+    .field-selected-for-bis {
+        border: 3px solid orange;
+    }
 
     $topFirstLinePark: 8.3%;
     $parkWidth: 3.2%;

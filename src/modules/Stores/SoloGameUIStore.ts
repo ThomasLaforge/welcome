@@ -141,12 +141,12 @@ export class SoloGameUIStore {
 	}
 
 	handleEstateChoice = (choice: number) => {
-		console.log('handle estate choice', choice)
+		// console.log('handle estate choice', choice)
 		this.optionsPlay.estateChoice = choice
 	}
 
 	handleHouseClick = (house: Field) => {
-		console.log('handleHouseClick', house)
+		// console.log('handleHouseClick', house)
 		switch (this.currentPhase) {
 			case SoloPhase.HouseSelection:
 				if(this.game.fieldCanBeSelected(house, this.actualConstructionToBuild)) {
@@ -169,18 +169,18 @@ export class SoloGameUIStore {
 	}
 
 	handleFenceClick = (f: Fence) => {
-		console.log('handle fence click')
+		// console.log('handle fence click')
 		if(this.currentPhase === SoloPhase.EffectChoices && this.actualConstructionToBuild.effect.type === EffectType.Surveyor){
 			this.optionsPlay.surveyorFence = f
 		}
 	}
 
 	handleParkClick = () => {
-		console.log('handleParkClick')
+		// console.log('handleParkClick')
 	}
 
 	handleStreetClick = () => {
-		console.log('handleStreetClick')
+		// console.log('handleStreetClick')
 	}
 
 	get currentPhase(){
@@ -239,4 +239,12 @@ export class SoloGameUIStore {
 		}
     }
 
+	handleDebug = () => {
+		console.clear()
+		console.log('-----------------debug------------------')
+		console.log('bis buildable')
+		this.game.getAllBisPossible().forEach(f => {
+			console.log('s: ' + f.streetLine + ', p: ' + f.position)
+		})
+	}
 }

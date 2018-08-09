@@ -50,7 +50,7 @@ export class SoloGame {
 	}
     
     play(construction: Construction, field?: Field, options?: OptionsPlay){
-		console.log('Game:play', construction, field, options)
+	console.log('Game:play', construction, field, options)
 		field.build(new House(construction.houseNumber, construction.effect))
 		if(options){
 			if(construction.effectType === EffectType.Surveyor && options.surveyorFence){
@@ -114,7 +114,11 @@ export class SoloGame {
 	}
 
 	getAllBisPossible(){
-		return this.map.getAllBisPossible()
+		return this.map.getAllBisFieldPossible()
+	}
+
+	isPossibleBis(f: Field){
+		return this.getAllBisPossible().includes(f)
 	}
 
 	get possibleCards(){
@@ -147,7 +151,6 @@ export class SoloGame {
 	}
 
 	get allCardsCombinationsUniq(){
-		let i = 0
 		let uniq = []
 		this.allCardsCombinations.forEach( (c) => {
 			if(uniq.findIndex(uniqConstr => uniqConstr.isEqual(c)) === -1){

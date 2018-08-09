@@ -54,7 +54,7 @@ export class Street {
         return this.districts.filter(d => !d.isComplete())
     }
 
-    get possiblyBisHouses(){
+    getPossiblyBisHouses(){
         return this.notCompleteDistricts.reduce( (houses: Field[], d) =>
             d.fields.filter( (h, i) => {
                 let leftNeighbor = i > 0 && d.fields[i-1]
@@ -63,14 +63,28 @@ export class Street {
             })
         , [])
     }
-    getNeighborsToBuild(house: Field){
+    getPossiblyBisFields(){
+        let eachBisPossibilites = this.getPossiblyBisHouses().map(f => this.getNeighborsToBuild(f))
+        let flattenBisPossibilites = ([] as Field[]).concat(...eachBisPossibilites)
+        
+		let uniqPossibilites: Field[] = []
+		flattenBisPossibilites.forEach( (bisField) => {
+			if(uniqPossibilites.findIndex(f => f.isEqual(bisField)) === -1){
+				uniqPossibilites.push(bisField)
+			}
+		})
+
+		return uniqPossibilites
+    }
+    getNeighborsToBuild(f: Field){
         let neighbors = []
-        let houseIndex = this.fields.indexOf(house)
+        let houseIndex = f.position       
+
         if(houseIndex - 1 >= 0 && !this.fields[houseIndex - 1].built && !this.fences[houseIndex - 1].built){
             neighbors.push(this.fields[houseIndex - 1])
         }
         if(houseIndex + 1 < this.length && !this.fields[houseIndex + 1].built && !this.fences[houseIndex].built){
-            neighbors.push(this.fields[houseIndex - 1])
+            neighbors.push(this.fields[houseIndex + 1])
         }
         return neighbors
     }

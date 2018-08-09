@@ -54,7 +54,7 @@ class PlayerActions extends React.Component <PlayerActionsProps, PlayerActionsSt
     render() {
         const uiSolo = this.props.ui.solo
         const showSkipBtn = false
-        console.log('effect type', uiSolo.computedConstruction && uiSolo.computedConstruction.effect, EffectType.TempAgency )
+        // console.log('effect type', uiSolo.computedConstruction && uiSolo.computedConstruction.effect, EffectType.TempAgency )
 
         return <div className='player-actions'>
             <div className='player-actions-info'>
@@ -112,6 +112,12 @@ class PlayerActions extends React.Component <PlayerActionsProps, PlayerActionsSt
                         {uiSolo.currentPhase === SoloPhase.Confirmation ? 'Play' : 'Next'}
                     </Button>
                 }
+                <Button 
+                    variant='raised'
+                    onClick={uiSolo.handleDebug}
+                >
+                    Debug
+                </Button>
             </div>   
         </div>
     }

@@ -8,6 +8,8 @@ import { Bis } from "./Bis";
 
 export class Field {
 
+    public streetLine: number;
+    public position: number;
     @observable public leftFence: boolean;
     @observable public rightFence: boolean;
     @observable public hasPool: boolean;
@@ -16,6 +18,8 @@ export class Field {
     @observable public usedForPlans: boolean;
 
 	constructor(
+        streetLine: number,
+        position: number,
         hasPool = false,
         leftFence = false, 
         rightFence = false, 
@@ -29,6 +33,8 @@ export class Field {
 		this.hasRoundabout = hasRoundabout;
         this.construction = construction;
         this.usedForPlans = usedForPlans;
+        this.streetLine = streetLine;
+        this.position = position;
     }
     
     get built(){
@@ -73,4 +79,7 @@ export class Field {
                 && this.hasPool
     }
 
+    isEqual(f: Field){
+        return this.streetLine === f.streetLine && this.position === f.position
+    }
 }
