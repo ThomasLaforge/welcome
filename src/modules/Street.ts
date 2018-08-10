@@ -86,6 +86,7 @@ export class Street {
         if(houseIndex + 1 < this.length && !this.fields[houseIndex + 1].built && !this.fences[houseIndex].built){
             neighbors.push(this.fields[houseIndex + 1])
         }
+        
         return neighbors
     }
 

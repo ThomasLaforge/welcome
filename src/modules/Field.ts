@@ -43,6 +43,12 @@ export class Field {
     build(construction: FieldConstruction){
         this.construction = construction
     }
+    get used(){
+        return this.usedForPlans
+    }
+    use(){
+        this.usedForPlans = true
+    }
 
     buildRoundabout(){
         this.hasRoundabout = true
