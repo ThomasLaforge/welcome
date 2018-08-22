@@ -9,6 +9,7 @@ import { Field } from './Field';
 import { Plan } from './Plan';
 import { House } from './House';
 import { EstateManager } from './EstateManager';
+import { Bis } from './Bis';
 
 export class SoloGame {
 
@@ -58,6 +59,9 @@ export class SoloGame {
 			}
 			else if(construction.effectType === EffectType.RealEstateAgent && !!options.estateChoice){
 				this.estate.increment(options.estateChoice)
+			}
+			else if(construction.effectType === EffectType.Bis && !!options.bisField){
+				this.buildBis(options.bisField)
 			}
 		}
 	}
@@ -151,7 +155,7 @@ export class SoloGame {
 	}
 
 	get allCardsCombinationsUniq(){
-		let uniq = []
+		let uniq: Construction[] = []
 		this.allCardsCombinations.forEach( (c) => {
 			if(uniq.findIndex(uniqConstr => uniqConstr.isEqual(c)) === -1){
 				uniq.push(c)
@@ -205,6 +209,19 @@ export class SoloGame {
 
 		// mark houses used
 
+	}
+
+	buildBis(bisField: Field){
+		let value;
+		// get left value
+
+		// if not left value => get right value
+
+		// if value build it
+			// for test only
+			value = 5
+			bisField.build(new Bis(value))
+		// else error 
 	}
 
 	get soloCardHasBeenDrawed(){

@@ -155,7 +155,10 @@ export class SoloGameUIStore {
 				break;
 			case SoloPhase.EffectChoices:
 				if(!house.built) {
-					this.selectedEffectTarget = house
+					if(this.actualConstructionToBuild.effectType === EffectType.Bis){
+						this.optionsPlay.bisField = house
+						console.log('select bis field', house)
+					}
 				}
 				break;
 			case SoloPhase.RoundAbout:
@@ -206,18 +209,12 @@ export class SoloGameUIStore {
 
 	
     get canDecrementConstruction(){
-		if(!this.optionsPlay.tempAgencyConstruction){
-			this.optionsPlay.tempAgencyConstruction = this.computedConstruction
-		}
-        let modified = this.optionsPlay.tempAgencyConstruction.houseNumber
+        let modified = this.optionsPlay.tempAgencyConstruction ? this.optionsPlay.tempAgencyConstruction.houseNumber : this.computedConstruction.houseNumber
         let initial = this.computedConstruction.houseNumber
         return initial - modified < 2 
     }
     get canIncrementConstruction(){
-		if(!this.optionsPlay.tempAgencyConstruction){
-			this.optionsPlay.tempAgencyConstruction = this.computedConstruction
-		}
-        let modified = this.optionsPlay.tempAgencyConstruction.houseNumber
+        let modified = this.optionsPlay.tempAgencyConstruction ? this.optionsPlay.tempAgencyConstruction.houseNumber : this.computedConstruction.houseNumber
         let initial = this.computedConstruction.houseNumber
         return modified - initial < 2 
     }
