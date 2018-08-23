@@ -213,15 +213,24 @@ export class SoloGame {
 
 	buildBis(bisField: Field){
 		let value;
-		// get left value
+		let fieldPos = bisField.position
+		let street = this.map.streets[bisField.streetLine]
 
+		// get left value
+		if(fieldPos > 0 && street.fields[fieldPos - 1].built){
+			value = street.fields[fieldPos - 1].construction.houseNumber
+		}
 		// if not left value => get right value
+		else if(fieldPos < street.length - 1 && street.fields[fieldPos + 1].built){
+			value = street.fields[fieldPos + 1].construction.houseNumber
+		}
+		else {
+			console.error('build bis is not possible', bisField)
+			return
+		} 
 
 		// if value build it
-			// for test only
-			value = 5
-			bisField.build(new Bis(value))
-		// else error 
+		bisField.build(new Bis(value))
 	}
 
 	get soloCardHasBeenDrawed(){

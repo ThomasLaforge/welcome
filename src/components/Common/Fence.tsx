@@ -24,19 +24,21 @@ class Fence extends React.Component <FenceProps, FenceState> {
     }
 
     render() {
+        let uiSolo = this.props.ui.solo
+
         let className = 'fence fence-' + this.props.streetNumber + '-' + this.props.fence.position
         if(this.props.fence.built){
             className += ' ' + 'fence-built'
         }
         else {
             if( 
-                [SoloPhase.EffectChoices, SoloPhase.RoundAbout, SoloPhase.Confirmation].includes(this.props.ui.solo.currentPhase) 
-                && this.props.ui.solo.actualConstructionToBuild.effectType === EffectType.Surveyor
+                [SoloPhase.EffectChoices, SoloPhase.RoundAbout, SoloPhase.Confirmation].includes(uiSolo.currentPhase) 
+                && uiSolo.actualConstructionToBuild.effectType === EffectType.Surveyor
             ){
-                if(this.props.ui.solo.optionsPlay.surveyorFence === this.props.fence){
+                if(uiSolo.optionsPlay.surveyorFence === this.props.fence){
                     className += ' ' + 'fence-selected'
                 }
-                else if(this.props.ui.solo.currentPhase !== SoloPhase.Confirmation ) {
+                else if(uiSolo.currentPhase !== SoloPhase.Confirmation ) {
                     className += ' ' + 'fence-selectable'
                 }
             }

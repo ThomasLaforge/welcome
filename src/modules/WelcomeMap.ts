@@ -4,6 +4,8 @@ import { EffectType } from './Welcome'
 import { Street } from './Street'
 import { Field } from './Field';
 import { District } from './District';
+import { Construction } from './Construction';
+import { Effect } from './Effect';
 
 const DEFAULT_STREETS = require('../datas/map.json').map( (s: boolean[], i) => {
 	let houses = s.map( (pool, j) => {
@@ -20,6 +22,46 @@ export class WelcomeMap {
 
 	constructor(streets = DEFAULT_STREETS) {
 		this.streets = streets;
+		this.initializeTestConstructions()
+	}
+
+	initializeTestConstructions(){
+		let initialFences = [
+			// max left
+			{
+				streetLine: 2,
+				pos: 3
+			}
+		]
+		let initialConstructions = [
+			// max left
+			{
+				houseNumber: 3,
+				streetLine: 0,
+				pos: 3
+			},
+			// max right
+			{
+				houseNumber: 3,
+				streetLine: 0,
+				pos: 3
+			},
+			// one space left
+			{
+				houseNumber: 3,
+				streetLine: 0,
+				pos: 3
+			}
+		]
+
+		initialConstructions.forEach(c => {
+			let construction = new Construction(c.houseNumber, new Effect(EffectType.TempAgency))
+			this.streets[c.streetLine].fields[c.pos].build(construction)
+		})
+
+		initialFences.forEach(f => {
+			this.streets[f.streetLine].fences[f.pos].build()
+		})
 	}
 
 	get nbPoolBuilt(){
