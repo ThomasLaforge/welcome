@@ -56,11 +56,13 @@ export class Street {
 
     getPossiblyBisHouses(){
         return this.notCompleteDistricts.reduce( (houses: Field[], d) =>
-            d.fields.filter( (h, i) => {
-                let leftNeighbor = i > 0 && d.fields[i-1]
-                let rightNeighbor = i < d.fields.length - 1 - 1 && d.fields[i+1]
-                return h.built && (!leftNeighbor.built || !rightNeighbor.built)
-            })
+            houses.concat(
+                d.fields.filter( (f, i) => {
+                    let leftNeighbor = i > 0 && d.fields[i - 1]
+                    let rightNeighbor = i < d.fields.length - 1 && d.fields[i + 1]
+                    return f.built && (!leftNeighbor.built || !rightNeighbor.built)
+                })
+            )
         , [])
     }
     getPossiblyBisFields(){

@@ -31,6 +31,18 @@ export class WelcomeMap {
 			{
 				streetLine: 2,
 				pos: 3
+			},
+			{
+				streetLine: 0,
+				pos: 3
+			},
+			{
+				streetLine: 0,
+				pos: 0
+			},
+			{
+				streetLine: 1,
+				pos: 9
 			}
 		]
 		let initialConstructions = [
@@ -50,6 +62,42 @@ export class WelcomeMap {
 			{
 				houseNumber: 3,
 				streetLine: 0,
+				pos: 3
+			},
+			// no space left
+			{
+				houseNumber: 2,
+				streetLine: 1,
+				pos: 0
+			},
+			// no space left
+			{
+				houseNumber: 2,
+				streetLine: 0,
+				pos: 0
+			},
+			// no space right
+			{
+				houseNumber: 14,
+				streetLine: 0,
+				pos: 9
+			},
+			
+			// no space right
+			{
+				houseNumber: 14,
+				streetLine: 1,
+				pos: 10
+			},
+			// no space right
+			{
+				houseNumber: 10,
+				streetLine: 2,
+				pos: 4
+			},
+			{
+				houseNumber: 8,
+				streetLine: 2,
 				pos: 3
 			}
 		]

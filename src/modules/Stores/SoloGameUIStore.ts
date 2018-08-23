@@ -155,7 +155,7 @@ export class SoloGameUIStore {
 				break;
 			case SoloPhase.EffectChoices:
 				if(!house.built) {
-					if(this.actualConstructionToBuild.effectType === EffectType.Bis){
+					if(this.actualConstructionToBuild.effectType === EffectType.Bis && this.game.isPossibleBis(house)){
 						this.optionsPlay.bisField = house
 						console.log('select bis field', house)
 					}
@@ -243,5 +243,8 @@ export class SoloGameUIStore {
 		this.game.getAllBisPossible().forEach(f => {
 			console.log('s: ' + f.streetLine + ', p: ' + f.position)
 		})
+		console.log('districts', this.game.map.streets.map(s => s.notCompleteDistricts))
+		let problematicField = this.game.map.streets[0].fields[3]
+		console.log('neighbor of problematic house', problematicField, this.game.map.streets[0].getNeighborsToBuild(problematicField))
 	}
 }
