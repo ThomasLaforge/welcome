@@ -10,7 +10,9 @@ import { Plan } from './Plan';
 import { House } from './House';
 import { EstateManager } from './EstateManager';
 import { Bis } from './Bis';
+import { Game } from './Game';
 
+// export class SoloGame extends Game {
 export class SoloGame {
 
     @observable public player: Player;

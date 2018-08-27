@@ -16,6 +16,10 @@ export class Plan {
 		this.isComplete = isComplete;
 	}
 
+    reset(){
+        this.isComplete = false
+    }
+
     complete(){
         this.isComplete = true
     }

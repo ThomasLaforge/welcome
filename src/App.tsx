@@ -24,7 +24,7 @@ import CasinoIcon from '@material-ui/icons/Casino';
 import AppsIcon from '@material-ui/icons/Apps';
 
 import Manager from './components/Manager/Manager';
-import WelcomeMap from './components/Common/WelcomeMap';
+import MapModule from './components/Map/MapModule';
 import SoloGame from './components/Solo/SoloGame';
 
 import './styles/main.scss';
@@ -96,8 +96,9 @@ class App extends React.Component<{}, { store: Store, drawerOpened: boolean} > {
             </Drawer>
 
             {route === Route.Manager && <Manager />}
-            {route === Route.Map && <WelcomeMap mode={MapMode.MapOnly} />}
+            {route === Route.Map && <MapModule />}
             {route === Route.Solo && <SoloGame />}
+            {route === Route.Multi && <SoloGame />}
 
           </div>
       </Provider>

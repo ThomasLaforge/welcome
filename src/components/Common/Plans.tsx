@@ -9,6 +9,7 @@ import { PlanModule } from '../../modules/PlanModule';
 
 interface PlansProps extends DefaultProps {
     plans: PlanModule
+    onPlanClick?: Function
 }
 interface PlansState {
 }
@@ -27,7 +28,13 @@ class Plans extends React.Component <PlansProps, PlansState> {
     }
 
     renderPlans(){
-        return this.props.plans.plansSelected.map( (p, k) => <Plan plan={p} key={k} />)
+        return this.props.plans.plansSelected.map( (p, k) => (
+            <Plan 
+                key={k} 
+                plan={p}
+                onClick={() => this.props.onPlanClick && this.props.onPlanClick(p)}
+            />
+        ))
     }
 
     render() {
@@ -37,9 +44,9 @@ class Plans extends React.Component <PlansProps, PlansState> {
                     {this.renderPlans()}
                 </div>
 
-                <div className="plans-actions">
+                {/* <div className="plans-actions">
                     <Button variant="outlined" color="primary" onClick={this.resetPlansComplete}>Reset complete</Button>
-                </div>
+                </div> */}
             </div>
         );
     }

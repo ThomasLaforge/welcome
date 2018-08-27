@@ -2,8 +2,10 @@ import * as React from 'react';
 import {observer, inject} from 'mobx-react';
 import { DefaultProps, injector } from '../../lib/mobxInjector'
 import { GameMode } from '../../modules/Welcome';
+import { SoloGame } from '../../modules/SoloGame';
 
 interface ScoreBoardProps extends DefaultProps {
+    soloGame: SoloGame
 }
 interface ScoreBoardState {
 }
@@ -25,13 +27,13 @@ class ScoreBoard extends React.Component <ScoreBoardProps, ScoreBoardState> {
         for (let i = 0; i < nbPlan; i++) {
             planScores.push(
                 <div key={i} className={'plan-score plan-score-' + i}>
-                    {this.props.solo.planScore(i)}
+                    {this.props.soloGame.planScore(i)}
                 </div>
             )            
         }
         planScores.push(
             <div key={nbPlan} className='total-plan-score'>
-                {this.props.solo.totalPlanScore}
+                {this.props.soloGame.totalPlanScore}
             </div>
         )
 
@@ -39,7 +41,7 @@ class ScoreBoard extends React.Component <ScoreBoardProps, ScoreBoardState> {
     }
     renderTotalScore(){
         return <div className='total-score'>
-            {this.props.solo.totalScore}
+            {this.props.soloGame.totalScore}
         </div>
     }
     renderParkScores(){
@@ -49,13 +51,13 @@ class ScoreBoard extends React.Component <ScoreBoardProps, ScoreBoardState> {
         for (let i = 0; i < nbPark; i++) {
             parkScores.push(
                 <div key={i} className={'park-score park-score-' + i}>
-                    {this.props.solo.parkScore(i)}
+                    {this.props.soloGame.parkScore(i)}
                 </div>
             )
         }
         parkScores.push(
             <div key={nbPark} className='total-park-score'>
-                {this.props.solo.totalParkScore}
+                {this.props.soloGame.totalParkScore}
             </div>
         )
 
@@ -65,7 +67,7 @@ class ScoreBoard extends React.Component <ScoreBoardProps, ScoreBoardState> {
         let maxNbPool = 9
         let poolScores = []
         let i = 0
-        while (i < this.props.solo.nbPoolBuilt && i < maxNbPool + 1) {
+        while (i < this.props.soloGame.nbPoolBuilt && i < maxNbPool + 1) {
             poolScores.push(
                 <div key={i} className={'pool-score pool-score-' + i}>
                     {'X'}
@@ -75,7 +77,7 @@ class ScoreBoard extends React.Component <ScoreBoardProps, ScoreBoardState> {
         }
         poolScores.push(
             <div key={maxNbPool + 1} className='total-pool-score'>
-                {this.props.solo.totalPoolScore}
+                {this.props.soloGame.totalPoolScore}
             </div>
         )
 
@@ -85,7 +87,7 @@ class ScoreBoard extends React.Component <ScoreBoardProps, ScoreBoardState> {
         let maxNbBis = 9
         let bisScores = []
         let i = 0
-        while (i < this.props.solo.nbBisBuilt && i <= maxNbBis) {
+        while (i < this.props.soloGame.nbBisBuilt && i <= maxNbBis) {
             bisScores.push(
                 <div key={i} className={'bis-score bis-score-' + i}>
                     {'X'}
@@ -95,7 +97,7 @@ class ScoreBoard extends React.Component <ScoreBoardProps, ScoreBoardState> {
         }
         bisScores.push(
             <div key={maxNbBis + 1} className='total-bis-score'>
-                {this.props.solo.bisScore}
+                {this.props.soloGame.bisScore}
             </div>
         )
 
@@ -103,12 +105,12 @@ class ScoreBoard extends React.Component <ScoreBoardProps, ScoreBoardState> {
     }
     renderRealEstateScores(){
         let estateScores = []
-        let solo = this.props.solo
+        let soloGame = this.props.soloGame
 
         for (let i = 0; i < 6; i++) {
-            let nbDistrictOfSize = solo.map.getNbCompleteDistricts(i+1) 
-            let districtEstateValue = solo.estate.getDistrictValue(i+1)
-            let multiplicator = solo.estate.getMultiplicator(i+1)
+            let nbDistrictOfSize = soloGame.map.getNbCompleteDistricts(i+1) 
+            let districtEstateValue = soloGame.estate.getDistrictValue(i+1)
+            let multiplicator = soloGame.estate.getMultiplicator(i+1)
             let score = nbDistrictOfSize * multiplicator
 
             // Estate improvements
@@ -133,7 +135,7 @@ class ScoreBoard extends React.Component <ScoreBoardProps, ScoreBoardState> {
         let interimScores = []
         let i = 0;
 
-        while (i < this.props.solo.nbInterimUsed) {
+        while (i < this.props.soloGame.nbInterimUsed) {
             interimScores.push(
                 <div key={i} className={'interim-score interim-score-' + i}>
                     {'X'}
@@ -142,8 +144,8 @@ class ScoreBoard extends React.Component <ScoreBoardProps, ScoreBoardState> {
             i++
         }
         interimScores.push(
-            <div key={this.props.solo.nbInterimUsed} className='total-interim-score'>
-                {this.props.solo.interimScore}
+            <div key={this.props.soloGame.nbInterimUsed} className='total-interim-score'>
+                {this.props.soloGame.interimScore}
             </div>
         )
 
@@ -154,7 +156,7 @@ class ScoreBoard extends React.Component <ScoreBoardProps, ScoreBoardState> {
         let roundaboutScores = []
         let i = 0;
 
-        while (i < this.props.solo.nbroundaboutUsed) {
+        while (i < this.props.soloGame.nbroundaboutUsed) {
             roundaboutScores.push(
                 <div className={'roundabout-score roundabout-score-' + i}>X</div>
             )
@@ -168,7 +170,7 @@ class ScoreBoard extends React.Component <ScoreBoardProps, ScoreBoardState> {
         let unbuiltScores = []
         let i = 0;
 
-        while (i < this.props.solo.nbUnbuiltUsed) {
+        while (i < this.props.soloGame.nbUnbuiltUsed) {
             unbuiltScores.push(
                 <div className={'unbuilt-score unbuilt-score-' + i}>X</div>
             )
@@ -189,7 +191,7 @@ class ScoreBoard extends React.Component <ScoreBoardProps, ScoreBoardState> {
             {this.renderInterimScores()}
             {this.unbuiltScores()}
             <div className='total-penalties-score'>0</div>
-            {this.props.solo.mode !== GameMode.Advanced && this.renderRoundaboutScores()}
+            {this.props.soloGame.mode !== GameMode.Advanced && this.renderRoundaboutScores()}
         </React.Fragment>
     }
 

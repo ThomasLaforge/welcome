@@ -68,7 +68,7 @@ export class SoloGameUIStore {
 			// after next
 			if( 
 				// Auto skip if effect is automatically used
-				this.currentPhase === SoloPhase.EffectChoices && (this.computedConstruction && Effect.isAutoActivateEffect(this.computedConstruction.effectType))
+				this.autoSkipTest()
 			){
 				this.phaseManager.next()
 			}
@@ -85,20 +85,31 @@ export class SoloGameUIStore {
 		if(this.currentPhase === SoloPhase.RoundAbout){
 			this.selectedRoundabout = null
 		}
-		if(this.currentPhase === SoloPhase.EffectChoices){
-			if(this.actualConstructionToBuild.effectType === EffectType.Bis){
-				this.optionsPlay.bisField = null
-			}
-			if(this.actualConstructionToBuild.effectType === EffectType.RealEstateAgent){
-				this.optionsPlay.estateChoice = null
-			}
-			if(this.actualConstructionToBuild.effectType === EffectType.Surveyor){
-				this.optionsPlay.surveyorFence = null
+		else if(this.currentPhase === SoloPhase.EffectChoices){
+			switch (this.actualConstructionToBuild.effectType) {
+				case EffectType.Bis:
+					this.optionsPlay.bisField = null				
+					break;
+				case EffectType.RealEstateAgent:
+					this.optionsPlay.estateChoice = null				
+					break;
+				case EffectType.Surveyor:
+					this.optionsPlay.surveyorFence = null				
+					break;
+				default:
+					break;
 			}
 		}
 
 		this.next()
+	}
 
+	autoSkipTest(){
+		return this.currentPhase === SoloPhase.EffectChoices && this.actualConstructionToBuild &&
+			(	
+				Effect.isAutoActivateEffect(this.actualConstructionToBuild.effectType)
+				|| 	this.actualConstructionToBuild.effectType === EffectType.Bis && this.game.getAllBisPossible().length === 0
+			)
 	}
 
 	back(){
@@ -111,10 +122,7 @@ export class SoloGameUIStore {
 		// }
 		this.phaseManager.back()
 
-		if( 
-			// Auto skip if effect is automatically used
-			this.currentPhase === SoloPhase.EffectChoices && (this.computedConstruction && Effect.isAutoActivateEffect(this.computedConstruction.effectType))
-		){
+		if( this.autoSkipTest() ){
 			this.phaseManager.back()
 		}
 

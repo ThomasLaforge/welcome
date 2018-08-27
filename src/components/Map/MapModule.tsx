@@ -2,23 +2,22 @@ import * as React from 'react';
 import {observer, inject} from 'mobx-react';
 import { DefaultProps, injector } from '../../lib/mobxInjector'
 
-import Manager from './Manager'
 import WelcomeMap from '../Common/WelcomeMap'
-import ScoreBoard from '../Common/ScoreBoard'
-import PlayerActions from './PlayerActions'
-import { MapMode } from '../../modules/Welcome';
 import GameOverScreen from '../Common/GameOverScreen';
 
-interface SoloGameProps extends DefaultProps {
+import {MapMode} from '../../modules/Welcome'
+import ScoreBoard from '../Common/ScoreBoard';
+
+interface PlayerActionsProps extends DefaultProps {
 }
-interface SoloGameState {
+interface PlayerActionsState {
 }
 
 @inject(injector)
 @observer
-class SoloGame extends React.Component <SoloGameProps, SoloGameState> {
+class PlayerActions extends React.Component <PlayerActionsProps, PlayerActionsState> {
 
-    constructor(props: SoloGameProps){
+    constructor(props: PlayerActionsProps){
         super(props)
         this.state = {
         }
@@ -29,10 +28,8 @@ class SoloGame extends React.Component <SoloGameProps, SoloGameState> {
             <div className="game-main">
                 {this.props.solo.isGameOver() ? 
                     <GameOverScreen />
-                : <>
-                    <Manager />
+                :
                     <PlayerActions />
-                </>
                 }
             </div>
             <div className="game-paper">
@@ -44,10 +41,12 @@ class SoloGame extends React.Component <SoloGameProps, SoloGameState> {
                     onFenceClick={this.props.ui.solo.handleFenceClick}
                     soloGame={this.props.ui.solo}
                 />
-                <ScoreBoard soloGame={this.props.solo} />
+                <ScoreBoard 
+                    soloGame={this.props.solo}
+                />
             </div>
         </div>
     }
 }
 
-export default SoloGame;
+export default PlayerActions;

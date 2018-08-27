@@ -3,7 +3,7 @@ import {observable} from 'mobx'
 import { WelcomeModulesManager } from './WelcomeModulesManager';
 import {Player} from './Player'
 import { Construction } from './Construction';
-import {OptionsPlay} from './Welcome'
+import {OptionsPlay, GameMode} from './Welcome'
 import { Field } from './Field';
 
 export class Game {
@@ -11,11 +11,13 @@ export class Game {
     @observable public players: Player[];
     @observable public manager: WelcomeModulesManager;
     public startDate: number;
-    @observable public endDate: number;
+	@observable public endDate: number;
+	public mode: GameMode
 
-	constructor(players = [new Player()], manager = new WelcomeModulesManager(), startDate = Date.now(), endDate?: number) {
+	constructor(players = [new Player()], manager = new WelcomeModulesManager(), mode = GameMode.Normal, startDate = Date.now(), endDate?: number) {
 		this.players = players;
 		this.manager = manager;
+		this.mode = mode
 		this.startDate = startDate;
 		this.endDate = endDate;
 	}

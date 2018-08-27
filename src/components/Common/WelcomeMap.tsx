@@ -2,12 +2,11 @@ import * as React from 'react';
 import {observer, inject} from 'mobx-react';
 import { DefaultProps, injector } from '../../lib/mobxInjector'
 
-import Fence from './Fence';
-
 import {WelcomeMap as WelcomeMapModel} from '../../modules/WelcomeMap'
-import { MissionType, MapMode, SoloPhase, EffectType } from '../../modules/Welcome';
-import { Street } from '../../modules/Street';
-import BisZone from '../Solo/EffectZones/BisZone';
+import { MapMode, SoloPhase, EffectType } from '../../modules/Welcome';
+import { SoloGameUIStore } from '../../modules/Stores/SoloGameUIStore';
+
+import Fence from './Fence';
 import Field from './Field';
 
 interface WelcomeMapProps extends DefaultProps {
@@ -17,6 +16,7 @@ interface WelcomeMapProps extends DefaultProps {
     onStreetClick?: Function
     onFenceClick?: Function
     mode: MapMode
+    soloGame: SoloGameUIStore
 }
 interface WelcomeMapState {
     map: WelcomeMapModel
@@ -29,14 +29,13 @@ class WelcomeMap extends React.Component <WelcomeMapProps, WelcomeMapState> {
     constructor(props: WelcomeMapProps){
         super(props)
         this.state = {
-            map: new WelcomeMapModel()
+            map: this.props.soloGame.game.map
         }
     }
     
     renderStreets(){
-        let uiSolo = this.props.ui.solo
+        let uiSolo = this.props.soloGame
         let inSurveyorPhase = uiSolo.currentPhase === SoloPhase.EffectChoices && uiSolo.computedConstruction.effectType === EffectType.Surveyor
-        let inBisPhase = uiSolo.currentPhase === SoloPhase.EffectChoices && uiSolo.computedConstruction.effectType === EffectType.Bis
 
         return this.state.map.streets.map( (s, streetIndex) => 
             <div className={'street street-' + streetIndex} key={streetIndex}

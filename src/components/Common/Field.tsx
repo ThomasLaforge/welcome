@@ -45,7 +45,7 @@ class Field extends React.Component <FieldProps, FieldState> {
         if( inHouseSelectionPhase &&  game.fieldCanBeSelected(field, uiSolo.actualConstructionToBuild) ) { 
             fieldClassName += ' ' + 'field-can-be-selected'
         }
-        if( /*inBisPhase && */ game.isPossibleBis(field) ) { 
+        if( inBisPhase && game.isPossibleBis(field) ) { 
             fieldClassName += ' ' + 'field-can-be-selected-for-bis'
         }
         if( field.isBis() ) { 

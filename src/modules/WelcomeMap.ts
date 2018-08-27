@@ -22,7 +22,7 @@ export class WelcomeMap {
 
 	constructor(streets = DEFAULT_STREETS) {
 		this.streets = streets;
-		this.initializeTestConstructions()
+		// this.initializeTestConstructions()
 	}
 
 	initializeTestConstructions(){
