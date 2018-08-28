@@ -2,6 +2,7 @@ import * as React from 'react';
 import {observer, inject} from 'mobx-react';
 import { DefaultProps, injector } from '../../lib/mobxInjector'
 
+<<<<<<< HEAD
 import { Button } from '../../../node_modules/@material-ui/core';
 import Construction from '../Common/Construction';
 
@@ -9,6 +10,8 @@ import { Construction as ConstructionModel } from '../../modules/Construction'
 import { Effect } from '../../modules/Effect';
 import { EffectType } from '../../modules/Welcome';
 
+=======
+>>>>>>> 4e3be9da00ee3e1d19a8c27f75eeb53c8ff62fac
 interface PlayerActionsProps extends DefaultProps {
 }
 interface PlayerActionsState {
