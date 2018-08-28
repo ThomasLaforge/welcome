@@ -4,8 +4,10 @@ import { DefaultProps, injector } from '../../lib/mobxInjector'
 
 import { Button } from '../../../node_modules/@material-ui/core';
 import { Route } from '../../modules/Welcome';
+import { SoloGame } from '../../modules/SoloGame';
 
 interface GameOverScreenProps extends DefaultProps {
+    soloGame: SoloGame
 }
 interface GameOverScreenState {
 }
@@ -26,10 +28,10 @@ class GameOverScreen extends React.Component <GameOverScreenProps, GameOverScree
                 GAME OVER !
             </div>
             <div className="game-over-content">
-                You scored {this.props.solo.totalScore}!
+                You scored {this.props.soloGame.totalScore}!
             </div>
             <div className="game-over-actions">
-                <Button variant='outlined' onClick={() => { this.props.solo.reset() }}>Retry</Button>
+                <Button variant='outlined' onClick={() => { this.props.soloGame.reset() }}>Retry</Button>
                 <Button variant='outlined' onClick={() => { this.props.ui.switchRoute()} }>Back Home</Button>
             </div>
         </div>

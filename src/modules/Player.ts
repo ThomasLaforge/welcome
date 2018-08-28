@@ -9,9 +9,10 @@ export class Player {
     @observable public map: WelcomeMap;
 	@observable public completedPlans: Plan[];
 
-	constructor(map = new WelcomeMap(), name = 'Thomas') {
+	constructor(map = new WelcomeMap(), completedPlans: Plan[] = [], name = 'Thomas') {
 		this.map = map;
 		this.name = name;
+		this.completedPlans = completedPlans
 	}
 
 	completePlan(p: Plan){
@@ -19,6 +20,6 @@ export class Player {
 	}
 
 	get planScore(){
-		return this.completedPlans.reduce( (score, p) => score + p.getScore(), 0)
+		return this.completedPlans.reduce( (score, p) => p ? score + p.getScore() : score, 0)
 	}
 }

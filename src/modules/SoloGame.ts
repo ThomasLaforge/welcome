@@ -11,6 +11,7 @@ import { House } from './House';
 import { EstateManager } from './EstateManager';
 import { Bis } from './Bis';
 import { Game } from './Game';
+import Summary from '../components/Solo/Summary';
 
 // export class SoloGame extends Game {
 export class SoloGame {
@@ -21,9 +22,7 @@ export class SoloGame {
     public startDate: number;
 	@observable public endDate: number;
 	@observable public mode: GameMode;
-	@observable public nbInterimUsed: number;
 	@observable public nbroundaboutUsed: number;
-	@observable public nbBisBuilt: number;
 	@observable public nbUnbuiltUsed: number;
 
 	constructor(mode = GameMode.Normal, player = new Player(), manager = new SoloWelcomeModulesManager(), estate = new EstateManager(), plansDone = [], startDate = Date.now(), endDate?: number, nbInterimUsed = 0, nbBisBuilt = 0, nbroundaboutUsed = 0, nbUnbuiltUsed = 0) {
@@ -33,8 +32,6 @@ export class SoloGame {
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.mode = mode
-		this.nbInterimUsed = nbInterimUsed;
-		this.nbBisBuilt = nbBisBuilt
 		this.nbroundaboutUsed = nbroundaboutUsed
 		this.nbUnbuiltUsed = nbUnbuiltUsed
 	}
@@ -46,8 +43,6 @@ export class SoloGame {
 		this.startDate = Date.now()
 		this.endDate = null
 		this.mode = GameMode.Normal
-		this.nbInterimUsed = 0;
-		this.nbBisBuilt = 0;
 		this.nbroundaboutUsed = 0;
 		this.nbUnbuiltUsed = 0;
 	}
@@ -124,7 +119,7 @@ export class SoloGame {
 	}
 
 	isPossibleBis(f: Field){
-		return this.getAllBisPossible().includes(f)
+		return this.getAllBisPossible().filter(field => field.isEqual(f)).length === 1
 	}
 
 	get possibleCards(){
@@ -240,10 +235,10 @@ export class SoloGame {
 	}
 
 	planScore(planLevel: PlanLevel){
-		return 0
+		return this.player.completedPlans && this.player.completedPlans[planLevel] || 0
 	}
 	get totalPlanScore(){
-		return 0
+		return this.player.planScore
 	}
 
 	parkScore(streetIndex: number){
@@ -260,6 +255,10 @@ export class SoloGame {
 		let scores = [0, 3, 6, 9, 13, 17, 21, 26, 31, 36]
 		return scores[this.nbPoolBuilt]
 	}
+
+	get nbBisBuilt(){
+		return this.map.streets.reduce( (sum: number, s) => sum + s.fields.filter(f => f.isBis()).length, 0)
+	}
 	
 	get bisScore(){
 		let scores = [0, 1, 3, 6, 9, 12, 16, 20, 24, 28]
@@ -274,9 +273,24 @@ export class SoloGame {
 	get refusalScore(){
 		return 0
 	}
+
+	get nbInterimUsed(){
+		return this.map.streets.reduce( (sum: number, s) => sum + s.fields.filter(f => f.isHouse() && (f.construction as House).effectType === EffectType.Interim).length, 0)
+	}
 	
 	get interimScore(){
 		return this.nbInterimUsed >= 6 ? 7 : 0
+	}
+
+	get totalEstateScore(){
+		let total = 0
+		for (let i = 1; i <= 6; i++) {
+            let nbDistrictOfSize = this.map.getNbCompleteDistricts(i) 
+            let multiplicator = this.estate.getMultiplicator(i)
+			let score = nbDistrictOfSize * multiplicator
+			total += score
+		}
+		return total
 	}
 
 	get totalScore(){
@@ -284,7 +298,7 @@ export class SoloGame {
 			+	this.totalParkScore
 			+	this.totalPoolScore
 			+	this.interimScore
-			// +	this.totalEstateScore
+			+	this.totalEstateScore
 			-	this.roundaboutScore
 			-	this.bisScore
 			-	this.refusalScore

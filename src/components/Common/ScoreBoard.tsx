@@ -6,6 +6,7 @@ import { SoloGame } from '../../modules/SoloGame';
 
 interface ScoreBoardProps extends DefaultProps {
     soloGame: SoloGame
+    handlePlanClick?: Function
 }
 interface ScoreBoardState {
 }
@@ -26,7 +27,9 @@ class ScoreBoard extends React.Component <ScoreBoardProps, ScoreBoardState> {
 
         for (let i = 0; i < nbPlan; i++) {
             planScores.push(
-                <div key={i} className={'plan-score plan-score-' + i}>
+                <div key={i} className={'plan-score plan-score-' + i}
+                    onClick={() => this.props.handlePlanClick && this.props.handlePlanClick(i)}
+                >
                     {this.props.soloGame.planScore(i)}
                 </div>
             )            
@@ -158,7 +161,7 @@ class ScoreBoard extends React.Component <ScoreBoardProps, ScoreBoardState> {
 
         while (i < this.props.soloGame.nbroundaboutUsed) {
             roundaboutScores.push(
-                <div className={'roundabout-score roundabout-score-' + i}>X</div>
+                <div key={i} className={'roundabout-score roundabout-score-' + i}>X</div>
             )
             i++
         }
@@ -172,7 +175,7 @@ class ScoreBoard extends React.Component <ScoreBoardProps, ScoreBoardState> {
 
         while (i < this.props.soloGame.nbUnbuiltUsed) {
             unbuiltScores.push(
-                <div className={'unbuilt-score unbuilt-score-' + i}>X</div>
+                <div key={i} className={'unbuilt-score unbuilt-score-' + i}>X</div>
             )
             i++
         }

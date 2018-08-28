@@ -14,6 +14,7 @@ interface FieldProps extends DefaultProps {
     position: number
     streetLine: number
     onFieldClick: Function
+    selectedField: FieldModel
 }
 interface FieldState {
 }
@@ -36,7 +37,7 @@ class Field extends React.Component <FieldProps, FieldState> {
         let inSummaryPhase = uiSolo.currentPhase === SoloPhase.Confirmation
 
         let field = this.props.field
-        let isHouseSelected = field === uiSolo.selectedHouse
+        let isHouseSelected = this.props.selectedField && field.isEqual(this.props.selectedField)
         let isHouseSelectedForBis = (inBisPhase || inSummaryPhase) && !!uiSolo.optionsPlay.bisField && uiSolo.optionsPlay.bisField.isEqual(field)
 
         let fieldClassName = 'field-line-' + this.props.streetLine + '-spot-'+ this.props.position +' house'

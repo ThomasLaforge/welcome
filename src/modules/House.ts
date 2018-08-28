@@ -5,13 +5,13 @@ export class House extends FieldConstruction {
 
 	public effect: Effect;
 
-    constructor(houseNumber: number, effect: Effect){
+    constructor(houseNumber: number, effect?: Effect){
 		super(houseNumber)
 		this.effect = effect
     }
 
 	get effectType(){
-		return this.effect.type
+		return this.effect && this.effect.type
 	}
 
 }

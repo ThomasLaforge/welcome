@@ -7,46 +7,48 @@ import GameOverScreen from '../Common/GameOverScreen';
 
 import {MapMode} from '../../modules/Welcome'
 import ScoreBoard from '../Common/ScoreBoard';
+import PlayerActions from './PlayerActions';
 
-interface PlayerActionsProps extends DefaultProps {
+interface MapModuleProps extends DefaultProps {
 }
-interface PlayerActionsState {
+interface MapModuleState {
 }
 
 @inject(injector)
 @observer
-class PlayerActions extends React.Component <PlayerActionsProps, PlayerActionsState> {
+class MapModule extends React.Component <MapModuleProps, MapModuleState> {
 
-    constructor(props: PlayerActionsProps){
+    constructor(props: MapModuleProps){
         super(props)
         this.state = {
         }
     }
 
     render() {
+        let uiMap = this.props.ui.map
+        let solo = uiMap.solo
         return <div className='game'>
             <div className="game-main">
-                {this.props.solo.isGameOver() ? 
-                    <GameOverScreen />
+                {solo.isGameOver() ? 
+                    <GameOverScreen soloGame={solo} />
                 :
                     <PlayerActions />
                 }
             </div>
+
             <div className="game-paper">
                <WelcomeMap
-                    mode={MapMode.Solo}
-                    onHouseClick={this.props.ui.solo.handleHouseClick}
-                    onParkClick={this.props.ui.solo.handleParkClick}
-                    onStreetClick={this.props.ui.solo.handleStreetClick}
-                    onFenceClick={this.props.ui.solo.handleFenceClick}
-                    soloGame={this.props.ui.solo}
+                    mode={MapMode.MapOnly}
+                    onHouseClick={uiMap.handleFieldClick}
+                    map={solo.map}
                 />
                 <ScoreBoard 
-                    soloGame={this.props.solo}
+                    soloGame={solo}
+                    handlePlanClick={uiMap.handlePlanClick}
                 />
             </div>
         </div>
     }
 }
 
-export default PlayerActions;
+export default MapModule;

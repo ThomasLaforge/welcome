@@ -10,8 +10,6 @@ export class Field {
 
     public streetLine: number;
     public position: number;
-    @observable public leftFence: boolean;
-    @observable public rightFence: boolean;
     @observable public hasPool: boolean;
     @observable public construction: House | Bis;
     @observable public hasRoundabout: boolean;
@@ -20,15 +18,11 @@ export class Field {
 	constructor(
         streetLine: number,
         position: number,
-        hasPool = false,
-        leftFence = false, 
-        rightFence = false, 
+        hasPool = false, 
         hasRoundabout = false,
         construction = null,
         usedForPlans = false
     ) {
-		this.leftFence = leftFence;
-		this.rightFence = rightFence;
 		this.hasPool = hasPool;
 		this.hasRoundabout = hasRoundabout;
         this.construction = construction;
@@ -41,7 +35,12 @@ export class Field {
         return !!this.construction
     }
     build(construction: FieldConstruction){
+        console.log('construction', construction)
         this.construction = construction
+    }
+
+    destroy(){
+        this.construction = null
     }
     get used(){
         return this.usedForPlans
@@ -55,20 +54,6 @@ export class Field {
     }
     destroyRoundabout(){
         this.hasRoundabout = true
-    }
-    
-    // Fences methods
-    createLeftFence(){
-        this.leftFence = true
-    }
-    destroyLeftFence(){
-        this.leftFence = false
-    }
-    createRightFence(){
-        this.rightFence = true
-    }
-    destroyRightFence(){
-        this.rightFence = false
     }
 
     isHouse(){
@@ -87,5 +72,16 @@ export class Field {
 
     isEqual(f: Field){
         return this.streetLine === f.streetLine && this.position === f.position
+    }
+
+    get houseNumber(){
+        return this.construction && this.construction.houseNumber
+    }
+
+    get effect(){
+        return this.isHouse() && (this.construction as House).effect
+    }
+    get effectType(){
+        return this.isHouse() && (this.construction as House).effectType
     }
 }

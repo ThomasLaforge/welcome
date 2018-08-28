@@ -28,7 +28,7 @@ class SoloGame extends React.Component <SoloGameProps, SoloGameState> {
         return <div className='game'>
             <div className="game-main">
                 {this.props.solo.isGameOver() ? 
-                    <GameOverScreen />
+                    <GameOverScreen soloGame={this.props.solo} />
                 : <>
                     <Manager />
                     <PlayerActions />
@@ -43,6 +43,7 @@ class SoloGame extends React.Component <SoloGameProps, SoloGameState> {
                     onStreetClick={this.props.ui.solo.handleStreetClick}
                     onFenceClick={this.props.ui.solo.handleFenceClick}
                     soloGame={this.props.ui.solo}
+                    map={this.props.ui.solo.game.map}
                 />
                 <ScoreBoard soloGame={this.props.solo} />
             </div>

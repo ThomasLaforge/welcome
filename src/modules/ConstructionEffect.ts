@@ -19,7 +19,7 @@ export class ConstructionEffect {
             case EffectType.PoolManufacturer:
                 imgName = 'pool'                
                 break;
-            case EffectType.TempAgency:
+            case EffectType.Interim:
                 imgName = 'interim'                
                 break;
             case EffectType.Bis:
@@ -42,7 +42,7 @@ export class ConstructionEffect {
                 return 'surveyor'
             case EffectType.PoolManufacturer:
                 return 'pool'
-            case EffectType.TempAgency:
+            case EffectType.Interim:
                 return 'interim'
             case EffectType.Bis:
                 return 'bis'

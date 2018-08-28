@@ -796,3 +796,11 @@ $planHeight: 200px;
         height: 20%;
     }
 }
+
+@mixin disabled {
+    color: lightgray;
+}
+
+.disabled {
+    @include disabled();
+}

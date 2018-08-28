@@ -115,7 +115,7 @@ export class Street {
     }
 
     get nbParkChecked(){
-        return this.fields.filter(f => f.isHouse() && (f.construction as House).effect.type === EffectType.Landscaper).length
+        return this.fields.filter(f => f.isHouse() && (f.construction as House).effect && (f.construction as House).effect.type === EffectType.Landscaper).length
     }
     
     get parkScore(){

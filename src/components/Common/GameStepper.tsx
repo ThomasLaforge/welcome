@@ -26,7 +26,7 @@ class GameStepper extends React.Component <GameStepperProps, GameStepperState> {
         // console.log('render stepper content', this.props.ui.solo.activePlayerActionStep)
         return <div className='player-actions-stepper-content'>
             {/* TempAgency */}
-            {this.props.ui.solo.currentPhase === SoloPhase.HouseSelection && this.props.ui.solo.actualConstructionToBuild.effectType === EffectType.TempAgency &&
+            {this.props.ui.solo.currentPhase === SoloPhase.HouseSelection && this.props.ui.solo.actualConstructionToBuild.effectType === EffectType.Interim &&
                 `Le pouvoir de cette construction vous permet de modifier la valeur de votre construction de + ou - 2!`
             }
             {/* Pool */}

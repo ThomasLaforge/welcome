@@ -17,7 +17,7 @@ export class Construction {
 	}
 
 	get effectType(){
-		return this.effect.type
+		return this.effect && this.effect.type
 	}
 
 }

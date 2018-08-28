@@ -10,7 +10,7 @@ import { Effect } from './Effect';
 const DEFAULT_STREETS = require('../datas/map.json').map( (s: boolean[], i) => {
 	let houses = s.map( (pool, j) => {
 		let hasPool = !!pool
-		return new Field(i, j, hasPool, j === 0, j === (s.length - 1))
+		return new Field(i, j, hasPool)
 	})
 	return new Street(i, houses)
 })
@@ -23,6 +23,10 @@ export class WelcomeMap {
 	constructor(streets = DEFAULT_STREETS) {
 		this.streets = streets;
 		// this.initializeTestConstructions()
+	}
+
+	reset(){
+		this.streets = DEFAULT_STREETS	
 	}
 
 	initializeTestConstructions(){
@@ -103,7 +107,7 @@ export class WelcomeMap {
 		]
 
 		initialConstructions.forEach(c => {
-			let construction = new Construction(c.houseNumber, new Effect(EffectType.TempAgency))
+			let construction = new Construction(c.houseNumber, new Effect(EffectType.Interim))
 			this.streets[c.streetLine].fields[c.pos].build(construction)
 		})
 

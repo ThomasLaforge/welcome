@@ -8,7 +8,7 @@ export enum EffectType {
     RealEstateAgent = 1,
     Landscaper = 2,
     PoolManufacturer = 3,
-    TempAgency = 4,
+    Interim = 4,
     Bis = 5
 }
 

@@ -68,7 +68,7 @@ class PlayerActions extends React.Component <PlayerActionsProps, PlayerActionsSt
                 }
                 {uiSolo.isInPhase(SoloPhase.HouseSelection) &&
                     <div className="merged-construction-zone">
-                        { uiSolo.computedConstruction.effectType === EffectType.TempAgency ?
+                        { uiSolo.computedConstruction.effectType === EffectType.Interim ?
                             <TempAgencyZone />
                         :
                         <div className="merged-construction">
