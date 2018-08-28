@@ -7,17 +7,18 @@ import GameOverScreen from '../Common/GameOverScreen';
 
 import {MapMode} from '../../modules/Welcome'
 import ScoreBoard from '../Common/ScoreBoard';
+import PlayerActions from './PlayerActions';
 
-interface PlayerActionsProps extends DefaultProps {
+interface MapModuleProps extends DefaultProps {
 }
-interface PlayerActionsState {
+interface MapModuleState {
 }
 
 @inject(injector)
 @observer
-class PlayerActions extends React.Component <PlayerActionsProps, PlayerActionsState> {
+class MapModule extends React.Component <MapModuleProps, MapModuleState> {
 
-    constructor(props: PlayerActionsProps){
+    constructor(props: MapModuleProps){
         super(props)
         this.state = {
         }
@@ -49,4 +50,4 @@ class PlayerActions extends React.Component <PlayerActionsProps, PlayerActionsSt
     }
 }
 
-export default PlayerActions;
+export default MapModule;

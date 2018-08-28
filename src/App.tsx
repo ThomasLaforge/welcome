@@ -73,7 +73,7 @@ class App extends React.Component<{}, { store: Store, drawerOpened: boolean} > {
                     </ListItemIcon>
                     <ListItemText primary="Solo" />
                   </ListItem>
-                  <ListItem button onClick={() => this.state.store.uiStore.switchRoute(Route.Multi)}>
+                  <ListItem button disabled onClick={() => this.state.store.uiStore.switchRoute(Route.Multi)}>
                     <ListItemIcon>
                       <PeopleIcon />
                     </ListItemIcon>
