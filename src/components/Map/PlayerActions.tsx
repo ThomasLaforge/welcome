@@ -2,16 +2,15 @@ import * as React from 'react';
 import {observer, inject} from 'mobx-react';
 import { DefaultProps, injector } from '../../lib/mobxInjector'
 
-<<<<<<< HEAD
 import { Button } from '../../../node_modules/@material-ui/core';
 import Construction from '../Common/Construction';
 
 import { Construction as ConstructionModel } from '../../modules/Construction'
 import { Effect } from '../../modules/Effect';
-import { EffectType } from '../../modules/Welcome';
+import { EffectType, PlanLevel, MAX_NB_ROUNDABOUT_TO_BUILD, GameMode } from '../../modules/Welcome';
+import { Plan } from '../../modules/Plan';
+import { Field } from '../../modules/Field';
 
-=======
->>>>>>> 4e3be9da00ee3e1d19a8c27f75eeb53c8ff62fac
 interface PlayerActionsProps extends DefaultProps {
 }
 interface PlayerActionsState {
@@ -32,19 +31,35 @@ class PlayerActions extends React.Component <PlayerActionsProps, PlayerActionsSt
     }
 
     renderNumbers(){
+        const uiMap = this.props.ui.map
+        const f = uiMap.selectedField
+        const fStreet = uiMap.map.streets[f.streetLine]
         const numbers = new Array(19).fill('').map( (val, i) => i - 1)
-        return numbers.map( (n) => 
-            <div className='numbers-elt'
+
+        return numbers.map( (n) => {
+            const disabled = !uiMap.solo.fieldCanBeSelected(f, new ConstructionModel(n, null))
+            return <div className={'numbers-elt ' + (disabled ? ' disabled' : '')}
                 key={n}
-                onClick={() => this.props.ui.map.handleNumberClick(n)}
+                onClick={() => !disabled && this.props.ui.map.handleNumberClick(n)}
             > 
                 {n}
             </div>
-        )
+        })
     }
 
     handlePlanNumberClick = (number: number) => {
         console.log('on plan number click', number)
+        const uiMap = this.props.ui.map
+
+        uiMap.solo.player.completePlan( new Plan(
+            {
+                firstPlayer: number,
+                others: number
+            },
+            null,
+            uiMap.selectedPlanIndex,
+            true
+        ))
     }
 
     renderPlanNumbers(){
@@ -59,95 +74,135 @@ class PlayerActions extends React.Component <PlayerActionsProps, PlayerActionsSt
         )
     }
 
-    handleEstateClick = (number: number) => {
-        console.log('on estate click', number)
-    }
-
     renderEstateBtns(){
         const numbers = new Array(6).fill('').map( (val, i) => i + 1)
         return numbers.map( (n) => 
             <div className='estates-elt'
                 key={n}
-                onClick={() => this.handleEstateClick(n)}
+                onClick={() => this.props.ui.map.handleEstateClick(n)}
             > 
                 {n}
             </div>
         )
     }
 
-    render() {
-        let uiMap = this.props.ui.map
+    renderEstateZone(){
+        return <div className='map-estate-zone'>
+            <div className='map-estate-zone-title'>Estates:</div>
+            <div className='map-estate-zone-btns'>
+                {this.renderEstateBtns()}
+            </div>
+        </div>
+    }
 
-        let constructionBuiltFromSelectedField
+    render() {
+        const uiMap = this.props.ui.map
+        const solo = uiMap.solo
+        const f = uiMap.selectedField
+        const fStreet = f && solo.map.streets[f.streetLine]
+
+        let constructionBuiltFromSelectedField;
         if(uiMap.selectedField){
             let effectOfSelectedField = uiMap.selectedField.effect
             if(!effectOfSelectedField && uiMap.selectedField.isBis()){
                 effectOfSelectedField = new Effect(EffectType.Bis)
             }
-            constructionBuiltFromSelectedField = new ConstructionModel(uiMap.selectedField.houseNumber, effectOfSelectedField)
+            if(uiMap.selectedField.houseNumber){
+                constructionBuiltFromSelectedField = new ConstructionModel(uiMap.selectedField.houseNumber, effectOfSelectedField)
+            }
         }
 
-        return <div className='map-actions'>
-            {uiMap.selectedField && 
-                <div className='map-actions-info'>
-                    <Construction card={constructionBuiltFromSelectedField} />
-                </div>
-            }
+        const canBuildRoundabout = uiMap.solo.nbRoundaboutUsed < MAX_NB_ROUNDABOUT_TO_BUILD
+        const fieldPosition = f && f.position 
+        const canBuildLeftFence = uiMap.selectedField && fieldPosition > 0
+        const canBuildRightFence = uiMap.selectedField && fieldPosition < fStreet.length - 1
+        const canBis = solo.isPossibleBis(f)
 
-            { uiMap.inFieldSelectionMode() && <div className="map-actions-field">
-                <div className={"park-btn" + (uiMap.selectedFieldIsPark ? ' disabled' : '')}
-                    onClick={uiMap.onParkClick}
-                >
-                    Park
+        return <div className='map-actions'>
+            <div className='map-specific-actions'>
+                {!uiMap.inFieldSelectionMode() && !uiMap.inPlanSelectionMode() && 
+                    <div className='map-actions-nothing-selected'>
+                        Rien n'est encore sélectionné. Vous pouvez sélectionner un terrain ou un plan.
+                    </div>
+                }
+
+                { uiMap.inFieldSelectionMode() && <div className="map-actions-field">
+                    <div className='map-actions-info'>
+                        {!!constructionBuiltFromSelectedField ? 
+                            <Construction card={constructionBuiltFromSelectedField} />
+                            :
+                            <div className='map-actions-info-nothing-built'>
+                                Rien de construit pour l'instant    
+                            </div>
+                        }
+                    </div>
+
+                    <div className='numbers'>
+                        {this.renderNumbers()}
+                    </div>
+                    
+                    <div className="map-actions-field-effects">
+                        {/* <div className={"park-btn map-actions-btn" + (uiMap.selectedFieldIsPark ? ' disabled' : '')} */}
+                        <div className="park-btn map-actions-btn"
+                            onClick={uiMap.onParkClick}
+                        >
+                            Park
+                        </div>
+                        <div className="pool-btn map-actions-btn"
+                            onClick={uiMap.onPoolClick}
+                        >
+                            Pool
+                        </div>
+                        <div className="interim-btn map-actions-btn"
+                            onClick={uiMap.onInterimClick}
+                        >
+                            Interim
+                        </div>
+                        { uiMap.solo.mode === GameMode.Advanced &&
+                            <div className={'roundabout-btn map-actions-btn' + (!canBuildRoundabout ? ' disabled' : '')}
+                                onClick={canBuildRoundabout && uiMap.onRoundaboutClick}
+                            >
+                                Roundabout
+                            </div>
+                        }
+                        <div className={'left-fence-btn map-actions-btn'}
+                            onClick={uiMap.onLeftFenceClick}
+                        >
+                            Left Fence
+                        </div>
+                        <div className={'right-fence-btn map-actions-btn'}
+                            onClick={uiMap.onRightFenceClick}
+                        >
+                            Right Fence
+                        </div>
+                        <div className={'bis-btn map-actions-btn ' + (!canBis ? 'disabled' : '')}
+                            onClick={canBis && uiMap.onBisClick}
+                        >
+                            Bis
+                        </div>
+                    </div>
+                    
+                    <div className="actions">
+                        {/* <Button onClick={uiMap.handleApply}>Apply</Button> */}
+                        <Button variant='raised' onClick={uiMap.handleResetField}>Reset field</Button>
+                    </div>
                 </div>
-                <div className="pool-btn"
-                    onClick={uiMap.onPoolClick}
-                >
-                    Pool
-                </div>
-                <div className="interim-btn"
-                    onClick={uiMap.onInterimClick}
-                >
-                    Interim
-                </div>
-                <div className='roundabout-btn'
-                    onClick={uiMap.onRoundaboutClick}
-                >
-                    Roundabout
-                </div>
-                <div className='left-fence-btn'
-                    onClick={uiMap.onLeftFenceClick}
-                >
-                    Left Fence
-                </div>
-                <div className='right-fence-btn'
-                    onClick={uiMap.onRightFenceClick}
-                >
-                    Right Fence
-                </div>
-                <div className='bis-btn'
-                    onClick={uiMap.onBisClick}
-                >
-                    Bis
-                </div>
-                <div className='numbers'>
-                    {this.renderNumbers()}
-                </div>
-                <div className="actions">
-                    {/* <Button onClick={uiMap.handleApply}>Apply</Button> */}
-                    <Button onClick={uiMap.handleResetField}>Reset field</Button>
-                </div>
+                }
+                { uiMap.inPlanSelectionMode() &&
+                    <div className="map-actions-plans">
+                        <div className='map-actions-plans-info'>
+                            Vous avez sélectionné le plan n°{uiMap.selectedPlanIndex + 1}. Indiquez le nombre de point marqué pour ce plan.
+                        </div>
+                        {this.renderPlanNumbers()}
+                    </div>
+                }
             </div>
-            }
-            { uiMap.inPlanSelectionMode() && <div className="map-actions-plans">
-                {this.renderPlanNumbers()}
+            <div className="map-global-actions">
+                {this.renderEstateZone()}
+                <Button className='rejection-btn' variant='raised' onClick={() => uiMap.handleRejection()}>Rejection</Button>
+                {/* <Button variant='raised' onClick={this.handleCancel}>Cancel</Button> */}
             </div>
-            }
-            <div className="map-actions-global">
-                <Button onClick={() => uiMap.handleRejection()}>Rejection</Button>
-                <Button onClick={this.handleCancel}>Cancel</Button>
-            </div>
-            {/* <Button onClick={uiMap.debug}>Debug</Button>     */}
+            {/* <Button onClick={uiMap.debug}>Debug</Button> */}
         </div>
     }
 }

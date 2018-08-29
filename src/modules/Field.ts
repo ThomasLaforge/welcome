@@ -1,30 +1,27 @@
 import { observable } from "mobx";
 
 import { FieldConstruction } from './FieldConstruction'
-import ConstructionEffect from "../components/Common/ConstructionEffect";
 import { EffectType } from "./Welcome";
 import { House } from "./House";
 import { Bis } from "./Bis";
+import { RoundAbout } from "./RoundAbout";
 
 export class Field {
 
     public streetLine: number;
     public position: number;
     @observable public hasPool: boolean;
-    @observable public construction: House | Bis;
-    @observable public hasRoundabout: boolean;
+    @observable public construction: House | Bis | RoundAbout;
     @observable public usedForPlans: boolean;
 
 	constructor(
         streetLine: number,
         position: number,
         hasPool = false, 
-        hasRoundabout = false,
         construction = null,
         usedForPlans = false
     ) {
 		this.hasPool = hasPool;
-		this.hasRoundabout = hasRoundabout;
         this.construction = construction;
         this.usedForPlans = usedForPlans;
         this.streetLine = streetLine;
@@ -35,7 +32,7 @@ export class Field {
         return !!this.construction
     }
     build(construction: FieldConstruction){
-        console.log('construction', construction)
+        // console.log('construction', construction)
         this.construction = construction
     }
 
@@ -49,19 +46,20 @@ export class Field {
         this.usedForPlans = true
     }
 
-    buildRoundabout(){
-        this.hasRoundabout = true
-    }
-    destroyRoundabout(){
-        this.hasRoundabout = true
-    }
-
     isHouse(){
         return this.construction && this.construction instanceof House
     }
     
     isBis(){
         return this.construction && this.construction instanceof Bis
+    }
+
+    isRoundabout(){
+        return this.construction && this.construction instanceof RoundAbout
+    }
+
+    isFree(){
+        return !this.isHouse() && !this.isRoundabout() && !this.isBis()
     }
 
     get hasPoolBuilt(){

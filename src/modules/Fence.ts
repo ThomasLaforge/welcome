@@ -14,9 +14,13 @@ export class Fence {
     build(){
         this.built = true
     }
+
     destroy = this.unbuild
     unbuild(){
         this.built = false
     }
 
+    get notBuilt(){
+        return !this.built
+    }
 }

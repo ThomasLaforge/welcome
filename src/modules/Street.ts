@@ -119,7 +119,8 @@ export class Street {
     }
     
     get parkScore(){
-        return this.getParksScores()[this.nbParkChecked]
+        let indexParkScore = this.nbParkChecked < this.getParksScores().length ? this.nbParkChecked : this.getParksScores().length - 1
+        return this.getParksScores()[indexParkScore]
     }
 
     get length(){

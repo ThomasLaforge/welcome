@@ -26,8 +26,9 @@ export class EstateManager {
             [6, 7, 8, 10, 12]
         ]
 
-        let index = districtSize - 1
-
-        return multis[index][this.getDistrictValue(districtSize)]
+        let indexDistrictSize = districtSize - 1
+        let indexDistrictValue = this.getDistrictValue(districtSize) < multis[indexDistrictSize].length - 1 ? this.getDistrictValue(districtSize) : multis[indexDistrictSize].length - 1
+        
+        return multis[indexDistrictSize][indexDistrictValue]
     }
 }

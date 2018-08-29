@@ -72,6 +72,9 @@ export class WelcomeMapUIStore {
 
     onRoundaboutClick = () => {
         console.log('on roundabout click')
+        if(!!this.selectedField){
+            this.solo.buildRoundabout(this.selectedField)
+        }
     }
     
     onLeftFenceClick = () => {
@@ -102,6 +105,11 @@ export class WelcomeMapUIStore {
             this.selectedField.destroy()
             this.solo.buildBis(this.selectedField)
         }
+    }
+
+    handleEstateClick = (number: number) => {
+        console.log('on estate click', number)
+        this.solo.estate.increment(number)
     }
 
     handleApply = () => {

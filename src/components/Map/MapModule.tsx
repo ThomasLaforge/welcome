@@ -27,17 +27,9 @@ class MapModule extends React.Component <MapModuleProps, MapModuleState> {
     render() {
         let uiMap = this.props.ui.map
         let solo = uiMap.solo
-        return <div className='game'>
-            <div className="game-main">
-                {solo.isGameOver() ? 
-                    <GameOverScreen soloGame={solo} />
-                :
-                    <PlayerActions />
-                }
-            </div>
-
-            <div className="game-paper">
-               <WelcomeMap
+        return <div className='map-module'>
+            <div className="map-module-paper">
+                <WelcomeMap
                     mode={MapMode.MapOnly}
                     onHouseClick={uiMap.handleFieldClick}
                     map={solo.map}
@@ -46,6 +38,13 @@ class MapModule extends React.Component <MapModuleProps, MapModuleState> {
                     soloGame={solo}
                     handlePlanClick={uiMap.handlePlanClick}
                 />
+            </div>
+            <div className="map-module-main">
+                {solo.isGameOver() ? 
+                    <GameOverScreen soloGame={solo} />
+                :
+                    <PlayerActions />
+                }
             </div>
         </div>
     }

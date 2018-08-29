@@ -39,6 +39,7 @@ class Field extends React.Component <FieldProps, FieldState> {
         let field = this.props.field
         let isHouseSelected = this.props.selectedField && field.isEqual(this.props.selectedField)
         let isHouseSelectedForBis = (inBisPhase || inSummaryPhase) && !!uiSolo.optionsPlay.bisField && uiSolo.optionsPlay.bisField.isEqual(field)
+        let isRoundabout = field.isRoundabout()
 
         let fieldClassName = 'field-line-' + this.props.streetLine + '-spot-'+ this.props.position +' house'
         if(isHouseSelected) { fieldClassName += ' ' + 'field-selected' }
@@ -59,7 +60,9 @@ class Field extends React.Component <FieldProps, FieldState> {
             onClick={() => this.props.onFieldClick(field)}
         >
             <div className={field.hasPoolBuilt ? 'field-with-pool-construction-number' : 'field-construction-number'}>
-                {field.construction && field.construction.houseNumber} {field.isBis() && 'bis'}
+                {isRoundabout && '(*)'}
+                {field.construction && !isRoundabout && field.construction.houseNumber} 
+                {field.isBis() && 'bis'}
             </div>
         </div>
     }

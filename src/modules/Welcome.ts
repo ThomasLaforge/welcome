@@ -83,3 +83,5 @@ export interface CompletedPlan {
     plan: Plan,
     soloCardDrawed: boolean
 }
+
+export const MAX_NB_ROUNDABOUT_TO_BUILD = 2

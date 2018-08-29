@@ -159,7 +159,7 @@ class ScoreBoard extends React.Component <ScoreBoardProps, ScoreBoardState> {
         let roundaboutScores = []
         let i = 0;
 
-        while (i < this.props.soloGame.nbroundaboutUsed) {
+        while (i < this.props.soloGame.nbRoundaboutUsed) {
             roundaboutScores.push(
                 <div key={i} className={'roundabout-score roundabout-score-' + i}>X</div>
             )
@@ -183,6 +183,11 @@ class ScoreBoard extends React.Component <ScoreBoardProps, ScoreBoardState> {
         return unbuiltScores
     }
 
+    penaltiesScore(){
+        let penaltiesScore = this.props.soloGame.refusalScore + this.props.soloGame.roundaboutScore
+        return <div className='total-penalties-score'>{-1 * penaltiesScore}</div> 
+    }
+
     renderSpots(){
         return <React.Fragment>
             {this.renderPlanScores()}
@@ -193,7 +198,7 @@ class ScoreBoard extends React.Component <ScoreBoardProps, ScoreBoardState> {
             {this.renderRealEstateScores()}
             {this.renderInterimScores()}
             {this.unbuiltScores()}
-            <div className='total-penalties-score'>0</div>
+            {this.penaltiesScore()}
             {this.props.soloGame.mode !== GameMode.Advanced && this.renderRoundaboutScores()}
         </React.Fragment>
     }

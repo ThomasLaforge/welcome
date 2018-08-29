@@ -586,27 +586,27 @@ $planHeight: 200px;
     }
 }
 
+.construction {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    
+    .construction-number {
+        width: 45%;
+        text-align: center;
+    }
+
+    .construction-effect {
+        width: 55%
+    }
+}
+
 .game {
     display: flex;
     flex-direction: row-reverse ;
     height: 100%;
     width: 100%;
     padding: 30px;
-
-    .construction {
-        width: 100%;
-        display: flex;
-        flex-direction: row;
-        
-        .construction-number {
-            width: 45%;
-            text-align: center;
-        }
-
-        .construction-effect {
-            width: 55%
-        }
-    }
     
     .game-main {
         height: 100%;
@@ -749,7 +749,6 @@ $planHeight: 200px;
         display: flex;
         flex-direction: column;
         justify-content: center;
-        border-left: 1px solid black;
 
         .map {
             width: 100%;
@@ -803,4 +802,145 @@ $planHeight: 200px;
 
 .disabled {
     @include disabled();
+}
+
+.map-module{
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    width: 100%;
+    padding: 30px;
+    
+    
+    .map-module-paper {
+        $mapHeight: 58%;
+        $scoreBoardHeigth: 100% - $mapHeight;
+        width: 60%;
+        // max-width: 800px;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        .map {
+            width: 100%;
+            height: $mapHeight;
+            margin: 0px auto;
+        }
+
+        .score-board {
+            height: $scoreBoardHeigth;
+            margin: 0px auto;
+        }
+        
+    }
+    
+    .map-module-main {
+        width: 40%;
+        padding-left: 30px;
+        height: 100%;
+
+        .map-actions{
+            width:100%;
+            height:100%;
+            display: flex;
+            flex-direction: column;
+
+            .map-specific-actions {
+                height: 80%;
+
+                .map-actions-info{
+                    border: 1px solid black;
+                    height: 20%;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    text-align: center;
+                }
+
+                // Buttons
+                .map-actions-field .numbers, .map-actions-plans {
+                    display: flex;
+                    flex-direction: row;
+                    flex-wrap: wrap;
+                    justify-content: center;
+
+                    .numbers-elt, .plan-numbers-elt  {
+                        margin: 15px;
+                        line-height: 60px;
+                        text-align: center;
+                        height: 60px;
+                        width: 60px;
+
+                        border: 1px grey solid;
+                    }
+                }
+
+                .map-actions-field {
+                    height: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-around;
+
+                    .map-actions-field-effects {
+                        display: flex;
+                        flex-direction: row;
+                        flex-wrap: wrap;
+                        justify-content: center;
+
+                        .map-actions-btn {
+                            margin: 15px;
+                            padding: 0 15px;
+                            line-height: 60px;
+                            text-align: center;
+                            height: 60px;
+
+                            border: 1px grey solid;
+                        }
+                    }
+        
+                    .actions {
+                        display: flex;
+                        justify-content: center;
+                    }
+                }
+            }
+
+            .map-global-actions {
+                height: 20%;
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                border-top: 1px black solid;
+
+                .map-estate-zone {
+                    display: flex;
+                    flex-direction: column;
+
+                    .map-estate-zone-btns {
+                        display: flex;
+                        flex-direction: row;
+
+                        .estates-elt {
+                            $estateBoxSize: 40px; 
+
+                            width: $estateBoxSize;
+                            height: $estateBoxSize;
+                            line-height: $estateBoxSize;
+                            border: 1px solid grey;
+                            text-align: center;
+                        }
+                    }
+                }
+
+                .rejection-btn {
+                    height: 60%;
+                    width: 60%;
+                    margin: auto;
+                }
+            }
+        }
+
+    }
 }

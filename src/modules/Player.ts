@@ -9,14 +9,14 @@ export class Player {
     @observable public map: WelcomeMap;
 	@observable public completedPlans: Plan[];
 
-	constructor(map = new WelcomeMap(), completedPlans: Plan[] = [], name = 'Thomas') {
+	constructor(map = new WelcomeMap(), completedPlans: Plan[] = new Array(3).fill(null), name = 'Thomas') {
 		this.map = map;
 		this.name = name;
 		this.completedPlans = completedPlans
 	}
 
 	completePlan(p: Plan){
-		this.completedPlans.push(p)
+		this.completedPlans[p.level] = p
 	}
 
 	get planScore(){
