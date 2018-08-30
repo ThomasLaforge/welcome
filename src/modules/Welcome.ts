@@ -41,12 +41,22 @@ export interface JsonPlan {
 }
 
 export interface MissionJson {
-    type: MissionType,
+    type: PlanMissionType,
     constructionNeeded?: number[]
 }
 
-export enum MissionType {
-    District = 0
+export enum PlanMissionType {
+    Districts = 0,
+    FiveBis = 1,
+    BottomStreetFull = 2,
+    TopStreetFull = 3,
+    SevenFences = 4,
+    Edges = 5,
+    ParksAndPoolsMiddleLine = 6,
+    ParksAndPoolsBottomLine = 7,
+    TwoLineFullPark = 8,
+    TwoLineFullPool = 9,
+    StreetFullParksAndPoolsWithOneRoundabout = 10,
 }
 
 export enum GameMode {

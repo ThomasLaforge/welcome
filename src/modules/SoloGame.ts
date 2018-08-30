@@ -4,7 +4,7 @@ import * as _ from 'lodash'
 import { SoloWelcomeModulesManager } from './SoloWelcomeModulesManager';
 import {Player} from './Player'
 import { Construction } from './Construction';
-import {OptionsPlay, GameMode, PlanLevel, EffectType, MAX_NB_ROUNDABOUT_TO_BUILD} from './Welcome'
+import {OptionsPlay, GameMode, PlanLevel, EffectType, MAX_NB_ROUNDABOUT_TO_BUILD, PlanMissionType} from './Welcome'
 import { Field } from './Field';
 import { Plan } from './Plan';
 import { House } from './House';
@@ -57,45 +57,58 @@ export class SoloGame {
 				this.buildBis(options.bisField)
 			}
 		}
+		// Check Plan is newly buildable
+		this.getPlansNotCompleted().forEach(p => {
+			this.planIsBuildable(p) && this.completePlan(p)
+		})
 	}
 
 	getPlansComplete(){
-		return this.manager.plans.plansSelected.filter(p => this.isPlanComplete(p))
+		return this.manager.plans.plansSelected.filter(p => p.isComplete)
+	}
+	getPlansNotCompleted(){
+		return this.manager.plans.plansSelected.filter(p => !p.isComplete)
+	}
+
+	planIsBuildable(p: Plan){
+		switch (p.mission.type) {
+			case PlanMissionType.Districts:
+				let districtForPlans = this.map.getDistrictsForPlansLengths()
+				console.log('districtForPlans', districtForPlans);
+				let i = 0
+				while(i < p.mission.constructionNeeded.length && districtForPlans.indexOf(p.mission.constructionNeeded[i]) !== -1){
+					let indexToRemove = districtForPlans.indexOf(p.mission.constructionNeeded[i])
+					districtForPlans.splice(indexToRemove, 1)
+					i++
+				}
+				return i === p.mission.constructionNeeded.length
+			case PlanMissionType.FiveBis:
+				return this.nbBisBuilt >= 5
+			case PlanMissionType.BottomStreetFull:
+				return this.map.bottomStreet.isFull()
+			case PlanMissionType.TopStreetFull:
+				return this.map.topStreet.isFull()
+			case PlanMissionType.SevenFences:
+				return this.map.streets.reduce( (nbFences, s) => nbFences + s.nbFencesBuilt, 0) >= 7
+			case PlanMissionType.Edges:
+				return this.map.streets.filter(s => s.fields[0].built && s.fields[s.length - 1].built).length === this.map.streets.length
+			case PlanMissionType.ParksAndPoolsMiddleLine:
+				return this.map.middleStreet.isFullOnPark() && this.map.middleStreet.isFullOnPool()
+			case PlanMissionType.ParksAndPoolsBottomLine:
+				return this.map.bottomStreet.isFullOnPark() && this.map.bottomStreet.isFullOnPool()
+			case PlanMissionType.TwoLineFullPark:
+				return this.map.streets.filter(s => s.isFullOnPark()).length >=2
+			case PlanMissionType.TwoLineFullPool:
+				return this.map.streets.filter(s => s.isFullOnPool()).length >=2
+			case PlanMissionType.StreetFullParksAndPoolsWithOneRoundabout:
+				return this.map.streets.filter(s => s.isFullOnPark() && s.isFullOnPool() && s.hasRoundabout()).length >= 1
+			default:
+				throw "not mission type known";
+		}
 	}
 
 	isAtLeatOnePlanComplete(){
 		return this.getPlansComplete().length > 0
-	}
-
-	isPlanComplete(p:Plan){
-		let mission = p.mission.constructionNeeded
-		let ownDistrictLengths = this.map.getDistrictsForPlansLengths()
-		const objectifyMission = (mission: number[]) => {
-			let obj = {}
-			mission.forEach(elt => {
-				obj[elt] = obj[elt] || 0
-				obj[elt]++
-			})
-			return obj
-		}
-
-		let missionObj = objectifyMission(mission)
-		let districtsObj = objectifyMission(ownDistrictLengths)
-
-		// console.log('plan complete?', missionObj, districtsObj)
-
-		let constructionSizes = Object.keys(missionObj)
-		let constructionLengthAvailable = (i) => {
-			let constructionLengthToTest = constructionSizes[i]
-			return districtsObj[constructionLengthToTest] >= missionObj[constructionLengthToTest]
-		}
-
-		let i = 0
-		while(i < constructionSizes.length && constructionLengthAvailable(i)){
-			i++
-		}
-
-		return i === constructionSizes.length
 	}
 
 	getAllHouseConstructable(construction: Construction){
@@ -195,13 +208,20 @@ export class SoloGame {
 		return canBeSelected
 	}
 
-	completePlan(planLevel: PlanLevel){
+	completePlan(p: Plan){
 		// completePlan
-		let plan = this.manager.plans.getSelectedPlanByLevel(planLevel)
-		this.player.completePlan(plan)
+		this.player.completePlan(p)
 
 		// mark houses used
-
+		switch (p.mission.type) {
+			case PlanMissionType.Districts:
+				p.mission.constructionNeeded.forEach(sizeNeeded => {
+					this.map.getDistrictsForPlans().find(d => d.length === sizeNeeded).complete()
+				})
+				break;
+			default:
+				break;
+		}
 	}
 
 	buildBis(bisField: Field){

@@ -69,7 +69,7 @@
                     "others": 3
                 },
                 "mission": {
-                    "type": "5 bis"
+                    "type": 1
                 }
             },
             {
@@ -78,7 +78,7 @@
                     "others": 4
                 },
                 "mission": {
-                    "type": "toute rangée du bas"
+                    "type": 2
                 }
             },
             {
@@ -87,7 +87,7 @@
                     "others": 3
                 },
                 "mission": {
-                   "type": "toute rangée du haut"
+                   "type": 3
                 }
             },
             {
@@ -96,7 +96,7 @@
                     "others": 3
                 },
                 "mission": {
-                    "type" : "7 barrières"
+                    "type" : 4
                 }
             },
             {
@@ -105,7 +105,7 @@
                     "others": 4
                 },
                 "mission": {
-                    "type": "extremites"
+                    "type": 5
                 }
             }
         ]
@@ -180,7 +180,7 @@
                     "others": 3
                 },
                 "mission": {
-                    "type": "tous parcs et piscinede la rue ligne milieu"
+                    "type": 6
                 }
             },
             {
@@ -189,7 +189,7 @@
                     "others": 5
                 },
                 "mission": {
-                    "type": "tous parcs et piscinede la rue ligne bas"
+                    "type": 7
                 }
             },
             {
@@ -198,7 +198,7 @@
                     "others": 4
                 },
                 "mission": {
-                    "type": "deux lignes tous leur parc"
+                    "type": 8
                 }
             },
             {
@@ -207,7 +207,7 @@
                     "others": 4
                 },
                 "mission": {
-                    "type": "deux lignes tous leur piscine"
+                    "type": 9
                 }
             },
             {
@@ -216,7 +216,7 @@
                     "others": 5
                 },
                 "mission": {
-                    "type": "tous les parcs + toutes les piscines + un rond point"
+                    "type": 10
                 }
             }
         ]

@@ -5,7 +5,7 @@ import { DefaultProps, injector } from '../../lib/mobxInjector'
 import Fence from './Fence';
 
 import {Field as FieldModel} from '../../modules/Field'
-import { MissionType, MapMode, SoloPhase, EffectType } from '../../modules/Welcome';
+import { PlanMissionType, MapMode, SoloPhase, EffectType } from '../../modules/Welcome';
 import { Street } from '../../modules/Street';
 import BisZone from '../Solo/EffectZones/BisZone';
 
@@ -52,6 +52,9 @@ class Field extends React.Component <FieldProps, FieldState> {
         }
         if( field.isBis() ) { 
             fieldClassName += ' ' + 'field-bis'
+        }
+        if( field.used ) {
+            fieldClassName += ' ' + 'field-used'
         }
 
         return <div 

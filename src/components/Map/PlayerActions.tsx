@@ -4,12 +4,12 @@ import { DefaultProps, injector } from '../../lib/mobxInjector'
 
 import { Button } from '../../../node_modules/@material-ui/core';
 import Construction from '../Common/Construction';
+import Plan from '../Common/Plan';
 
 import { Construction as ConstructionModel } from '../../modules/Construction'
 import { Effect } from '../../modules/Effect';
 import { EffectType, PlanLevel, MAX_NB_ROUNDABOUT_TO_BUILD, GameMode } from '../../modules/Welcome';
-import { Plan } from '../../modules/Plan';
-import { Field } from '../../modules/Field';
+import { Plan as PlanModel} from '../../modules/Plan';
 
 interface PlayerActionsProps extends DefaultProps {
 }
@@ -51,7 +51,7 @@ class PlayerActions extends React.Component <PlayerActionsProps, PlayerActionsSt
         console.log('on plan number click', number)
         const uiMap = this.props.ui.map
 
-        uiMap.solo.player.completePlan( new Plan(
+        uiMap.solo.player.completePlan( new PlanModel(
             {
                 firstPlayer: number,
                 others: number
@@ -198,11 +198,14 @@ class PlayerActions extends React.Component <PlayerActionsProps, PlayerActionsSt
                 }
             </div>
             <div className="map-global-actions">
+                <Plan plan={uiMap.planToTest} />
+                {uiMap.solo.planIsBuildable(uiMap.planToTest) ? 'buildable' : 'not buildable'}
                 {this.renderEstateZone()}
                 <Button className='rejection-btn' variant='raised' onClick={() => uiMap.handleRejection()}>Rejection</Button>
                 {/* <Button variant='raised' onClick={this.handleCancel}>Cancel</Button> */}
             </div>
             {/* <Button onClick={uiMap.debug}>Debug</Button> */}
+            {<Button onClick={() => uiMap.solo.completePlan(uiMap.planToTest)}>Build</Button>}
         </div>
     }
 }

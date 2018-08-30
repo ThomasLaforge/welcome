@@ -4,7 +4,7 @@ import { DefaultProps, injector } from '../../lib/mobxInjector'
 
 import {Plan as PlanModel} from '../../modules/Plan'
 
-import { MissionType } from '../../modules/Welcome';
+import { PlanMissionType } from '../../modules/Welcome';
 
 interface PlanProps extends DefaultProps {
     plan: PlanModel
@@ -41,7 +41,7 @@ class Plan extends React.Component <PlanProps, PlanState> {
         return (
             <div className="plan" onClick={() => this.props.onClick && this.props.onClick() }>
                 <div className='plan-mission'>
-                    {plan.mission.type === MissionType.District ? this.renderDistrictNeeded() : plan.mission.type}
+                    {plan.mission.type === PlanMissionType.Districts ? this.renderDistrictNeeded() : plan.mission.type}
                 </div>
                 <div className='plan-rewards'>
                     <div className={'plan-rewards-first ' + classNameDone}>

@@ -42,7 +42,7 @@ export class Field {
     get used(){
         return this.usedForPlans
     }
-    use(){
+    useForPlan(){
         this.usedForPlans = true
     }
 

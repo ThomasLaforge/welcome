@@ -152,4 +152,19 @@ export class WelcomeMap {
 		return this.streets.reduce( (bisPossible: Field[], s) => bisPossible.concat(s.getPossiblyBisFields()), [] )			
 	}
 
+	get firstStreet(){
+		return this.streets[0]
+	}
+	get topStreet(){
+		return this.firstStreet
+	}
+	get middleStreet(){
+		return this.streets[1]
+	}
+	get lastStreet(){
+		return this.streets[2]
+	}
+	get bottomStreet(){
+		return this.lastStreet
+	}
 }

@@ -27,7 +27,7 @@ export class Street {
     }
     
     getDistrictsForPlans(){
-        return this.districts.filter(d => d.isReasyForPlan())
+        return this.districts.filter(d => d.isReadyForPlan())
     }
 
     getDistrictsForEstate(){
@@ -92,6 +92,9 @@ export class Street {
         return neighbors
     }
 
+    get nbFencesBuilt(){
+        return this.builtFences.length
+    }
     get builtFences(){
         return this.fences.filter(f => f.built)
     }
@@ -115,17 +118,32 @@ export class Street {
     }
 
     get nbParkChecked(){
-        return this.fields.filter(f => f.isHouse() && (f.construction as House).effect && (f.construction as House).effect.type === EffectType.Landscaper).length
+        let totalNbParkBuilt = this.fields.filter(f => f.isHouse() && (f.construction as House).effect && (f.construction as House).effect.type === EffectType.Landscaper).length
+        let nbParkChecked = totalNbParkBuilt < this.getParksScores().length ? totalNbParkBuilt : this.getParksScores().length - 1
+        return nbParkChecked
     }
     
     get parkScore(){
-        let indexParkScore = this.nbParkChecked < this.getParksScores().length ? this.nbParkChecked : this.getParksScores().length - 1
-        return this.getParksScores()[indexParkScore]
+        return this.getParksScores()[this.nbParkChecked]
     }
 
     get length(){
         return this.fields.length
     }
+
+    isFullOnPark(){
+        return this.nbParkChecked === this.getParksScores().length
+    }
+    isFullOnPool(){
+        const nbPoolBuildable = this.fields.filter(f => f.hasPool).length
+        const nbPoolBuilt = this.fields.filter(f => f.hasPoolBuilt).length
+        return nbPoolBuildable === nbPoolBuilt
+    }
+    hasRoundabout(){
+        return this.fields.filter(f => f.isRoundabout()).length >= 1
+    }
     
-    
+    isFull(){
+        return this.length === this.fields.filter(f => f.built).length
+    }
 }

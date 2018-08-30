@@ -9,11 +9,15 @@ export class District {
         this.fields = fields
     }
 
+    complete(){
+        this.fields.forEach(f => f.useForPlan())
+    }
+
     isComplete(){
         return this.fields.filter(f => f.built).length === this.fields.length
     }
 
-    isReasyForPlan(){
+    isReadyForPlan(){
         return this.isComplete() && this.fields.filter(h => h.usedForPlans).length === 0
     }
 
