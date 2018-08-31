@@ -89,9 +89,9 @@ export class SoloGame {
 			case PlanMissionType.TopStreetFull:
 				return this.map.topStreet.isFull()
 			case PlanMissionType.SevenFences:
-				return this.map.streets.reduce( (nbFences, s) => nbFences + s.nbFencesBuilt, 0) >= 7
+				return this.map.streets.reduce( (nbFences, s) => nbFences + s.nbFencesBuiltAndNotUsed, 0) >= 7
 			case PlanMissionType.Edges:
-				return this.map.streets.filter(s => s.fields[0].built && s.fields[s.length - 1].built).length === this.map.streets.length
+				return this.map.streets.filter(s => s.firstField.built && s.lastField.built).length === this.map.streets.length
 			case PlanMissionType.ParksAndPoolsMiddleLine:
 				return this.map.middleStreet.isFullOnPark() && this.map.middleStreet.isFullOnPool()
 			case PlanMissionType.ParksAndPoolsBottomLine:
@@ -101,9 +101,60 @@ export class SoloGame {
 			case PlanMissionType.TwoLineFullPool:
 				return this.map.streets.filter(s => s.isFullOnPool()).length >=2
 			case PlanMissionType.StreetFullParksAndPoolsWithOneRoundabout:
-				return this.map.streets.filter(s => s.isFullOnPark() && s.isFullOnPool() && s.hasRoundabout()).length >= 1
+				return this.map.streets.filter(s => s.hasFullParksAndPoolsWithOneRoundabout).length >= 1
 			default:
 				throw "not mission type known";
+		}
+	}
+
+	completePlan(p: Plan){
+		// completePlan
+		this.player.completePlan(p)
+
+		// mark houses used
+		switch (p.mission.type) {
+			case PlanMissionType.Districts:
+				p.mission.constructionNeeded.forEach(sizeNeeded => {
+					this.map.getDistrictsForPlans().find(d => d.length === sizeNeeded).complete()
+				})
+				break;
+			case PlanMissionType.Edges:
+				this.map.streets.forEach(s => {
+					s.firstField.useForPlan()
+					s.lastField.useForPlan()
+				})
+				break;
+			case PlanMissionType.BottomStreetFull:
+				this.map.bottomStreet.fields.forEach(f => f.useForPlan())
+				break;
+			case PlanMissionType.TopStreetFull:
+				this.map.topStreet.fields.forEach(f => f.useForPlan())
+				break;
+			case PlanMissionType.FiveBis:
+				this.map.allBis.forEach(bis => bis.useForPlan());
+				break;
+			case PlanMissionType.SevenFences:
+				this.map.streets.forEach(s => s.builtFences.forEach(f => f.useForPlan()));
+				break;
+			case PlanMissionType.TwoLineFullPool:
+				this.map.streets.forEach(s => s.isFullOnPool() && s.allPools.forEach(f => f.useForPlan()));
+				break;
+			case PlanMissionType.TwoLineFullPark:
+				this.map.streets.forEach(s => s.isFullOnPark() && s.allParks.forEach(f => f.useForPlan()));
+				break;
+			case PlanMissionType.StreetFullParksAndPoolsWithOneRoundabout:
+				this.map.streets.find(s => s.hasFullParksAndPoolsWithOneRoundabout).fields.forEach(f => 
+					(f.isPool() || f.isPark() || f.isRoundabout()) && f.useForPlan()
+				);
+				break;
+			case PlanMissionType.ParksAndPoolsMiddleLine:
+				this.map.middleStreet.fields.forEach(f => (f.hasPool || f.isPark()) && f.useForPlan())
+				break;
+			case PlanMissionType.ParksAndPoolsBottomLine:
+				this.map.bottomStreet.fields.forEach(f => (f.hasPool || f.isPark()) && f.useForPlan())
+				break;
+			default:
+				break;
 		}
 	}
 
@@ -206,22 +257,6 @@ export class SoloGame {
 		}
 
 		return canBeSelected
-	}
-
-	completePlan(p: Plan){
-		// completePlan
-		this.player.completePlan(p)
-
-		// mark houses used
-		switch (p.mission.type) {
-			case PlanMissionType.Districts:
-				p.mission.constructionNeeded.forEach(sizeNeeded => {
-					this.map.getDistrictsForPlans().find(d => d.length === sizeNeeded).complete()
-				})
-				break;
-			default:
-				break;
-		}
 	}
 
 	buildBis(bisField: Field){

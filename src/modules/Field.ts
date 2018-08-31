@@ -49,7 +49,15 @@ export class Field {
     isHouse(){
         return this.construction && this.construction instanceof House
     }
-    
+
+    isPark(){
+        return this.isHouse() && (this.construction as House).effectType === EffectType.Landscaper
+    }
+
+    isPool(){
+        return this.hasPoolBuilt
+    }
+
     isBis(){
         return this.construction && this.construction instanceof Bis
     }

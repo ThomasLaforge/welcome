@@ -198,7 +198,7 @@ class PlayerActions extends React.Component <PlayerActionsProps, PlayerActionsSt
                 }
             </div>
             <div className="map-global-actions">
-                <Plan plan={uiMap.planToTest} />
+                {/* <Plan plan={uiMap.planToTest} /> */}
                 {uiMap.solo.planIsBuildable(uiMap.planToTest) ? 'buildable' : 'not buildable'}
                 {this.renderEstateZone()}
                 <Button className='rejection-btn' variant='raised' onClick={() => uiMap.handleRejection()}>Rejection</Button>

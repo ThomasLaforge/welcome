@@ -167,4 +167,8 @@ export class WelcomeMap {
 	get bottomStreet(){
 		return this.lastStreet
 	}
+
+	get allBis(){
+		return this.streets.reduce((bisCollection, s) => bisCollection.concat(s.bisCollection), [])
+	}
 }

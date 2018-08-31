@@ -4,7 +4,7 @@ import { Field } from '../Field';
 import { SoloGame } from '../SoloGame';
 import { House } from '../House';
 import { Effect } from '../Effect';
-import { EffectType, PlanMissionType, PlanLevel } from '../Welcome';
+import { EffectType, PlanMissionType, PlanLevel, GameMode } from '../Welcome';
 import { Plan } from '../Plan';
 import { Mission } from '../Mission';
 
@@ -15,11 +15,12 @@ export class WelcomeMapUIStore {
     @observable public selectedField: Field;
     @observable public planToTest: Plan;
 
-	constructor(map: WelcomeMap, solo = new SoloGame()) {
+	constructor(map: WelcomeMap, solo = new SoloGame(GameMode.Advanced)) {
         this.map = map;
         this.solo = solo;
         this.reset();
-        this.planToTest = new Plan({firstPlayer: 111, others: 100}, new Mission(PlanMissionType.Districts, [1, 1]), PlanLevel.One)
+        // this.planToTest = new Plan({firstPlayer: 111, others: 100}, new Mission(PlanMissionType.Districts, [1, 3,2]), PlanLevel.One)
+        this.planToTest = new Plan({firstPlayer: 111, others: 100}, new Mission(PlanMissionType.StreetFullParksAndPoolsWithOneRoundabout), PlanLevel.One)
     }
     
     inPlanSelectionMode(){

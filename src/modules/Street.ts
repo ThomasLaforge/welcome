@@ -98,6 +98,13 @@ export class Street {
     get builtFences(){
         return this.fences.filter(f => f.built)
     }
+    
+    get builtFencesAndNotUsed(){
+        return this.fences.filter(f => f.built && !f.usedForPlan)
+    }
+    get nbFencesBuiltAndNotUsed(){
+        return this.builtFencesAndNotUsed.length
+    }
     get freeFences(){
         return this.fences.filter(f => !f.built)
     }
@@ -127,12 +134,30 @@ export class Street {
         return this.getParksScores()[this.nbParkChecked]
     }
 
+    get bisCollection(){
+        return this.fields.filter(f => f.isBis())
+    }
+
+    get firstField(){
+        return this.fields[0]
+    }
+    get lastField(){
+        return this.fields[this.length - 1]
+    }
+
     get length(){
         return this.fields.length
     }
 
+    get allParks(){
+        return this.fields.filter(f => f.isPark())
+    }
     isFullOnPark(){
-        return this.nbParkChecked === this.getParksScores().length
+        return this.nbParkChecked === this.getParksScores().length - 1
+    }
+
+    get allPools(){
+        return this.fields.filter(f => f.isPool())
     }
     isFullOnPool(){
         const nbPoolBuildable = this.fields.filter(f => f.hasPool).length
@@ -145,5 +170,9 @@ export class Street {
     
     isFull(){
         return this.length === this.fields.filter(f => f.built).length
+    }
+
+    get hasFullParksAndPoolsWithOneRoundabout(){
+        return this.isFullOnPark() && this.isFullOnPool() && this.hasRoundabout()
     }
 }
