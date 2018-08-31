@@ -33,7 +33,8 @@ export class PlanDeck extends Deck<Plan> {
 
     constructor(
         gameMode = GameMode.Normal, 
-        datas = gameMode === GameMode.Normal ? planList.filter(p => p.mission.type === 0) : planList
+        datas = gameMode === GameMode.Normal ? planList.filter(p => p.mission.type === 0) : planList,
+        orderDeck?: number[] | string
     ){
         super(datas)
     }
@@ -62,19 +63,17 @@ export const constructions = constructionList
 
 export class ConstructionDeck extends Deck<Construction> {
 
-    constructor(datas: Construction[], soloMode = false){
+    constructor(datas: Construction[], orderDeck?: number[] | string){
         super(datas)
     }
 }
 
 export class SoloConstructionDeck extends Deck<Construction | SpecialSoloCard> {
 
-    constructor(datas: Construction[], soloMode = false){
+    constructor(datas: Construction[], orderDeck?: number[] | string){
         super(datas)
-        if(soloMode){
-            let c: SpecialSoloCard;
-            this.addAtBottomMiddle(c)
-        }
+        let c: SpecialSoloCard;
+        this.addAtBottomMiddle(c)
     }
 
     get soloCardHasBeenDrawed(){
