@@ -4,7 +4,7 @@ import {observer, Provider } from 'mobx-react';
 import DevTools from 'mobx-react-devtools';
 
 import { Store } from './modules/Store'
-import { Route, MapMode } from './modules/Welcome'
+import { RouteEnum, MapMode } from './modules/Welcome'
 
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
@@ -28,6 +28,7 @@ import MapModule from './components/Map/MapModule';
 import SoloGame from './components/Solo/SoloGame';
 
 import './styles/main.scss';
+import RouterComponent from './components/Router/RouterComponent';
 
 @observer
 class App extends React.Component<{}, { store: Store, drawerOpened: boolean} > {
@@ -45,8 +46,6 @@ class App extends React.Component<{}, { store: Store, drawerOpened: boolean} > {
   }
 
   render() {
-    const route = this.state.store.uiStore.route
-
     return (
       <Provider store={this.state.store} >
           <div className="app">
@@ -67,25 +66,25 @@ class App extends React.Component<{}, { store: Store, drawerOpened: boolean} > {
                 onClick={this.toggleDrawer}
               >
                 <List component="nav">
-                  <ListItem button onClick={() => this.state.store.uiStore.switchRoute(Route.Solo)}>
+                  <ListItem button onClick={() => this.state.store.uiStore.router.switchRoute(RouteEnum.Solo)}>
                     <ListItemIcon>
                       <VideogameAssetIcon />
                     </ListItemIcon>
                     <ListItemText primary="Solo" />
                   </ListItem>
-                  <ListItem button disabled onClick={() => this.state.store.uiStore.switchRoute(Route.Multi)}>
+                  <ListItem button disabled onClick={() => this.state.store.uiStore.router.switchRoute(RouteEnum.Multi)}>
                     <ListItemIcon>
                       <PeopleIcon />
                     </ListItemIcon>
                     <ListItemText primary="Multi" />
                   </ListItem>
-                  <ListItem button onClick={() => this.state.store.uiStore.switchRoute(Route.Manager)}>
+                  <ListItem button onClick={() => this.state.store.uiStore.router.switchRoute(RouteEnum.Manager)}>
                     <ListItemIcon>
                       <CasinoIcon />
                     </ListItemIcon>
                     <ListItemText primary="Manager" />
                   </ListItem>
-                  <ListItem button onClick={() => this.state.store.uiStore.switchRoute(Route.Map)}>
+                  <ListItem button onClick={() => this.state.store.uiStore.router.switchRoute(RouteEnum.Map)}>
                     <ListItemIcon>
                       <MapIcon />
                     </ListItemIcon>
@@ -95,10 +94,7 @@ class App extends React.Component<{}, { store: Store, drawerOpened: boolean} > {
               </div>
             </Drawer>
 
-            {route === Route.Manager && <Manager />}
-            {route === Route.Map && <MapModule />}
-            {route === Route.Solo && <SoloGame />}
-            {route === Route.Multi && <SoloGame />}
+            <RouterComponent />
 
           </div>
       </Provider>

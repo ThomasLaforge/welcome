@@ -10,8 +10,8 @@ h2 {
 html, body, #app {
     // background-color: rgba(black, 0.42) !important;
     height: 100%;
-    background-color: black;
-    color: white;
+    // background-color: black;
+    // color: white;
     // overflow: hidden;
 }
 
@@ -20,6 +20,11 @@ html, body, #app {
     overflow: hidden;
     display: flex;
     flex-direction: column;
+}
+
+.router {
+    flex: 1;
+    display: flex;
 }
 
 .manager {

@@ -23,11 +23,12 @@ export enum PlanLevel {
     Three
 }
 
-export enum Route {
+export enum RouteEnum {
     Solo,
     Multi,
     Map,
-    Manager
+    Manager,
+    Home
 }
 
 export interface JsonConstruction {

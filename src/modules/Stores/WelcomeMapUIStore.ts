@@ -15,12 +15,11 @@ export class WelcomeMapUIStore {
     @observable public selectedField: Field;
     @observable public planToTest: Plan;
 
-	constructor(map: WelcomeMap, solo = new SoloGame(GameMode.Advanced)) {
+	constructor(map: WelcomeMap, solo = new SoloGame()) {
         this.map = map;
         this.solo = solo;
         this.reset();
-        // this.planToTest = new Plan({firstPlayer: 111, others: 100}, new Mission(PlanMissionType.Districts, [1, 3,2]), PlanLevel.One)
-        this.planToTest = new Plan({firstPlayer: 111, others: 100}, new Mission(PlanMissionType.StreetFullParksAndPoolsWithOneRoundabout), PlanLevel.One)
+        // this.planToTest = new Plan({firstPlayer: 111, others: 100}, new Mission(PlanMissionType.StreetFullParksAndPoolsWithOneRoundabout), PlanLevel.One)
     }
     
     inPlanSelectionMode(){

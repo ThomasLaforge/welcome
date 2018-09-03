@@ -3,7 +3,7 @@ import {observer, inject} from 'mobx-react';
 import { DefaultProps, injector } from '../../lib/mobxInjector'
 
 import { Button } from '../../../node_modules/@material-ui/core';
-import { Route } from '../../modules/Welcome';
+import { RouteEnum } from '../../modules/Welcome';
 import { SoloGame } from '../../modules/SoloGame';
 
 interface GameOverScreenProps extends DefaultProps {
@@ -32,7 +32,7 @@ class GameOverScreen extends React.Component <GameOverScreenProps, GameOverScree
             </div>
             <div className="game-over-actions">
                 <Button variant='outlined' onClick={() => { this.props.soloGame.reset() }}>Retry</Button>
-                <Button variant='outlined' onClick={() => { this.props.ui.switchRoute()} }>Back Home</Button>
+                <Button variant='outlined' onClick={() => { this.props.ui.router.switchRoute(RouteEnum.Manager)} }>Back Home</Button>
             </div>
         </div>
     }

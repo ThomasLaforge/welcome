@@ -199,13 +199,11 @@ class PlayerActions extends React.Component <PlayerActionsProps, PlayerActionsSt
             </div>
             <div className="map-global-actions">
                 {/* <Plan plan={uiMap.planToTest} /> */}
-                {uiMap.solo.planIsBuildable(uiMap.planToTest) ? 'buildable' : 'not buildable'}
                 {this.renderEstateZone()}
                 <Button className='rejection-btn' variant='raised' onClick={() => uiMap.handleRejection()}>Rejection</Button>
                 {/* <Button variant='raised' onClick={this.handleCancel}>Cancel</Button> */}
             </div>
             {/* <Button onClick={uiMap.debug}>Debug</Button> */}
-            {<Button onClick={() => uiMap.solo.completePlan(uiMap.planToTest)}>Build</Button>}
         </div>
     }
 }

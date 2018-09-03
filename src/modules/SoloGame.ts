@@ -23,7 +23,16 @@ export class SoloGame {
 	@observable public mode: GameMode;
 	@observable public nbUnbuiltUsed: number;
 
-	constructor(mode = GameMode.Normal, player = new Player(), manager = new SoloWelcomeModulesManager(), estate = new EstateManager(), plansDone = [], startDate = Date.now(), endDate?: number, nbInterimUsed = 0, nbBisBuilt = 0, nbroundaboutUsed = 0, nbUnbuiltUsed = 0) {
+	constructor(
+		gameId?: string,
+		mode = GameMode.Normal, 
+		player = new Player(), 
+		manager = new SoloWelcomeModulesManager(gameId, mode), 
+		estate = new EstateManager(),
+		startDate = Date.now(), 
+		endDate?: number, 
+		nbUnbuiltUsed = 0
+	) {
 		this.player = player;
 		this.manager = manager;
 		this.estate = estate
