@@ -2,7 +2,7 @@ import {Construction} from './Construction'
 import {Deck} from './Deck'
 import {Plan} from './Plan'
 import {observable} from 'mobx'
-import { SoloConstructionDeck, constructions } from './Decks';
+import { SoloConstructionDeck } from './Decks';
 import { SpecialSoloCard } from './Welcome';
 
 const CARD_PER_TURN = 3
@@ -12,7 +12,7 @@ export class SoloConstructionModule {
     @observable public constructionDeck: SoloConstructionDeck;
     @observable public actualCards: Construction[];
 
-	constructor(constructionDeck = new SoloConstructionDeck(constructions), actualCards = []) {
+	constructor(shuffler?: number[], soloCardIndex?: number, constructionDeck = new SoloConstructionDeck(shuffler, soloCardIndex), actualCards = []) {
         this.constructionDeck = constructionDeck;
         this.actualCards = actualCards
     }

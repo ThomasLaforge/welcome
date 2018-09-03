@@ -4,7 +4,7 @@ import * as _ from 'lodash'
 import { SoloWelcomeModulesManager } from './SoloWelcomeModulesManager';
 import {Player} from './Player'
 import { Construction } from './Construction';
-import {OptionsPlay, GameMode, PlanLevel, EffectType, MAX_NB_ROUNDABOUT_TO_BUILD, PlanMissionType} from './Welcome'
+import {OptionsPlay, GameMode, PlanLevel, EffectType, MAX_NB_ROUNDABOUT_TO_BUILD, PlanMissionType, DEFAULT_GAME_MODE} from './Welcome'
 import { Field } from './Field';
 import { Plan } from './Plan';
 import { House } from './House';
@@ -25,7 +25,7 @@ export class SoloGame {
 
 	constructor(
 		gameId?: string,
-		mode = GameMode.Normal, 
+		mode = DEFAULT_GAME_MODE, 
 		player = new Player(), 
 		manager = new SoloWelcomeModulesManager(gameId, mode), 
 		estate = new EstateManager(),
@@ -48,7 +48,7 @@ export class SoloGame {
 		this.estate = new EstateManager()
 		this.startDate = Date.now()
 		this.endDate = null
-		this.mode = GameMode.Normal
+		this.mode = DEFAULT_GAME_MODE
 		this.nbUnbuiltUsed = 0;
 	}
     

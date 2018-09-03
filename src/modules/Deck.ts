@@ -4,13 +4,12 @@ import {observable} from 'mobx'
 export class Deck <T> {
 
     @observable protected _arrayDeck : T[]
+    @observable public shuffler: number[]
 
-    constructor(arrayDeck: T[] = [], shuffle = true) {
+    constructor(arrayDeck: T[] = [], shuffler?: number[]) {
         this.arrayDeck = arrayDeck
+        this.shuffle(shuffler);
         // console.log('arrayDeck', this.arrayDeck, this.arrayDeck.length)
-        if(shuffle){
-            this.shuffle();
-        }
     }
 
     isEmpty(){
@@ -22,8 +21,13 @@ export class Deck <T> {
         return this.arrayDeck.length;
     }
 
-    shuffle(){
-        this.arrayDeck = _.shuffle(this.arrayDeck.slice())
+    shuffle(shuffler?: number[]){
+        if(!shuffler){
+            let indexes = this.arrayDeck.map( (element, i) => i)
+            shuffler = _.shuffle(indexes)
+        }
+        this.shuffler = shuffler
+        this.arrayDeck = shuffler.map( index => this.arrayDeck[index])
     }
 
     addCard(card:T | T[]){
@@ -98,16 +102,18 @@ export class Deck <T> {
         return this.arrayDeck.slice(start, end)
     }
 
-    addAtBottomMiddle(c: any){
+    addAtBottomMiddle(c: T, index?: number){
         let newArrayDeck = this.arrayDeck.slice(0, Math.floor(this.arrayDeck.length / 2))
         let secondPart = this.arrayDeck.slice(Math.ceil(this.arrayDeck.length / 2), this.arrayDeck.length)
 
-        let randomBottomIndex = Math.floor(Math.random()* (secondPart.length + 1));
+        let randomBottomIndex = index || Math.floor(Math.random()* (secondPart.length + 1));
         secondPart.splice(randomBottomIndex, 0, c)
 
         newArrayDeck = newArrayDeck.concat(secondPart)
 
         this.arrayDeck = newArrayDeck
+
+        return randomBottomIndex
     }
 
     public get arrayDeck(){ return this._arrayDeck }

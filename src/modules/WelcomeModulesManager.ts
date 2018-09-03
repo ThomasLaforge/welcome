@@ -2,7 +2,7 @@ import {observable} from 'mobx'
 // imports
 import {PlanModule} from './PlanModule'
 import {ConstructionModule} from './ConstructionModule'
-import { GameMode } from './Welcome';
+import { GameMode, DEFAULT_GAME_MODE } from './Welcome';
 // -------
 
 export class WelcomeModulesManager {
@@ -11,7 +11,7 @@ export class WelcomeModulesManager {
 	@observable public plans: PlanModule;
 	@observable public mode: GameMode;
 
-	constructor(gameMode = GameMode.Normal){
+	constructor(gameMode = DEFAULT_GAME_MODE){
 		this.mode = gameMode
 		this.init()
 	}

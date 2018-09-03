@@ -1,6 +1,6 @@
 import {observable} from 'mobx'
 
-import {PlanLevel, GameMode} from './Welcome'
+import {PlanLevel, GameMode, DEFAULT_GAME_MODE} from './Welcome'
 import {PlanDeck} from './Decks'
 import {Plan} from './Plan'
 
@@ -8,7 +8,7 @@ export class PlanModule {
     @observable public deck: PlanDeck;
     @observable public plansSelected: Plan[];
     
-	constructor(gameMode = GameMode.Normal, deck: PlanDeck = new PlanDeck(gameMode), plans: Plan[] = []) {
+	constructor(gameMode = DEFAULT_GAME_MODE, deckShuffler?: number[], deck: PlanDeck = new PlanDeck(gameMode, deckShuffler), plans: Plan[] = []) {
         this.plansSelected = plans;
         this.deck = deck;
         this.initPlans();

@@ -1,13 +1,13 @@
 import { observable } from "mobx";
 
-import {SoloPhase, GameMode} from './Welcome'
+import {SoloPhase, GameMode, DEFAULT_GAME_MODE} from './Welcome'
 
 export class SoloPhaseManager {
 
     @observable public currentPhase: SoloPhase;
     @observable public mode: GameMode;
 
-    constructor(initialPhase = SoloPhase.ConstructionSelection, mode = GameMode.Normal){
+    constructor(initialPhase = SoloPhase.ConstructionSelection, mode = DEFAULT_GAME_MODE){
         this.currentPhase = initialPhase
         this.mode = mode
     }

@@ -1,10 +1,10 @@
 import {Deck} from './Deck'
 import {Plan} from './Plan'
 import {Construction} from './Construction'
-import { JsonPlan, GameMode, SpecialSoloCard } from './Welcome';
+import { JsonPlan, GameMode, SpecialSoloCard, DEFAULT_GAME_MODE } from './Welcome';
 import { Mission } from './Mission';
 import { Effect } from './Effect';
-
+import { observable } from 'mobx';
 /**
  * Plans
  */
@@ -32,11 +32,11 @@ Object.keys(dataPlans).forEach( (level: string) => {
 export class PlanDeck extends Deck<Plan> {
 
     constructor(
-        gameMode = GameMode.Normal, 
+        gameMode = DEFAULT_GAME_MODE, 
+        shuffler?: number[],
         datas = gameMode === GameMode.Normal ? planList.filter(p => p.mission.type === 0) : planList,
-        orderDeck?: number[] | string
     ){
-        super(datas)
+        super(datas, shuffler)
     }
 }
 
@@ -60,20 +60,24 @@ Object.keys(datasConstruction).forEach( (effect: string) => {
 // console.log('constructionlist', constructionList, constructionList.length)
  
 export const constructions = constructionList
+export const CONSTRUCTION_DECK_SIZE = constructions.length
 
 export class ConstructionDeck extends Deck<Construction> {
 
-    constructor(datas: Construction[], orderDeck?: number[] | string){
+    constructor(datas: Construction[], shuffler?: number[]){
         super(datas)
     }
 }
 
 export class SoloConstructionDeck extends Deck<Construction | SpecialSoloCard> {
 
-    constructor(datas: Construction[], orderDeck?: number[] | string){
-        super(datas)
+    @observable public specialCardIndex: number
+
+    constructor(shuffler?: number[], specialCardIndex?: number, datas: Construction[] = constructions){
+        super(datas, shuffler)
         let c: SpecialSoloCard;
-        this.addAtBottomMiddle(c)
+        this.specialCardIndex = this.addAtBottomMiddle(c, specialCardIndex)
+        // console.log('solo construction deck', this.arrayDeck)
     }
 
     get soloCardHasBeenDrawed(){
@@ -81,3 +85,6 @@ export class SoloConstructionDeck extends Deck<Construction | SpecialSoloCard> {
     }
 
 }
+
+// export const ALL_CONSTRUCTION_DECKS_POSSIBILITIES = permutate(new Array(CONSTRUCTION_DECK_SIZE).fill('').map( (elt, i) => i))
+// console.log('perm', ALL_CONSTRUCTION_DECKS_POSSIBILITIES)

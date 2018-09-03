@@ -3,6 +3,10 @@ import { Construction } from "./Construction";
 import { Field } from "./Field";
 import { Plan } from "./Plan";
 
+export const HASH_KEY = 'My Other Project'
+export const HASH_LENGTH = 10
+export const HASH_SPACER = 100
+
 export enum EffectType {
     Surveyor = 0,
     RealEstateAgent = 1,
@@ -64,6 +68,8 @@ export enum GameMode {
     Normal,
     Advanced
 }
+
+export const DEFAULT_GAME_MODE = GameMode.Normal
 
 export interface OptionsPlay {
     estateChoice?: number,
