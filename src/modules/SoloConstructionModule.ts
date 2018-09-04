@@ -15,6 +15,7 @@ export class SoloConstructionModule {
 	constructor(shuffler?: number[], soloCardIndex?: number, constructionDeck = new SoloConstructionDeck(shuffler, soloCardIndex), actualCards = []) {
         this.constructionDeck = constructionDeck;
         this.actualCards = actualCards
+        this.nextTurn()
     }
 
     get remainingTurn(){

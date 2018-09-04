@@ -29,12 +29,15 @@ export class SoloWelcomeModulesManager {
 	init(gameId?: string, mode?: GameMode){
 		let gamesParams: SoloWelcomeModulesManagerData
 		if(!!gameId){
+			this.gameId = gameId
 			gamesParams = this.decodedGameInfo
 		}
-		this.mode = !!gameId ? this.decodedGameInfo.gameMode : mode
+		console.log('SoloWelcomeModuleManger:init', gameId, gamesParams)
+		this.mode = !!gameId && this.decodedGameInfo ? this.decodedGameInfo.gameMode : mode
 
 		this.constructions = new SoloConstructionModule(gamesParams && gamesParams.constructionShuffler, gamesParams && gamesParams.indexSpecialSoloCard)
 		this.plans = new PlanModule(this.mode, gamesParams && gamesParams.planShuffler)
+		console.log('newBuilt', this.constructions, this.plans)
 
 		// case
 		this.gameId = this.getGameId()
@@ -45,7 +48,7 @@ export class SoloWelcomeModulesManager {
 
 	getGameId(){
 		const constructionDeck = this.constructions.constructionDeck
-		const planDeck = this.constructions.constructionDeck
+		const planDeck = this.plans.deck
 		let completeArray = [].concat(this.mode, HASH_SPACER, constructionDeck.shuffler, HASH_SPACER, constructionDeck.specialCardIndex, HASH_SPACER, planDeck.shuffler)
 		let hash = hasher.encode(completeArray)
 		console.log('hash', hash, hasher.decode(hash), completeArray)
@@ -53,22 +56,30 @@ export class SoloWelcomeModulesManager {
 	}
 
 	get decodedGameInfo() : SoloWelcomeModulesManagerData {
+		console.log('gameId', this.gameId)
 		if(!this.gameId){
 			return null
 		}
 		
 		let decodedHash = hasher.decode(this.gameId)
 		let split = numberArray_split(decodedHash, HASH_SPACER)
-		let gameMode = split[0][0]
+		let gameMode = split[0] && split[0][0]
 		let constructionShuffler = split[1]
-		let indexSpecialSoloCard = split[2][0]
+		let indexSpecialSoloCard = split[2] &&  split[2][0]
 		let planShuffler = split[3]
 
-		return {
-			gameMode,
-			planShuffler,
-			constructionShuffler,
-			indexSpecialSoloCard
+		if( (gameMode || gameMode === 0) && constructionShuffler && (indexSpecialSoloCard || indexSpecialSoloCard === 0) && planShuffler){
+			let gameInfo = {
+				gameMode,
+				planShuffler,
+				constructionShuffler,
+				indexSpecialSoloCard
+			}
+			console.log('gameInfo', gameInfo)
+			return gameInfo 
+		}
+		else {
+			return null
 		}
 	}
 

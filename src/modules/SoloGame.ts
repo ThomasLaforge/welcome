@@ -22,6 +22,7 @@ export class SoloGame {
 	@observable public endDate: number;
 	@observable public mode: GameMode;
 	@observable public nbUnbuiltUsed: number;
+	@observable public gameId: string
 
 	constructor(
 		gameId?: string,
@@ -40,6 +41,7 @@ export class SoloGame {
 		this.endDate = endDate;
 		this.mode = mode
 		this.nbUnbuiltUsed = nbUnbuiltUsed
+		this.gameId = gameId
 	}
 	
 	reset(){
@@ -50,6 +52,12 @@ export class SoloGame {
 		this.endDate = null
 		this.mode = DEFAULT_GAME_MODE
 		this.nbUnbuiltUsed = 0;
+	}
+
+	restart(){
+		this.gameId = this.gameId || this.manager.gameId
+		this.reset();
+		this.manager = new SoloWelcomeModulesManager(this.gameId)
 	}
     
     play(construction: Construction, field?: Field, options?: OptionsPlay){
@@ -222,6 +230,7 @@ export class SoloGame {
 
 	get allCardsCombinationsUniq(){
 		let uniq: Construction[] = []
+		console.log('allCards', this.allCardsCombinations)
 		this.allCardsCombinations.forEach( (c) => {
 			if(uniq.findIndex(uniqConstr => uniqConstr.isEqual(c)) === -1){
 				uniq.push(c)

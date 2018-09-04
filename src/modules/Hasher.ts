@@ -23,4 +23,4 @@ export class Hasher {
     
 }
 
-export const hasher = new Hasher
+export const hasher = new Hasher()

@@ -29,7 +29,6 @@ export class SoloGameUIStore {
 		this.selectedRoundabout = null;
 		this.selectedEffectTarget = null;
 		this.optionsPlay = {};
-		this.game.manager.constructions.nextTurn()
 		// this.phaseManager.goTo(SoloPhase.ConstructionSelection)
 	}
 
