@@ -6,10 +6,14 @@ import Manager from '../Manager/Manager'
 import MapModule from '../Map/MapModule'
 import Home from '../Home/Home'
 import { RouteEnum } from "../../modules/Welcome";
+import { isString } from "util";
+
+export type RouteDescriptor = RouteEnum | string
 
 export class Router {
     public routes: Route[]
     @observable public currentRoute: Route;
+    @observable public history: any
 
     constructor(){
         let routeDefs: IRoute[] = [
@@ -37,17 +41,32 @@ export class Router {
         ]
         this.routes = routeDefs.map(iRoute => new Route(iRoute))
         this.switchRoute(this.routes[0].type)
-
+        // this.switchRoute('/?test=ab')
+        // console.log('getAllParams', this.getAllParams())
     }
 
-    switchRoute(routeType: RouteEnum){
-        let route = this.routes.find(r => r.type === routeType)
+    switchRoute(routeInfo: RouteDescriptor){
+        let route = this.routes.find(r => isString(routeInfo) ? r.path === routeInfo : r.type === routeInfo)
         this.currentRoute = route
-        this.setWindowHistory()
+        this.updateWindowHistory()
     }
 
-    setWindowHistory(){
+    updateWindowHistory(){
         window.history.pushState({}, "page 2", this.currentRoute.path);
+    }
+
+    getAllParams(){
+        let match,
+            pl     = /\+/g,  // Regex for replacing addition symbol with a space
+            search = /([^&=]+)=?([^&]*)/g,
+            decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
+            query  = window.location.search.substring(1);
+
+        let urlParams = {};
+        while (match = search.exec(query)){
+            urlParams[decode(match[1])] = decode(match[2]);
+        }
+        return urlParams
     }
 
 }

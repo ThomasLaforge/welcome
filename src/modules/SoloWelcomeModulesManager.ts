@@ -81,6 +81,7 @@ export class SoloWelcomeModulesManager {
 		else {
 			return null
 		}
+
 	}
 
 	get remainingTurn(){
