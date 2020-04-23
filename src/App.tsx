@@ -21,11 +21,7 @@ import AppsIcon from '@material-ui/icons/Apps';
 
 import './styles/main.scss';
 import RouterComponent from './components/Router/RouterComponent';
-import { Router, navigate } from "@reach/router"
-import Home from './components/Home/Home';
-import MapModule from './components/Map/MapModule';
-import SoloGame from './components/Solo/SoloGame';
-import Manager from './components/Solo/Manager';
+
 @observer
 class App extends React.Component<{}, { store: Store, drawerOpened: boolean} > {
 
@@ -90,13 +86,7 @@ class App extends React.Component<{}, { store: Store, drawerOpened: boolean} > {
               </div>
             </Drawer>
 
-            <Router style={{display: 'flex', width: '100%', height: '100%'}}>
-              <Home path="/" />
-              <MapModule path="/map" />
-              <SoloGame path='/solo' />
-              <Manager path='/manager' />
-            </Router>
-
+            <RouterComponent />
           </div>
       </Provider>
     );
