@@ -5,6 +5,7 @@ import { RouteDescriptor } from '../Router/Router';
 
 interface HomeMenuItemProps extends DefaultProps {
     route: RouteDescriptor,
+    title: string,
     className: string
 }
 interface HomeMenuItemState {
@@ -26,7 +27,7 @@ class HomeMenuItem extends React.Component <HomeMenuItemProps, HomeMenuItemState
                 onClick={() => this.props.ui.router.switchRoute(this.props.route)}
             >
                 <div className='home-solo-elt-icon' />
-                <div className='home-solo-elt-title' />
+                <div className='home-solo-elt-title'>{this.props.title}</div>
             </div>
         );
     }

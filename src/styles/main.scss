@@ -27,6 +27,43 @@ html, body, #app {
     display: flex;
 }
 
+.home {
+    display: flex;
+    width: 100%;
+
+    .home-menu {
+        display: flex;
+        width: 100%;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-evenly;
+        .home-solo-elt {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 40%;
+            margin: 30px 0;
+            padding: 20px 40px;
+            text-align: center;
+
+            .home-solo-elt-icon {
+
+            }
+
+            .home-solo-elt-title {
+                font-size: large;
+                font-weight: bold;
+                color: whitesmoke;
+            }
+        }
+
+        .home-menu-solo { background-color: blue;}
+        .home-menu-multi { background-color: red;}
+        .home-menu-map { background-color: grey;}
+        .home-menu-manager { background-color: orange;}
+    }
+}
+
 .manager {
     flex: 1;
     display: flex;

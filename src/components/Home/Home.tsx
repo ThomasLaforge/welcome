@@ -29,11 +29,24 @@ class Home extends React.Component <HomeProps, HomeState> {
                 <div className="home-menu">
                     <HomeMenuItem 
                         className='home-menu-solo' 
+                        title='Solo'
                         route={RouteEnum.Solo}
                     />
-                    <HomeMenuItem className='home-menu-multi' route={RouteEnum.Multi} />
-                    <HomeMenuItem className='home-menu-map' route={RouteEnum.Map} />
-                    <HomeMenuItem className='home-menu-manager' route={RouteEnum.Manager} />
+                    <HomeMenuItem 
+                        className='home-menu-multi' 
+                        route={RouteEnum.Multi}
+                        title='Multi'
+                    />
+                    <HomeMenuItem 
+                        className='home-menu-map' 
+                        route={RouteEnum.Map} 
+                        title='Map'
+                    />
+                    <HomeMenuItem 
+                        className='home-menu-manager' 
+                        route={RouteEnum.Manager} 
+                        title='Cards'
+                    />
                 </div>
             </div>
         );
