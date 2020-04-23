@@ -2,8 +2,6 @@ import * as React from 'react';
 import {observer, inject} from 'mobx-react';
 import { DefaultProps, injector } from '../../lib/mobxInjector'
 
-import {WelcomeModulesManager} from '../../modules/WelcomeModulesManager'
-import ConstructionDeck from '../Common/ConstructionDeck';
 import Constructions from './Constructions';
 import Plans from '../Common/Plans';
 

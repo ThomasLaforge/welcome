@@ -1,16 +1,12 @@
 import * as React from 'react';
 import {observer, Provider } from 'mobx-react';
 
-import DevTools from 'mobx-react-devtools';
-
 import { Store } from './modules/Store'
-import { RouteEnum, MapMode } from './modules/Welcome'
+import { RouteEnum } from './modules/Welcome'
 
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import IconButton from '@material-ui/core/IconButton'
-import MenuIcon from '@material-ui/icons/Menu';
-import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import Drawer from '@material-ui/core/Drawer'
 import List from '@material-ui/core/List';
@@ -23,13 +19,13 @@ import MapIcon from '@material-ui/icons/Map';
 import CasinoIcon from '@material-ui/icons/Casino';
 import AppsIcon from '@material-ui/icons/Apps';
 
-import Manager from './components/Manager/Manager';
-import MapModule from './components/Map/MapModule';
-import SoloGame from './components/Solo/SoloGame';
-
 import './styles/main.scss';
 import RouterComponent from './components/Router/RouterComponent';
-
+import { Router, navigate } from "@reach/router"
+import Home from './components/Home/Home';
+import MapModule from './components/Map/MapModule';
+import SoloGame from './components/Solo/SoloGame';
+import Manager from './components/Solo/Manager';
 @observer
 class App extends React.Component<{}, { store: Store, drawerOpened: boolean} > {
 
@@ -94,7 +90,12 @@ class App extends React.Component<{}, { store: Store, drawerOpened: boolean} > {
               </div>
             </Drawer>
 
-            <RouterComponent />
+            <Router style={{display: 'flex', width: '100%', height: '100%'}}>
+              <Home path="/" />
+              <MapModule path="/map" />
+              <SoloGame path='/solo' />
+              <Manager path='/manager' />
+            </Router>
 
           </div>
       </Provider>

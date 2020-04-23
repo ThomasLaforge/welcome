@@ -2,9 +2,10 @@ import * as React from 'react';
 import {observer, inject} from 'mobx-react';
 import { DefaultProps, injector } from '../../lib/mobxInjector'
 import { RouteDescriptor } from '../Router/Router';
+import { navigate } from "@reach/router"
 
 interface HomeMenuItemProps extends DefaultProps {
-    route: RouteDescriptor,
+    route: string,
     title: string,
     className: string
 }
@@ -24,7 +25,7 @@ class HomeMenuItem extends React.Component <HomeMenuItemProps, HomeMenuItemState
     render() {
         return (
             <div className={"home-solo-elt " + this.props.className} 
-                onClick={() => this.props.ui.router.switchRoute(this.props.route)}
+                onClick={() => navigate(this.props.route)}
             >
                 <div className='home-solo-elt-icon' />
                 <div className='home-solo-elt-title'>{this.props.title}</div>

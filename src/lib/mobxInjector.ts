@@ -4,13 +4,20 @@ import {Game} from '../modules/Game'
 import { WelcomeModulesManager } from '../modules/WelcomeModulesManager';
 import { SoloGame } from '../modules/SoloGame';
 import { WelcomeMap } from '../modules/WelcomeMap';
-// import {History} from '../modules/History'
 
 export interface InjectedStores {
     store?: Store
 }
 
-export interface DefaultProps {
+export interface RouteComponentProps {
+    path?: string;
+    default?: boolean;
+    location?: string;
+    navigate?: Function;
+    uri?: string;
+}
+
+export interface DefaultProps extends RouteComponentProps {
     game?: Game
     ui?: UIStore
     manager?: WelcomeModulesManager

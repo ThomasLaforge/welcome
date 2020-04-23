@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {observer, inject} from 'mobx-react';
 import { DefaultProps, injector } from '../../lib/mobxInjector'
-import { Input, Button } from '@material-ui/core';
 import { RouteEnum } from '../../modules/Welcome';
 import HomeMenuItem from './HomeMenuItem';
 
@@ -30,21 +29,21 @@ class Home extends React.Component <HomeProps, HomeState> {
                     <HomeMenuItem 
                         className='home-menu-solo' 
                         title='Solo'
-                        route={RouteEnum.Solo}
+                        route={'/solo'}
                     />
                     <HomeMenuItem 
                         className='home-menu-multi' 
-                        route={RouteEnum.Multi}
+                        route={'/multi'}
                         title='Multi'
                     />
                     <HomeMenuItem 
                         className='home-menu-map' 
-                        route={RouteEnum.Map} 
+                        route={'/map'} 
                         title='Map'
                     />
                     <HomeMenuItem 
                         className='home-menu-manager' 
-                        route={RouteEnum.Manager} 
+                        route={'/manager'} 
                         title='Cards'
                     />
                 </div>
