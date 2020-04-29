@@ -6,6 +6,7 @@ import Home from '../../components/Home/Home';
 import MapModule from '../../components/Map/MapModule';
 import SoloGame from '../../components/Solo/SoloGame';
 import Manager from '../../components/Manager/Manager';
+import MultiplayerForm from '../../components/Multiplayer/MultiplayerForm';
 
 interface RouterProps extends DefaultProps {
 }
@@ -31,6 +32,7 @@ class RouterComponent extends React.Component <RouterProps, RouterState> {
                     <MapModule path="/map" />
                     <Manager path='/manager' />
                     <SoloGame path='/solo' />
+                    <MultiplayerForm path='/multi' />
                 </Router>
             </div>
         );

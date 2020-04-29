@@ -2,7 +2,7 @@ import * as React from 'react';
 import {observer, Provider } from 'mobx-react';
 
 import { Store } from './modules/Store'
-import { RouteEnum } from './modules/Welcome'
+import { navigate } from "@reach/router"
 
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
@@ -58,25 +58,25 @@ class App extends React.Component<{}, { store: Store, drawerOpened: boolean} > {
                 onClick={this.toggleDrawer}
               >
                 <List component="nav">
-                  <ListItem button onClick={() => this.state.store.uiStore.router.switchRoute(RouteEnum.Solo)}>
+                  <ListItem button onClick={() => navigate('/solo')}>
                     <ListItemIcon>
                       <VideogameAssetIcon />
                     </ListItemIcon>
                     <ListItemText primary="Solo" />
                   </ListItem>
-                  <ListItem button disabled onClick={() => this.state.store.uiStore.router.switchRoute(RouteEnum.Multi)}>
+                  <ListItem button onClick={() => navigate('/multi')}>
                     <ListItemIcon>
                       <PeopleIcon />
                     </ListItemIcon>
                     <ListItemText primary="Multi" />
                   </ListItem>
-                  <ListItem button onClick={() => this.state.store.uiStore.router.switchRoute(RouteEnum.Manager)}>
+                  <ListItem button onClick={() => navigate('/manager')}>
                     <ListItemIcon>
                       <CasinoIcon />
                     </ListItemIcon>
                     <ListItemText primary="Manager" />
                   </ListItem>
-                  <ListItem button onClick={() => this.state.store.uiStore.router.switchRoute(RouteEnum.Map)}>
+                  <ListItem button onClick={() => navigate('/map')}>
                     <ListItemIcon>
                       <MapIcon />
                     </ListItemIcon>
