@@ -45,22 +45,23 @@ html, body, #app {
             margin: 30px 0;
             padding: 20px 40px;
             text-align: center;
+            border-radius: 30px;
 
             .home-solo-elt-icon {
 
             }
 
             .home-solo-elt-title {
-                font-size: large;
+                font-size: 40px;
                 font-weight: bold;
                 color: whitesmoke;
             }
         }
 
-        .home-menu-solo { background-color: blue;}
-        .home-menu-multi { background-color: red;}
+        .home-menu-solo { background-color: #3131d2f7;}
+        .home-menu-multi { background-color: #e81a1abf;}
         .home-menu-map { background-color: grey;}
-        .home-menu-manager { background-color: orange;}
+        .home-menu-manager { background-color: #de9f2dd9;}
     }
 }
 
