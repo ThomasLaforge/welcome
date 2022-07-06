@@ -18,7 +18,7 @@
     "mobx": "^5.0.3",
     "mobx-logger": "https://github.com/iamdanthedev/mobx-undo-redo",
     "mobx-react": "^5.2.3",
-    "moment": "^2.22.2",
+    "moment": "^2.29.4",
     "node-uuid": "^1.4.8",
     "raf": "^3.4.0",
     "react": "^16.4.1",
